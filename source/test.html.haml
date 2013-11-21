@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %title Stagehand Test Suite
+    %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
+    %script(type="text/javascript" src="/lib/qunit.js")
+    %script(type="text/javascript" src="/javascripts/stagehand.js")
+    %script(type="text/javascript" src="/javascripts/suite.js")
+    %link(rel="stylesheet" href="/lib/qunit.css" type="text/css")
+  %body
+    %h1#qunit-header
+    %h2#qunit-banner
+    %h2#qunit-userAgent
+    %ol#qunit-tests
+    #qunit-fixture
+      .direct_siblings
+        %p Not an actor
+        %p(data-stage) Stage 1 scene 1
+        %p(data-stage) Stage 1 scene 2
+        %p(data-stage='foo') Stage foo scene 1
+        %p Not an actor
+        %p(data-stage) Not used in this stage
+      .two_direct_sibling_sets
+        %p(data-stage) Stage 1 scene 1
+        %p(data-stage) Stage 1 scene 2
+        %p Not an actor
+        %p(data-stage) Stage 2 scene 1
+        %p(data-stage) Stage 2 scene 2
+      .named_stages
+        %p(data-stage='foo') Stage foo scene 1
+        %p(data-stage='bar') Stage bar scene 1
+        %p(data-stage='foo') Stage foo scene 2
+        %p(data-stage='bar') Stage bar scene 2
+        %p(data-stage) Stage 2 scene 1
+        %p(data-stage) Stage 2 scene 2
+        %p(data-stage='bar') Stage bar scene 3
