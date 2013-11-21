@@ -49,15 +49,25 @@ Stagehand =
       .attr('data-stage', stage_name)
       .find('h2').text(stage_name)
     $stage.each (idx) ->
-      text = if $(@).attr('data-scene') then $(@).attr('data-scene') else "#{idx + 1}"
-      $(s.templates.control_button)
-        .appendTo($li.find('ul'))
-        .find('a')
-          .data('$actor', $(@))
-          .data('$stage', $stage)
-          .text(text)
+      $button = s.buildOrAppendControlButton($(@), $li, idx)
+      $button.data('$stage', $stage)
     @stage_controls.push($li)
     @$controls.find("> ul").append($li)
+  buildOrAppendControlButton: ($actor, $control, idx) ->
+    scenes = if $actor.attr('data-scene') then $actor.attr('data-scene').split(',') else ["#{idx + 1}"]
+    for scene, i in scenes
+      scene = scene.replace(/^\s+|\s+$/g, '')
+      $button = $control.find("[data-scene-control='#{scene}']")
+      if $button.length
+        $button.data('$actor', $button.data('$actor').add($actor))
+      else
+        $button = $(@templates.control_button)
+          .appendTo($control.find('ul'))
+          .find('a')
+            .attr('data-scene-control', scene)
+            .data('$actor', $actor)
+            .text(scene)
+    $button
   changeScene: ->
     $a = $(@)
     $a.closest('ul').find('a').removeClass('stagehand-active')

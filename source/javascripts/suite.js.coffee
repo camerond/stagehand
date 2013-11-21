@@ -4,7 +4,7 @@
     selector = "%#{@[0].tagName.toLowerCase()}"
     @attr('id') && selector += "##{@.attr('id')}"
     @attr('class') && selector += ".#{@.attr('class')}"
-    text = if @text().length > 20 then "#{@text().slice(0, 20)}..." else @text()
+    text = if @text().length > 30 then "#{@text().slice(0, 30)}..." else @text()
     selector = selector + " with text of '#{text}'"
 
   $.fn.shouldHaveValue = (val, msg) ->
@@ -109,5 +109,24 @@
     fixture.select('Stage 2', 1)
     sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('2')
     sc.$controls.find("[data-stage='Stage 2'] a.stagehand-active").shouldSay('my other scene')
+
+  test 'support multiple named `data-scene` attributes', ->
+    fixture.use '.shared_scenes'
+    sc = fixture.init().get()
+    $stage = sc.named_stages['foo']
+    fixture.$el.find('.actor_1').shouldBe(':visible')
+    fixture.$el.find('.actor_2').shouldNotBe(':visible')
+    fixture.$el.find('.actor_3').shouldNotBe(':visible')
+    fixture.$el.find('.actor_4').shouldBe(':visible')
+    fixture.select('foo', 1)
+    fixture.$el.find('.actor_1').shouldNotBe(':visible')
+    fixture.$el.find('.actor_2').shouldBe(':visible')
+    fixture.$el.find('.actor_3').shouldNotBe(':visible')
+    fixture.$el.find('.actor_4').shouldBe(':visible')
+    fixture.select('foo', 2)
+    fixture.$el.find('.actor_1').shouldNotBe(':visible')
+    fixture.$el.find('.actor_2').shouldNotBe(':visible')
+    fixture.$el.find('.actor_3').shouldBe(':visible')
+    fixture.$el.find('.actor_4').shouldNotBe(':visible')
 
 )(jQuery)
