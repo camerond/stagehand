@@ -26,9 +26,11 @@ Stagehand =
   name: 'stagehand'
   named_stages: {}
   stages: []
+  stage_controls: []
   templates:
-    controls: "<div class='stagehand-controls'><p>Stages</p><ul></ul></div>"
-    control: "<li><label></label><select></select></li>"
+    controls: "<section class='stagehand-controls'><h1>Stages</h1><ul></ul></section>"
+    control: "<li><h2></h2><ul></ul></li>"
+    control_button: "<li><a href='#'></a></li>"
   teardown: ->
     @$controls.remove()
     @$el.removeData(@name)
@@ -40,23 +42,28 @@ Stagehand =
     for $stage, i in @stages
       @buildStageControl($stage, i)
   buildStageControl: ($stage, i) ->
-    $control = $(@templates.control)
+    s = @
+    $li = $(@templates.control)
     stage_name = $stage.attr('data-stage') || "Stage #{i+1}"
-    $control.find('label').text(stage_name)
-    $select = $control.find('select')
-      .attr('data-stage-name', stage_name)
-      .data('stage', $stage)
+    $li
+      .attr('data-stage', stage_name)
+      .find('h2').text(stage_name)
     $stage.each (idx) ->
-      text = if $(@).attr('data-scene') then $(@).attr('data-scene') else "Scene #{idx + 1}"
-      $('<option />')
-        .attr('value', idx)
-        .text(text)
-        .data('actor', $(@))
-        .appendTo($select)
-    @$controls.append($control)
+      text = if $(@).attr('data-scene') then $(@).attr('data-scene') else "#{idx + 1}"
+      $(s.templates.control_button)
+        .appendTo($li.find('ul'))
+        .find('a')
+          .data('$actor', $(@))
+          .data('$stage', $stage)
+          .text(text)
+    @stage_controls.push($li)
+    @$controls.find("> ul").append($li)
   changeScene: ->
-    $(@).data('stage').hide()
-    $(@).find(':selected').data('actor').show()
+    $a = $(@)
+    $a.closest('ul').find('a').removeClass('stagehand-active')
+    $a.addClass('stagehand-active')
+    $a.data('$stage').hide()
+    $a.data('$actor').show()
   detectNamedStages: ->
     $actor_cache = $.extend(@$actor_elements, {}).filter('[data-stage]').filter("[data-stage!='']")
     while $actor_cache.length
@@ -82,11 +89,12 @@ Stagehand =
     @detectAnonymousStages()
     @buildControls()
   bindEvents: ->
-    @$controls.on 'change.stagehand', 'select', @changeScene
+    @$controls.on 'click.stagehand', 'a', @changeScene
   init: ->
     @detectScenes(@$el)
     @bindEvents()
-    @$controls.find('select').trigger('change.stagehand')
+    $.each @stage_controls, ->
+      $(@).find('a').eq(0).trigger('click.stagehand')
     @$el
 
 $.fn[Stagehand.name] = (opts) ->

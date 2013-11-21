@@ -44,9 +44,9 @@
       @get() && @get().teardown()
     select: (stage, scene) ->
       if typeof stage == 'number'
-        @get().$controls.find('li').eq(stage).find('select').val(scene).change()
+        @get().$controls.find('li').eq(stage).find('li').eq(scene).find('a').click()
       else
-        @get().$controls.find("[data-stage-name='#{stage}']").val(scene).change()
+        @get().$controls.find("[data-stage='#{stage}']").find("li").eq(scene).find("a").click()
     init: (opts, $context) ->
       $context ?= $(document.body)
       @$el = $context.stagehand(opts)
@@ -69,9 +69,9 @@
   test 'it detects siblings with `data-stage` attributes as one scene', ->
     fixture.use '.direct_siblings'
     sc = fixture.init().get()
-    equal sc.$controls.find('li').length, 1, 'one scene control built'
-    sc.$controls.find('li label').shouldSay('Stage 1')
-    equal sc.$controls.find('select option').length, 2, 'scene control has two options'
+    equal sc.$controls.find('> ul > li').length, 1, 'one scene control built'
+    sc.$controls.find('> ul > li > ul > li a.stagehand-active').shouldSay('1')
+    equal sc.$controls.find('li li').length, 2, 'scene control has two options'
     equal sc.stages.length, 1, 'one stage in stagehand.stages array'
 
   test 'it shows the first scene of each stage by default', ->
@@ -91,7 +91,7 @@
     fixture.use '.named_stages'
     sc = fixture.init().get()
     equal sc.stages.length, 3, '3 stages in stagehand.stages array'
-    sc.$controls.find("[data-stage-name='foo']").prev('label').shouldSay('foo')
+    sc.$controls.find("[data-stage='foo'] h2").shouldSay('foo')
     fixture.select('foo', 1)
     fixture.select('bar', 2)
     sc.named_stages['foo'].eq(0).shouldNotBe(':visible')
