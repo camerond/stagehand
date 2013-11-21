@@ -99,4 +99,15 @@
     sc.named_stages['bar'].eq(1).shouldNotBe(':visible')
     sc.named_stages['bar'].eq(2).shouldBe(':visible')
 
+  test 'support named `data-scene` attributes', ->
+    fixture.use '.named_scenes'
+    sc = fixture.init().get()
+    equal sc.stages.length, 2, '2 stages detected'
+    sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('my scene')
+    sc.$controls.find("[data-stage='Stage 2'] a.stagehand-active").shouldSay('1')
+    fixture.select('foo', 1)
+    fixture.select('Stage 2', 1)
+    sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('2')
+    sc.$controls.find("[data-stage='Stage 2'] a.stagehand-active").shouldSay('my other scene')
+
 )(jQuery)
