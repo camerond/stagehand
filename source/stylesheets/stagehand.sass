@@ -1,0 +1,86 @@
+$prefixes: moz, webkit, o
+
+= reset
+  margin: 0
+  padding: 0
+  box-shadow: none
+  text-shadow: none
+  transition: none
+  transform: none
+  @each $prefix in $prefixes
+    #{$prefix}-box-shadow: none
+    #{$prefix}-text-shadow: none
+    #{$prefix}-transition: none
+    #{$prefix}-transform: none
+
+= box-sizing($type: border-box)
+  @each $prefix in $prefixes
+    -#{$prefix}-box-sizing: $type
+  box-sizing: $type
+
+body.stagehand-active
+  padding-left: 150px
+  @each $prefix in $prefixes
+    -#{$prefix}-transition: padding-left 200ms
+  section#stagehand-controls
+    left: 0
+
+section#stagehand-controls
+  +reset
+  color: #fff
+  position: absolute
+  left: -150px
+  top: 0
+  bottom: 0
+  width: 150px
+  background: #161718
+  font-family: "Helvetica Neue", Helvetica, sans-serif
+  -webkit-font-smoothing: antialiased
+  @each $prefix in $prefixes
+    -#{$prefix}-transition: left 200ms
+  a.stagehand-toggle
+    display: block
+    position: absolute
+    left: 100%
+    top: 0
+    width: 30px
+    height: 30px
+    background: transparentize(#3d3f40, .2)
+  h1
+    +reset
+    background: transparentize(#3d3f40, .5)
+    line-height: 100%
+    text-transform: uppercase
+    font-size: 12px
+    padding: 9px 10px
+  ul
+    +reset
+    list-style-type: none
+  > ul
+    padding: 20px 10px
+    li
+      +reset
+      h2
+        font-size: 12px
+      ul
+        li
+          display: inline-block
+          a
+            +reset
+            +box-sizing
+            padding: 0 5px
+            display: inline-block
+            min-height: 24px
+            min-width: 24px
+            background: #2e2f30
+            text-decoration: none
+            color: #fff
+            font-weight: bold
+            line-height: 24px
+            font-size: 12px
+            text-align: center
+            margin: 0 5px 5px 0
+            &:hover
+              background: #434547
+            &.stagehand-active
+              background: #e23246

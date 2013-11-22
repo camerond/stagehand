@@ -63,7 +63,7 @@
   
   test 'it appends controls to the body', ->
     sc = fixture.init().get()
-    sc.$controls.shouldBe('.stagehand-controls')
+    sc.$controls.shouldBe('#stagehand-controls')
     sc.$controls.parent().shouldBe($(document.body), 'controls should be appended to body')
   
   test 'it detects siblings with `data-stage` attributes as one scene', ->

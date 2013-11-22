@@ -28,9 +28,10 @@ Stagehand =
   stages: []
   stage_controls: []
   templates:
-    controls: "<section class='stagehand-controls'><h1>Stages</h1><ul></ul></section>"
+    controls: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"
     control: "<li><h2></h2><ul></ul></li>"
     control_button: "<li><a href='#'></a></li>"
+    toggle: "<a href='#' class='stagehand-toggle'></a>"
   teardown: ->
     @$controls.remove()
     @$el.removeData(@name)
@@ -38,7 +39,8 @@ Stagehand =
     if @$controls
       @$controls.empty()
     else
-      @$controls = $(@templates.controls).appendTo($(document.body))
+      @$controls = $(@templates.controls).append($(@templates.toggle))
+      $(document.body).append(@$controls).addClass('.stagehand-enabled')
     for $stage, i in @stages
       @buildStageControl($stage, i)
   buildStageControl: ($stage, i) ->
@@ -74,6 +76,7 @@ Stagehand =
     $a.addClass('stagehand-active')
     $a.data('$stage').hide()
     $a.data('$actor').show()
+    false
   detectNamedStages: ->
     $actor_cache = $.extend(@$actor_elements, {}).filter('[data-stage]').filter("[data-stage!='']")
     while $actor_cache.length
@@ -98,8 +101,12 @@ Stagehand =
     @detectNamedStages()
     @detectAnonymousStages()
     @buildControls()
+  toggleControls: ->
+    $(document.body).toggleClass('stagehand-active')
+    false
   bindEvents: ->
-    @$controls.on 'click.stagehand', 'a', @changeScene
+    @$controls.on 'click.stagehand', 'ul a', @changeScene
+    @$controls.on 'click.stagehand', 'a.stagehand-toggle', @toggleControls
   init: ->
     @detectScenes(@$el)
     @bindEvents()
