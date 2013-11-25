@@ -7,6 +7,7 @@ $prefixes: moz, webkit, o
   text-shadow: none
   transition: none
   transform: none
+  font-weight: normal
   @each $prefix in $prefixes
     #{$prefix}-box-shadow: none
     #{$prefix}-text-shadow: none
@@ -32,6 +33,7 @@ body.stagehand-active
       opacity: 1
 
 section#stagehand-controls
+  z-index: 1000001
   +reset
   color: #161718
   position: absolute
@@ -65,6 +67,7 @@ section#stagehand-controls
     font-size: 12px
     padding: 16px 10px 12px 10px
     background: mix(#eff0f1, #000, 97%)
+    font-weight: bold
   ul
     +reset
     list-style-type: none
@@ -73,8 +76,12 @@ section#stagehand-controls
     li
       +reset
       h2
+        +reset
         font-size: 12px
+        margin: 0 0 5px 0
+        font-weight: bold
       ul
+        margin: 0 0 10px 0
         li
           display: inline-block
           a
