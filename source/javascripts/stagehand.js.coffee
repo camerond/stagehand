@@ -53,12 +53,19 @@ Stagehand =
       .find('h2').text(stage_name)
     $stage.each (idx) ->
       $button = s.buildOrAppendControlButton($(@), $li, idx)
-      $button.data('$stage', $stage)
+    @prependNoneOption($li, $stage)
+    $li.find('a').data('$stage', $stage)
     @stage_controls.push($li)
     @$controls.find("> ul").append($li)
+  prependNoneOption: ($li, $stage) ->
+    if $stage.filter("[data-scene='all']").length
+      $button = $(@templates.control_button)
+        .prependTo($li.find('ul'))
+        .find('a').text('none')
   buildOrAppendControlButton: ($actor, $control, idx) ->
     scenes = if $actor.attr('data-scene') then $actor.attr('data-scene').split(',') else ["#{idx + 1}"]
     for scene, i in scenes
+      if scene == 'all' then return
       scene = scene.replace(/^\s+|\s+$/g, '')
       $button = $control.find("[data-scene-control='#{scene}']")
       if $button.length
@@ -74,8 +81,12 @@ Stagehand =
   changeScene: (e) ->
     s = @
     $a = $(e.target)
-    $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"))
-    $actors_off = $a.data('$stage').not($actors_on)
+    if $a.text() == 'none'
+      $actors_on = $()
+      $actors_off = $a.data('$stage')
+    else
+      $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"))
+      $actors_off = $a.data('$stage').not($actors_on)
     $a.closest('ul').find('a').removeClass('stagehand-active')
     $a.addClass('stagehand-active')
     $actors_off.each ->

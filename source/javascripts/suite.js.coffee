@@ -180,12 +180,16 @@
 
   test 'support special `data-scene` attribute of `all`', ->
     fixture.use '.keyword_all'
-    fixture.init()
+    sc = fixture.init().get()
+    equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
+    sc.$controls.find('li li').first().shouldSay('none')
+    fixture.$el.find("[class^='actor']").shouldNotBe(':visible')
+    fixture.select(0, 1)
     fixture.$el.find('.actor_1').shouldBe(':visible')
     fixture.$el.find('.actor_2').shouldNotBe(':visible')
     fixture.$el.find('.actor_3').shouldBe(':visible')
     fixture.$el.find('.actor_4').shouldBe(':visible')
-    fixture.select(0, 1)
+    fixture.select(0, 2)
     fixture.$el.find('.actor_1').shouldNotBe(':visible')
     fixture.$el.find('.actor_2').shouldBe(':visible')
     fixture.$el.find('.actor_3').shouldBe(':visible')
