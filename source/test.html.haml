@@ -17,9 +17,8 @@
         %p Not an actor
         %p(data-stage) Stage 1 scene 1
         %p(data-stage) Stage 1 scene 2
-        %p(data-stage='foo') Stage foo scene 1
         %p Not an actor
-        %p(data-stage) Ignore anonymous stages without siblings
+        %p(data-stage) Stage 2 scene 1
       .two_direct_sibling_sets
         %p(data-stage) Stage 1 scene 1
         %p(data-stage) Stage 1 scene 2
@@ -34,6 +33,14 @@
         %p(data-stage) Stage 1 scene 1
         %p(data-stage) Stage 1 scene 2
         %p(data-stage='bar') Stage bar scene 3
+      .shared_stages
+        %p.actor_1_1(data-stage='foo') foo 1
+        %p.actor_1_2(data-stage='foo') foo 2
+        %p.actor_2_1(data-stage='bar') bar 1
+        %p.actor_2_2(data-stage='bar') bar 2
+        %p.actor_3_1(data-stage='baz') baz 1
+        %p.actor_4(data-stage='foo, baz') foo 3, baz 2
+        %p.actor_5(data-stage='bar, baz') bar 3, baz 3
       .named_scenes
         %p(data-stage='foo' data-scene='my scene') Stage foo scene my scene
         %p(data-stage='foo') Stage foo scene 2

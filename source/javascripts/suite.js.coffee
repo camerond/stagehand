@@ -71,48 +71,63 @@
   test 'it detects siblings with `data-stage` attributes as one scene', ->
     fixture.use '.direct_siblings'
     sc = fixture.init().get()
-    equal sc.$controls.find('> ul > li').length, 1, 'one scene control built'
-    sc.$controls.find('> ul > li > ul > li a.stagehand-active').shouldSay('1')
-    equal sc.$controls.find('li li').length, 2, 'scene control has two options'
-    equal sc.stages.length, 1, 'one stage in stagehand.stages array'
+    equal sc.$controls.find('> ul > li').length, 2, 'two scene controls built'
+    sc.$controls.find('a.stagehand-active').eq(0).shouldSay('1')
+    equal sc.$controls.find('> ul > li').eq(0).find('li').length, 2, 'first scene control has two options'
+    equal sc.$controls.find('> ul > li').eq(1).find('li').length, 1, 'first scene control has one option'
 
   test 'it shows the first scene of each stage by default', ->
     fixture.use '.direct_siblings'
     sc = fixture.init().get()
-    sc.stages[0].eq(0).shouldBe(':visible')
-    sc.stages[0].eq(1).shouldNotBe(':visible')
+    sc.stages['Stage 1'].eq(0).shouldBe(':visible')
+    sc.stages['Stage 1'].eq(1).shouldNotBe(':visible')
 
   test 'changing a stage control to a new scene changes the associated stage', ->
     fixture.use '.direct_siblings'
     sc = fixture.init().get()
     fixture.select(0, 1)
-    sc.stages[0].eq(0).shouldNotBe(':visible')
-    sc.stages[0].eq(1).shouldBe(':visible')
+    sc.stages['Stage 1'].eq(0).shouldNotBe(':visible')
+    sc.stages['Stage 1'].eq(1).shouldBe(':visible')
 
   module 'Named stages and scenes'
 
   test 'support named `data-stage` attributes', ->
     fixture.use '.named_stages'
     sc = fixture.init().get()
-    equal sc.stages.length, 3, '3 stages in stagehand.stages array'
     sc.$controls.find("[data-stage='foo'] h2").shouldSay('foo')
     fixture.select('foo', 1)
     fixture.select('bar', 2)
-    sc.named_stages['foo'].eq(0).shouldNotBe(':visible')
-    sc.named_stages['foo'].eq(1).shouldBe(':visible')
-    sc.named_stages['bar'].eq(1).shouldNotBe(':visible')
-    sc.named_stages['bar'].eq(2).shouldBe(':visible')
+    sc.stages['foo'].eq(0).shouldNotBe(':visible')
+    sc.stages['foo'].eq(1).shouldBe(':visible')
+    sc.stages['bar'].eq(1).shouldNotBe(':visible')
+    sc.stages['bar'].eq(2).shouldBe(':visible')
+
+  test 'support multiple named `data-stage` attributes', ->
+    fixture.use '.shared_stages'
+    sc = fixture.init().get()
+    equal sc.$controls.find("[data-stage='foo'] li").length, 3, '3 items in foo control'
+    equal sc.$controls.find("[data-stage='bar'] li").length, 3, '3 items in bar control'
+    equal sc.$controls.find("[data-stage='baz'] li").length, 3, '3 items in baz control'
+    $foo = sc.stages['foo']
+    $bar = sc.stages['bar']
+    $baz = sc.stages['baz']
+    $('.actor_1_1, .actor_2_1, .actor_3_1').shouldBe(':visible')
+    fixture.select('foo', 2)
+    $('.actor_4').shouldBe(':visible')
+    fixture.select('foo', 1)
+    fixture.select('baz', 2)
+    $('.actor_4').shouldNotBe(':visible')
+    $('.actor_5').shouldBe(':visible')
 
   test 'support named `data-scene` attributes', ->
     fixture.use '.named_scenes'
     sc = fixture.init().get()
-    equal sc.stages.length, 2, '2 stages detected'
     sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('my scene')
-    sc.$controls.find("[data-stage='Stage 2'] a.stagehand-active").shouldSay('1')
+    sc.$controls.find("[data-stage='Stage 1'] a.stagehand-active").shouldSay('1')
     fixture.select('foo', 1)
-    fixture.select('Stage 2', 1)
+    fixture.select('Stage 1', 1)
     sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('2')
-    sc.$controls.find("[data-stage='Stage 2'] a.stagehand-active").shouldSay('my other scene')
+    sc.$controls.find("[data-stage='Stage 1'] a.stagehand-active").shouldSay('my other scene')
 
   test 'support multiple named `data-scene` attributes', ->
     fixture.use '.shared_scenes'

@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.2.2
+# version 0.2.3
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -25,8 +25,7 @@
 Stagehand =
   name: 'stagehand'
   afterSceneChange: $.noop()
-  named_stages: {}
-  stages: []
+  stages: {}
   stage_controls: []
   templates:
     controls: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"
@@ -42,15 +41,14 @@ Stagehand =
     else
       @$controls = $(@templates.controls).append($(@templates.toggle))
       $(document.body).append(@$controls).addClass('.stagehand-enabled')
-    for $stage, i in @stages
-      @buildStageControl($stage, i)
-  buildStageControl: ($stage, i) ->
+    for k, v of @stages
+      @buildStageControl(k, v)
+  buildStageControl: (name, $stage) ->
     s = @
     $li = $(@templates.control)
-    stage_name = $stage.attr('data-stage') || "Stage #{i+1}"
     $li
-      .attr('data-stage', stage_name)
-      .find('h2').text(stage_name)
+      .attr('data-stage', name)
+      .find('h2').text(name)
     $stage.each (idx) ->
       $button = s.buildOrAppendControlButton($(@), $li, idx)
     @prependNoneOption($li, $stage)
@@ -105,21 +103,24 @@ Stagehand =
     $actor_cache = $.extend(@$actor_elements, {}).filter('[data-stage]').filter("[data-stage!='']")
     while $actor_cache.length
       $actor = $actor_cache.eq(0)
-      stage_name = $actor.attr('data-stage')
-      $stage = $actor.add($actor_cache.filter("[data-stage='#{stage_name}']"))
-      @$actor_elements = @$actor_elements.not($stage)
-      $actor_cache = $actor_cache.not($stage)
-      if $stage.length > 1
-        @named_stages[stage_name] = $stage
-        @stages.push($stage)
+      for stage_name in $actor.attr('data-stage').split(',')
+        stage_name = stage_name.replace(/^\s+|\s+$/g, '')
+        if @stages[stage_name]
+          @stages[stage_name] = @stages[stage_name].add($actor)
+        else
+          @stages[stage_name] = $actor
+      @$actor_elements = @$actor_elements.not($actor)
+      $actor_cache = $actor_cache.not($actor)
   detectAnonymousStages: ->
     $actor_cache = $.extend(@$actor_elements, {})
+    i = 1
     while $actor_cache.length
       $actor = $actor_cache.eq(0)
       $stage = $actor.add($actor.nextUntil("[data-stage!='']"))
       $stage = $stage.add($actor.prevUntil("[data-stage!='']"))
-      $stage.length > 1 && @stages.push($stage)
+      @stages["Stage #{i}"] = $stage
       $actor_cache = $actor_cache.not($stage)
+      i = i + 1
   detectScenes: ->
     @$actor_elements = @$el.find('[data-stage]')
     @detectNamedStages()
