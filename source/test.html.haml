@@ -49,3 +49,7 @@
         %p.actor_2(data-stage data-scene-class='active')
         %p.actor_3(data-stage data-scene-id='some_id')
       .shared_scene_attributes
+        %p.actor_1(data-stage='foo' data-scene='my scene' data-scene-class='active') Stage foo scene my scene
+        %p.actor_2(data-stage='foo' data-scene='my other scene' data-scene-class='active') Stage foo my other scene
+        %p.actor_3(data-stage='foo' data-scene='my third scene' data-scene-class='active') Stage foo my third scene
+        %p.actor_4(data-stage='foo' data-scene='my scene, my other scene' data-scene-class='active') Should be visible in two scenes

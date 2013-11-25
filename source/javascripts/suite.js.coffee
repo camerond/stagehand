@@ -5,7 +5,8 @@
     @attr('id') && selector += "##{@.attr('id')}"
     @attr('class') && selector += ".#{@.attr('class')}"
     text = if @text().length > 30 then "#{@text().slice(0, 30)}..." else @text()
-    selector = selector + " with text of '#{text}'"
+    text && selector = selector + " with text of '#{text}'"
+    selector
 
   $.fn.shouldHaveValue = (val, msg) ->
     equal @.val(), val, msg or "#{@selectorText()} should have a value of #{val}"
@@ -130,5 +131,51 @@
     fixture.$el.find('.actor_2').shouldNotBe(':visible')
     fixture.$el.find('.actor_3').shouldBe(':visible')
     fixture.$el.find('.actor_4').shouldNotBe(':visible')
+
+  module 'Changing attributes'
+
+  test 'toggle classes via `data-scene-class` attribute', ->
+    fixture.use '.scene_attributes'
+    sc = fixture.init().get()
+    fixture.$el.find('.actor_1').shouldBe('.active')
+    fixture.$el.find('.actor_2').shouldNotBe('.active')
+    fixture.$el.find('.actor_3').shouldNotBe('.active')
+    fixture.select(0, 1)
+    fixture.$el.find('.actor_1').shouldNotBe('.active')
+    fixture.$el.find('.actor_2').shouldBe('.active')
+    fixture.$el.find('.actor_3').shouldNotBe('.active')
+
+  test 'toggle ids via `data-scene-id` attribute', ->
+    fixture.use '.scene_attributes'
+    sc = fixture.init().get()
+    fixture.$el.find('.actor_1').shouldBe('#some_id')
+    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
+    fixture.$el.find('.actor_3').shouldNotBe('#some_id')
+    fixture.select(0, 1)
+    fixture.$el.find('.actor_1').shouldNotBe('#some_id')
+    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
+    fixture.$el.find('.actor_3').shouldNotBe('#some_id')
+    fixture.select(0, 2)
+    fixture.$el.find('.actor_1').shouldNotBe('#some_id')
+    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
+    fixture.$el.find('.actor_3').shouldBe('#some_id')
+
+  test 'support toggling attributes while using multiple named `data-scene` attributes', ->
+    fixture.use '.shared_scene_attributes'
+    sc = fixture.init().get()
+    fixture.$el.find('.actor_1').shouldBe('.active')
+    fixture.$el.find('.actor_2').shouldNotBe('.active')
+    fixture.$el.find('.actor_3').shouldNotBe('.active')
+    fixture.$el.find('.actor_4').shouldBe('.active')
+    fixture.select('foo', 1)
+    fixture.$el.find('.actor_1').shouldNotBe('.active')
+    fixture.$el.find('.actor_2').shouldBe('.active')
+    fixture.$el.find('.actor_3').shouldNotBe('.active')
+    fixture.$el.find('.actor_4').shouldBe('.active')
+    fixture.select('foo', 2)
+    fixture.$el.find('.actor_1').shouldNotBe('.active')
+    fixture.$el.find('.actor_2').shouldNotBe('.active')
+    fixture.$el.find('.actor_3').shouldBe('.active')
+    fixture.$el.find('.actor_4').shouldNotBe('.active')
 
 )(jQuery)

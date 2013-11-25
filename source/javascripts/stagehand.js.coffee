@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.1
+# version 0.2
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -70,13 +70,22 @@ Stagehand =
             .data('$actor', $actor)
             .text(scene)
     $button
-  changeScene: ->
-    $a = $(@)
+  changeScene: (e) ->
+    s = @
+    $a = $(e.target)
     $a.closest('ul').find('a').removeClass('stagehand-active')
     $a.addClass('stagehand-active')
-    $a.data('$stage').hide()
-    $a.data('$actor').show()
+    $a.data('$stage').each ->
+      s.toggleActor $(@), false
+    $a.data('$actor').each ->
+      s.toggleActor $(@), true
     false
+  toggleActor: ($actor, direction) ->
+    klass = $actor.attr('data-scene-class')
+    id = $actor.attr('data-scene-id')
+    if klass then $actor.toggleClass(klass, direction)
+    if id then $actor.attr("id", if direction then id else '')
+    if !id and !klass then $actor.toggle(direction)
   detectNamedStages: ->
     $actor_cache = $.extend(@$actor_elements, {}).filter('[data-stage]').filter("[data-stage!='']")
     while $actor_cache.length
@@ -96,19 +105,19 @@ Stagehand =
       $stage = $stage.add($actor.prevUntil("[data-stage!='']"))
       $stage.length > 1 && @stages.push($stage)
       $actor_cache = $actor_cache.not($stage)
-  detectScenes: ($context) ->
-    @$actor_elements = $context.find('[data-stage]')
+  detectScenes: ->
+    @$actor_elements = @$el.find('[data-stage]')
     @detectNamedStages()
     @detectAnonymousStages()
-    @buildControls()
   toggleControls: ->
     $(document.body).toggleClass('stagehand-active')
     false
   bindEvents: ->
-    @$controls.on 'click.stagehand', 'ul a', @changeScene
+    @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
     @$controls.on 'click.stagehand', 'a.stagehand-toggle', @toggleControls
   init: ->
-    @detectScenes(@$el)
+    @detectScenes()
+    @buildControls()
     @bindEvents()
     $.each @stage_controls, ->
       $(@).find('a').eq(0).trigger('click.stagehand')
