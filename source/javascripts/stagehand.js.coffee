@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.2
+# version 0.2.1
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -24,6 +24,7 @@
 
 Stagehand =
   name: 'stagehand'
+  afterSceneChange: $.noop()
   named_stages: {}
   stages: []
   stage_controls: []
@@ -73,12 +74,15 @@ Stagehand =
   changeScene: (e) ->
     s = @
     $a = $(e.target)
+    $actors_on = $a.data('$actor')
+    $actors_off = $a.data('$stage').not($actors_on)
     $a.closest('ul').find('a').removeClass('stagehand-active')
     $a.addClass('stagehand-active')
-    $a.data('$stage').each ->
+    $actors_off.each ->
       s.toggleActor $(@), false
-    $a.data('$actor').each ->
+    $actors_on.each ->
       s.toggleActor $(@), true
+    @afterSceneChange && @afterSceneChange(@$el, $actors_on, $actors_off)
     false
   toggleActor: ($actor, direction) ->
     klass = $actor.attr('data-scene-class')

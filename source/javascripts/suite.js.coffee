@@ -178,4 +178,21 @@
     fixture.$el.find('.actor_3').shouldBe('.active')
     fixture.$el.find('.actor_4').shouldNotBe('.active')
 
+  module 'Callbacks'
+
+  test 'afterChange callback', ->
+    fixture.use '.shared_scenes'
+    opts = {
+      afterSceneChange: ($ctx, $actors_on, $actors_off) ->
+        $actors_on.addClass('changed')
+        $actors_off.removeClass('changed')
+    }
+    $("#qunit-fixture").find('p').shouldNotBe('.changed')
+    fixture.init(opts)
+    fixture.$el.find('.actor_1, .actor_4').shouldBe('.changed')
+    fixture.$el.find('.actor_2, .actor_3').shouldNotBe('.changed')
+    fixture.select(0, 1)
+    fixture.$el.find('.actor_2, .actor_4').shouldBe('.changed')
+    fixture.$el.find('.actor_1, .actor_3').shouldNotBe('.changed')
+
 )(jQuery)
