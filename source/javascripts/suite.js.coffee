@@ -24,8 +24,6 @@
     @
 
   fixture =
-    fixture: ->
-      $("#qunit-fixture")
     buildElements: ->
       $set = $()
       for el, text in elements
@@ -37,9 +35,9 @@
     generate: (elements) ->
       @$el.append @buildElements(elements)
     get: ->
-      @$el && @$el.data('stagehand')
+      @$ctx && @$ctx.data('stagehand')
     use: (selector) ->
-      @fixture().children().not(selector).remove()
+      $("#qunit-fixture").children().not(selector).remove()
     reset: ->
       @get() && @get().teardown()
     select: (stage, scene) ->
@@ -49,13 +47,16 @@
         @get().$controls.find("[data-stage='#{stage}']").find("li").eq(scene).find("a").click()
     init: (opts, $context) ->
       $context ?= $(document.body)
-      @$el = $context.stagehand(opts)
+      @$ctx = $context.stagehand(opts)
+      @$el = $("#qunit-fixture")
       @
 
   QUnit.testDone -> fixture.reset.apply(fixture)
 
+  module 'Base Functionality'
+
   test 'it chains properly', ->
-    deepEqual fixture.init().$el.hide().show(), $(document.body), '.stagehand() returns proper element'
+    deepEqual fixture.init().$ctx.hide().show(), $(document.body), '.stagehand() returns proper element'
 
   test 'it produces a Stage object', ->
     sc = fixture.init().get()
@@ -87,6 +88,8 @@
     sc.stages[0].eq(0).shouldNotBe(':visible')
     sc.stages[0].eq(1).shouldBe(':visible')
 
+  module 'Named stages and scenes'
+
   test 'support named `data-stage` attributes', ->
     fixture.use '.named_stages'
     sc = fixture.init().get()
@@ -113,7 +116,6 @@
   test 'support multiple named `data-scene` attributes', ->
     fixture.use '.shared_scenes'
     sc = fixture.init().get()
-    $stage = sc.named_stages['foo']
     fixture.$el.find('.actor_1').shouldBe(':visible')
     fixture.$el.find('.actor_2').shouldNotBe(':visible')
     fixture.$el.find('.actor_3').shouldNotBe(':visible')
