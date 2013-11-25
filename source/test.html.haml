@@ -53,3 +53,8 @@
         %p.actor_2(data-stage='foo' data-scene='my other scene' data-scene-class='active') Stage foo my other scene
         %p.actor_3(data-stage='foo' data-scene='my third scene' data-scene-class='active') Stage foo my third scene
         %p.actor_4(data-stage='foo' data-scene='my scene, my other scene' data-scene-class='active') Should be visible in two scenes
+      .keyword_all
+        %p.actor_1(data-stage data-scene='my scene') Stage foo scene my scene
+        %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
+        %p.actor_3(data-stage data-scene='all') Should be visible in all scenes
+        %p.actor_4(data-stage data-scene='my scene, my other scene') Should be visible in two scenes

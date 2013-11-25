@@ -116,7 +116,7 @@
 
   test 'support multiple named `data-scene` attributes', ->
     fixture.use '.shared_scenes'
-    sc = fixture.init().get()
+    fixture.init()
     fixture.$el.find('.actor_1').shouldBe(':visible')
     fixture.$el.find('.actor_2').shouldNotBe(':visible')
     fixture.$el.find('.actor_3').shouldNotBe(':visible')
@@ -136,7 +136,7 @@
 
   test 'toggle classes via `data-scene-class` attribute', ->
     fixture.use '.scene_attributes'
-    sc = fixture.init().get()
+    fixture.init()
     fixture.$el.find('.actor_1').shouldBe('.active')
     fixture.$el.find('.actor_2').shouldNotBe('.active')
     fixture.$el.find('.actor_3').shouldNotBe('.active')
@@ -147,7 +147,7 @@
 
   test 'toggle ids via `data-scene-id` attribute', ->
     fixture.use '.scene_attributes'
-    sc = fixture.init().get()
+    fixture.init()
     fixture.$el.find('.actor_1').shouldBe('#some_id')
     fixture.$el.find('.actor_2').shouldNotBe('#some_id')
     fixture.$el.find('.actor_3').shouldNotBe('#some_id')
@@ -162,7 +162,7 @@
 
   test 'support toggling attributes while using multiple named `data-scene` attributes', ->
     fixture.use '.shared_scene_attributes'
-    sc = fixture.init().get()
+    fixture.init()
     fixture.$el.find('.actor_1').shouldBe('.active')
     fixture.$el.find('.actor_2').shouldNotBe('.active')
     fixture.$el.find('.actor_3').shouldNotBe('.active')
@@ -177,6 +177,19 @@
     fixture.$el.find('.actor_2').shouldNotBe('.active')
     fixture.$el.find('.actor_3').shouldBe('.active')
     fixture.$el.find('.actor_4').shouldNotBe('.active')
+
+  test 'support special `data-scene` attribute of `all`', ->
+    fixture.use '.keyword_all'
+    fixture.init()
+    fixture.$el.find('.actor_1').shouldBe(':visible')
+    fixture.$el.find('.actor_2').shouldNotBe(':visible')
+    fixture.$el.find('.actor_3').shouldBe(':visible')
+    fixture.$el.find('.actor_4').shouldBe(':visible')
+    fixture.select(0, 1)
+    fixture.$el.find('.actor_1').shouldNotBe(':visible')
+    fixture.$el.find('.actor_2').shouldBe(':visible')
+    fixture.$el.find('.actor_3').shouldBe(':visible')
+    fixture.$el.find('.actor_4').shouldBe(':visible')
 
   module 'Callbacks'
 

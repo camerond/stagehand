@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.2.1
+# version 0.2.2
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -74,7 +74,7 @@ Stagehand =
   changeScene: (e) ->
     s = @
     $a = $(e.target)
-    $actors_on = $a.data('$actor')
+    $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"))
     $actors_off = $a.data('$stage').not($actors_on)
     $a.closest('ul').find('a').removeClass('stagehand-active')
     $a.addClass('stagehand-active')
