@@ -36,11 +36,12 @@ section#stagehand-controls
   z-index: 1000001
   +reset
   color: #161718
-  position: absolute
+  position: fixed
   left: -151px
   top: 0
   bottom: 0
   width: 150px
+  padding-top: 40px
   background: #eff0f1
   font-family: "Helvetica Neue", Helvetica, sans-serif
   -webkit-font-smoothing: antialiased
@@ -62,6 +63,11 @@ section#stagehand-controls
       opacity: 1
   h1
     +reset
+    +box-sizing
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
     line-height: 100%
     text-transform: uppercase
     font-size: 12px
@@ -72,7 +78,10 @@ section#stagehand-controls
     +reset
     list-style-type: none
   > ul
+    +box-sizing
     padding: 20px 10px
+    max-height: 100%
+    overflow: auto
     li
       +reset
       h2
