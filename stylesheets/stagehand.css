@@ -74,7 +74,7 @@ section#stagehand-controls {
     height: 40px;
     border-left: 0;
     border-top: 0;
-    background: #e7e8e9 url("/images/stagehand_icon.png") center no-repeat;
+    background: #e7e8e9 url("/stagehand/images/stagehand_icon.png") center no-repeat;
     background-size: 20px 22px;
     opacity: 0.5;
     -moz-transition: opacity 50ms;
