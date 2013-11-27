@@ -31,6 +31,17 @@ body.stagehand-active
     left: 0
     a.stagehand-toggle
       opacity: 1
+  @media screen and (max-width: 480px)
+    padding-left: inherit
+    section#stagehand-controls
+      width: 50%
+      padding-right: 40px
+      background: rgba(255,255,255,.9)
+
+body.stagehand-overlay.stagehand-active
+  padding-left: inherit
+  section#stagehand-controls
+    background: rgba(255,255,255,.9)
 
 section#stagehand-controls
   z-index: 1000001
@@ -45,7 +56,8 @@ section#stagehand-controls
   background: #eff0f1
   font-family: "Helvetica Neue", Helvetica, sans-serif
   -webkit-font-smoothing: antialiased
-  +transition(left 200ms)
+  -webkit-text-size-adjust: none
+  +transition((left 200ms, width 100ms))
   a.stagehand-toggle
     display: block
     position: absolute
@@ -70,8 +82,10 @@ section#stagehand-controls
     width: 100%
     line-height: 100%
     text-transform: uppercase
-    font-size: 12px
-    padding: 16px 10px 12px 10px
+    font-size: 14px
+    line-height: 40px
+    height: 40px
+    padding: 0 10px
     background: mix(#eff0f1, #000, 97%)
     font-weight: bold
   ul

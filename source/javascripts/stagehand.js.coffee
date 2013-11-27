@@ -135,6 +135,7 @@ Stagehand =
     @detectScenes()
     @buildControls()
     @bindEvents()
+    @overlay && $(document.body).toggleClass('stagehand-overlay')
     $.each @stage_controls, ->
       $(@).find('a').eq(0).trigger('click.stagehand')
     @$el
