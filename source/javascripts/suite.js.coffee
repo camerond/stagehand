@@ -198,7 +198,7 @@
   test 'afterChange callback', ->
     fixture.use '.shared_scenes'
     opts = {
-      afterSceneChange: ($ctx, $actors_on, $actors_off) ->
+      afterSceneChange: ($actors_on, $actors_off) ->
         $actors_on.addClass('changed')
         $actors_off.removeClass('changed')
     }

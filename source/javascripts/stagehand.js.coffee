@@ -91,7 +91,7 @@ Stagehand =
       s.toggleActor $(@), false
     $actors_on.each ->
       s.toggleActor $(@), true
-    @afterSceneChange && @afterSceneChange(@$el, $actors_on, $actors_off)
+    @afterSceneChange && @afterSceneChange($actors_on, $actors_off)
     false
   toggleActor: ($actor, direction) ->
     klass = $actor.attr('data-scene-class')
