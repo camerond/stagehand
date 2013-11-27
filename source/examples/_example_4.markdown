@@ -1,15 +1,20 @@
-<div data-stage>
-  I'm only shown when Stage 1, scene '1' is active
+<div data-stage='hammertime, hammerpants' data-scene='all'>
+  I'm visible for all scenes of 'hammertime' and 'hammerpants'.
 </div>
 
-<div data-stage data-scene='all'>
-  I'm visible in all scenes of Stage 1
+<div data-stage='hammertime' data-scene='stop, collaborate, listen'>
+  <span data-stage='hammertime' data-scene='stop' data-scene-class='highlighted'>
+    Stop
+  </span>
+  <span data-stage='hammertime' data-scene='collaborate' data-scene-class='highlighted'>
+    Collaborate
+  </span>
+  and
+  <span data-stage='hammertime' data-scene='listen' data-scene-class='highlighted'>
+    Listen
+  </span>
 </div>
 
-<div data-stage data-scene='stop, hammertime'>
-  I'm in scene 'stop' and scene 'hammertime' of Stage 1
-</div>
-
-<div data-stage='hammer, pants' data-scene='all'>
-  I'm in all scenes of stage 'hammer' and stage 'pants'
+<div data-stage='hammerpants' data-scene='sparkly'>
+  I'm scene 'sparkly' of 'hammerpants'.
 </div>
