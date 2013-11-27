@@ -1,12 +1,13 @@
 set :js_dir, 'javascripts'
 activate :livereload
 activate :syntax
+activate :directory_indexes
 activate :relative_assets
 set :relative_links, true
 set :haml, { ugly: true }
 
 (1..4).to_a.each do |i|
-  proxy "/examples/#{i}", "/examples/index.html", :locals => { :example => i }, ignore: true
+  proxy "examples/#{i}", "examples/index.html", :locals => { :example => i }, ignore: true
 end
 
 activate :deploy do |deploy|
