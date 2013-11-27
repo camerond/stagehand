@@ -23,13 +23,13 @@ Or, a more concrete use case:
 </div>
 ~~~
 
-[view expanded example](/examples/1)
+[view expanded example](http://camerond.github.io/stagehand/examples/1)
 
 So, to reiterate, this isn't a tool for integrating with your actual app's views: it's a tool to help designers quickly and easily slice static representations of interfaces, without the need for Javascript. Designers can quickly debug issues and check for possible layout issues, and developers can use a Stagehand-enhanced page as a comprehensive reference when they're implementing the markup.
 
 ## Usage
 
-Stagehand is dependent upon jQuery, so you'll need that. Then include [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee), [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass), and the [toolbar icon](https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png), and then just toss this in:
+Stagehand is dependent upon jQuery, so you'll need that. Then include [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee), [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass), download and update the stylesheet URL to the [toolbar icon](https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png), and then just toss this in:
 
 ~~~javascript
 $(document.body).stagehand()
@@ -63,7 +63,7 @@ Direct siblings with the same unnamed stage attribute are grouped together into 
 </div>
 ~~~
 
-[view expanded example](/examples/2)
+[view expanded example](http://camerond.github.io/stagehand/examples/2)
 
 ### Scenes
 
@@ -84,7 +84,7 @@ Scene names are entirely optional: if you don't give an actor a `data-scene` att
   I get a class of 'highlighted' when Stage 1, scene 'hammerpants' is active
 </div>
 ~~~
-[view expanded example](/examples/3)
+[view expanded example](http://camerond.github.io/stagehand/examples/3)
 
 ## Complexities
 
@@ -116,7 +116,7 @@ You can also assign multiple stages to an element, though that's a little less l
 </div>
 ~~~
 
-[view expanded example](/examples/4)
+[view expanded example](http://camerond.github.io/stagehand/examples/4)
 
 You can nest stages and scenes to your heart's content, it'll all work just fine.
 

@@ -7,18 +7,19 @@
     %link(href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css')
     %link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css')
     %meta(content='width=device-width, initial-scale=1' name='viewport')
+    %link{ :rel => 'favicon', :src => rel_url('/images/stagehand_icon.png')}
     = yield_content :head
   %body
     %header
-      %h1= link_to 'Stagehand', '/'
+      %h1= rel_link_to 'Stagehand', '/'
       %nav
         %ul
-          %li{ :class => if current_page.path == 'index.html' then 'active' end }= link_to 'Documentation', '/'
+          %li{ :class => if current_page.path == 'index.html' then 'active' end }= rel_link_to 'Documentation', '/'
           %li
             Examples:
             %ul
               - (1..4).to_a.each do |i|
-                %li{ :class => if current_page.path == "examples/#{i}" then 'active' end }= link_to i, "/examples/#{i}"
+                %li{ :class => if current_page.path == "examples/#{i}/index.html" then 'active' end }= rel_link_to i, "/examples/#{i}"
           %li= link_to 'view on Github &rarr;', 'http://github.com/camerond/stagehand', target: '_blank'
     %main= yield
     %footer
