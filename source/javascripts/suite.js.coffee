@@ -13,12 +13,31 @@
     @
 
   $.fn.shouldBe = (attr, msg) ->
-    ok @.is(attr), msg or "#{@selectorText()} should be #{attr}"
-    @
+    state = true
+    @each ->
+      state = $(@).is(attr)
+      ok state, msg or "#{$(@).selectorText()} should be #{attr}"
+      state
+    state
 
   $.fn.shouldNotBe = (attr, msg) ->
-    ok !@.is(attr), msg or "#{@selectorText()} should not be #{attr}"
-    @
+    state = true
+    @each ->
+      state = !$(@).is(attr)
+      ok state, msg or "#{$(@).selectorText()} should not be #{attr}"
+      state
+    state
+
+  $.fn.shouldBeOnly = (attr, msg) ->
+    state = true
+    $set = @
+    $set.each ->
+      state = $(@).is(attr)
+      if state
+        state = !$(@).siblings().not($set).is(attr)
+      ok state, msg or "#{$(@).selectorText()} should be one of the only #{attr} elements"
+      state
+    state
 
   $.fn.shouldSay = (text, msg) ->
     equal @text(), text, msg or "#{text} is displayed within #{@selectorText()}"
@@ -97,10 +116,13 @@
     sc.$controls.find("[data-stage='foo'] h2").shouldSay('foo')
     fixture.select('foo', 1)
     fixture.select('bar', 2)
+    fixture.select('Stage 1', 1)
     sc.stages['foo'].eq(0).shouldNotBe(':visible')
     sc.stages['foo'].eq(1).shouldBe(':visible')
     sc.stages['bar'].eq(1).shouldNotBe(':visible')
     sc.stages['bar'].eq(2).shouldBe(':visible')
+    sc.stages['Stage 1'].eq(0).shouldNotBe(':visible')
+    sc.stages['Stage 1'].eq(1).shouldBe(':visible')
 
   test 'support multiple named `data-stage` attributes', ->
     fixture.use '.shared_stages'
@@ -108,10 +130,7 @@
     equal sc.$controls.find("[data-stage='foo'] li").length, 3, '3 items in foo control'
     equal sc.$controls.find("[data-stage='bar'] li").length, 3, '3 items in bar control'
     equal sc.$controls.find("[data-stage='baz'] li").length, 3, '3 items in baz control'
-    $foo = sc.stages['foo']
-    $bar = sc.stages['bar']
-    $baz = sc.stages['baz']
-    $('.actor_1_1, .actor_2_1, .actor_3_1').shouldBe(':visible')
+    $('.actor_1_1, .actor_2_1, .actor_3_1').shouldBeOnly(':visible')
     fixture.select('foo', 2)
     $('.actor_4').shouldBe(':visible')
     fixture.select('foo', 1)
@@ -122,93 +141,57 @@
   test 'support named `data-scene` attributes', ->
     fixture.use '.named_scenes'
     sc = fixture.init().get()
-    sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('my scene')
-    sc.$controls.find("[data-stage='Stage 1'] a.stagehand-active").shouldSay('1')
+    $('.actor_1_1, .actor_2_1').shouldBeOnly(':visible')
     fixture.select('foo', 1)
     fixture.select('Stage 1', 1)
-    sc.$controls.find("[data-stage='foo'] a.stagehand-active").shouldSay('2')
-    sc.$controls.find("[data-stage='Stage 1'] a.stagehand-active").shouldSay('my other scene')
+    $('.actor_1_2, .actor_2_2').shouldBeOnly(':visible')
 
   test 'support multiple named `data-scene` attributes', ->
     fixture.use '.shared_scenes'
     fixture.init()
-    fixture.$el.find('.actor_1').shouldBe(':visible')
-    fixture.$el.find('.actor_2').shouldNotBe(':visible')
-    fixture.$el.find('.actor_3').shouldNotBe(':visible')
-    fixture.$el.find('.actor_4').shouldBe(':visible')
+    $('.actor_1, .actor_4').shouldBeOnly(':visible')
     fixture.select('foo', 1)
-    fixture.$el.find('.actor_1').shouldNotBe(':visible')
-    fixture.$el.find('.actor_2').shouldBe(':visible')
-    fixture.$el.find('.actor_3').shouldNotBe(':visible')
-    fixture.$el.find('.actor_4').shouldBe(':visible')
+    $('.actor_2, .actor_4').shouldBeOnly(':visible')
     fixture.select('foo', 2)
-    fixture.$el.find('.actor_1').shouldNotBe(':visible')
-    fixture.$el.find('.actor_2').shouldNotBe(':visible')
-    fixture.$el.find('.actor_3').shouldBe(':visible')
-    fixture.$el.find('.actor_4').shouldNotBe(':visible')
+    $('.actor_3').shouldBeOnly(':visible')
 
   module 'Changing attributes'
 
   test 'toggle classes via `data-scene-class` attribute', ->
     fixture.use '.scene_attributes'
     fixture.init()
-    fixture.$el.find('.actor_1').shouldBe('.active')
-    fixture.$el.find('.actor_2').shouldNotBe('.active')
-    fixture.$el.find('.actor_3').shouldNotBe('.active')
+    $('.actor_1').shouldBeOnly('.active')
     fixture.select(0, 1)
-    fixture.$el.find('.actor_1').shouldNotBe('.active')
-    fixture.$el.find('.actor_2').shouldBe('.active')
-    fixture.$el.find('.actor_3').shouldNotBe('.active')
+    $('.actor_2').shouldBeOnly('.active')
 
   test 'toggle ids via `data-scene-id` attribute', ->
     fixture.use '.scene_attributes'
     fixture.init()
-    fixture.$el.find('.actor_1').shouldBe('#some_id')
-    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
-    fixture.$el.find('.actor_3').shouldNotBe('#some_id')
+    $('.actor_1').shouldBeOnly('#some_id')
     fixture.select(0, 1)
-    fixture.$el.find('.actor_1').shouldNotBe('#some_id')
-    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
-    fixture.$el.find('.actor_3').shouldNotBe('#some_id')
+    equal $("#some_id").length, 0, 'correctly does not apply an id to any element in this scene'
     fixture.select(0, 2)
-    fixture.$el.find('.actor_1').shouldNotBe('#some_id')
-    fixture.$el.find('.actor_2').shouldNotBe('#some_id')
-    fixture.$el.find('.actor_3').shouldBe('#some_id')
+    $('.actor_3').shouldBeOnly('#some_id')
 
   test 'support toggling attributes while using multiple named `data-scene` attributes', ->
     fixture.use '.shared_scene_attributes'
     fixture.init()
-    fixture.$el.find('.actor_1').shouldBe('.active')
-    fixture.$el.find('.actor_2').shouldNotBe('.active')
-    fixture.$el.find('.actor_3').shouldNotBe('.active')
-    fixture.$el.find('.actor_4').shouldBe('.active')
+    $('.actor_1, .actor_4').shouldBeOnly('.active')
     fixture.select('foo', 1)
-    fixture.$el.find('.actor_1').shouldNotBe('.active')
-    fixture.$el.find('.actor_2').shouldBe('.active')
-    fixture.$el.find('.actor_3').shouldNotBe('.active')
-    fixture.$el.find('.actor_4').shouldBe('.active')
+    $('.actor_2, .actor_4').shouldBeOnly('.active')
     fixture.select('foo', 2)
-    fixture.$el.find('.actor_1').shouldNotBe('.active')
-    fixture.$el.find('.actor_2').shouldNotBe('.active')
-    fixture.$el.find('.actor_3').shouldBe('.active')
-    fixture.$el.find('.actor_4').shouldNotBe('.active')
+    $('.actor_3').shouldBeOnly('.active')
 
   test 'support special `data-scene` attribute of `all`', ->
     fixture.use '.keyword_all'
     sc = fixture.init().get()
     equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
     sc.$controls.find('li li').first().shouldSay('none')
-    fixture.$el.find("[class^='actor']").shouldNotBe(':visible')
+    $("[class^='actor']").shouldNotBe(':visible')
     fixture.select(0, 1)
-    fixture.$el.find('.actor_1').shouldBe(':visible')
-    fixture.$el.find('.actor_2').shouldNotBe(':visible')
-    fixture.$el.find('.actor_3').shouldBe(':visible')
-    fixture.$el.find('.actor_4').shouldBe(':visible')
+    $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
     fixture.select(0, 2)
-    fixture.$el.find('.actor_1').shouldNotBe(':visible')
-    fixture.$el.find('.actor_2').shouldBe(':visible')
-    fixture.$el.find('.actor_3').shouldBe(':visible')
-    fixture.$el.find('.actor_4').shouldBe(':visible')
+    $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
 
   module 'Callbacks'
 
@@ -221,10 +204,8 @@
     }
     $("#qunit-fixture").find('p').shouldNotBe('.changed')
     fixture.init(opts)
-    fixture.$el.find('.actor_1, .actor_4').shouldBe('.changed')
-    fixture.$el.find('.actor_2, .actor_3').shouldNotBe('.changed')
+    $('.actor_1, .actor_4').shouldBeOnly('.changed')
     fixture.select(0, 1)
-    fixture.$el.find('.actor_2, .actor_4').shouldBe('.changed')
-    fixture.$el.find('.actor_1, .actor_3').shouldNotBe('.changed')
+    $('.actor_2, .actor_4').shouldBeOnly('.changed')
 
 )(jQuery)
