@@ -67,8 +67,10 @@ Direct siblings with the same unnamed stage attribute are grouped together into 
 
 Scenes are various states of stages. When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead.
 
+Scene names are entirely optional: if you don't give an actor a `data-scene` attribute, it'll default to an integer.
+
 ```html
-<div data-stage data-scene>
+<div data-stage>
   I'm only shown when Stage 1, scene '1' is active
 </div>
 
@@ -86,7 +88,7 @@ Scenes are various states of stages. When a scene is active, any actors with tha
 One stage name is a keyword: `all`. Anything with a stage name of `all` is shown in all scenes of its stage, and the Stagehand toolbar then provides an additional scene of `none` for that stage – the `none` scene toggles all actors off, including those with a scene of `all`.
 
 ```html
-<div data-stage data-scene>
+<div data-stage>
   I'm only shown when Stage 1, scene '1' is active
 </div>
 
