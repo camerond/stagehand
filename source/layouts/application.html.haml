@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %title Stagehand
+    = javascript_include_tag 'jquery.min', 'stagehand'
+    = stylesheet_link_tag 'application', 'stagehand', 'syntax'
+    %link(href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css')
+    %link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css')
+    %meta(content='width=device-width, initial-scale=1' name='viewport')
+    = yield_content :head
+  %body
+    %header
+      %h1= link_to 'Stagehand', '/'
+      %nav
+        %ul
+          %li{ :class => if current_page.path == 'index.html' then 'active' end }= link_to 'Documentation', '/'
+          %li
+            Examples:
+            %ul
+              - (1..4).to_a.each do |i|
+                %li{ :class => if current_page.path == "examples/#{i}" then 'active' end }= link_to i, "/examples/#{i}"
+          %li= link_to 'view on Github &rarr;', 'http://github.com/camerond/stagehand', target: '_blank'
+    %main= yield
+    %footer
+      %p
+        code and design &copy 2013 by
+        = link_to "Cameron Daigle", "http://camerondaigle.com"

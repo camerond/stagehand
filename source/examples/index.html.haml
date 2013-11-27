@@ -1,0 +1,28 @@
+---
+layout: application
+---
+
+- content_for :head do
+  = javascript_include_tag 'examples'
+
+%h2
+  Example #{example}:
+  - case example
+    - when 1
+      Using Stagehand to display various states of a search form
+    - when 2
+      Siblings automatically join a stage together
+    - when 3
+      Naming scenes and toggling classes instead of visibility
+    - when 4
+      Sharing scenes, sharing stages, the 'all' keyword
+
+%h3 Example output
+
+- @code = partial "/examples/example_#{example}"
+
+.example_output= @code
+
+%h3 Source code
+
+- code('html') do @code.force_encoding(Encoding::UTF_8) end

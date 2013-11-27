@@ -29,7 +29,7 @@ So, to reiterate, this isn't a tool for integrating with your actual app's views
 
 ## Usage
 
-Stagehand is dependent upon jQuery, so you'll need that. Then include [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee), [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass), and the [toolbar icon](https://github.com/camerond/stagehand/blob/master/source/images/stagehand-icon.png), and then just toss this in:
+Stagehand is dependent upon jQuery, so you'll need that. Then include [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee), [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass), and the [toolbar icon](https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png), and then just toss this in:
 
 ~~~javascript
 $(document.body).stagehand()

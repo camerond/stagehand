@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %title Stagehand Test Suite
+    %script(type="text/javascript" src="/javascripts/jquery.min.js")
+    %script(type="text/javascript" src="/lib/qunit.js")
+    %script(type="text/javascript" src="/javascripts/stagehand.js")
+    %script(type="text/javascript" src="/javascripts/suite.js")
+    %link(rel="stylesheet" href="/lib/qunit.css" type="text/css")
+  %body
+    %h1#qunit-header
+    %h2#qunit-banner
+    %h2#qunit-userAgent
+    %ol#qunit-tests
+    #qunit-fixture
+      = yield

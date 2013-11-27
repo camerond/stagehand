@@ -1,61 +1,50 @@
-!!!
-%html
-  %head
-    %title Stagehand Test Suite
-    %script(type="text/javascript" src="/javascripts/jquery.min.js")
-    %script(type="text/javascript" src="/lib/qunit.js")
-    %script(type="text/javascript" src="/javascripts/stagehand.js")
-    %script(type="text/javascript" src="/javascripts/suite.js")
-    %link(rel="stylesheet" href="/lib/qunit.css" type="text/css")
-  %body
-    %h1#qunit-header
-    %h2#qunit-banner
-    %h2#qunit-userAgent
-    %ol#qunit-tests
-    #qunit-fixture
-      .direct_siblings
-        %p Not an actor
-        %p(data-stage) Stage 1 scene 1
-        %p(data-stage) Stage 1 scene 2
-        %p Not an actor
-        %p(data-stage) Stage 2 scene 1
-      .named_stages
-        %p(data-stage='foo') Stage foo scene 1
-        %p(data-stage='bar') Stage bar scene 1
-        %p(data-stage='foo') Stage foo scene 2
-        %p(data-stage='bar') Stage bar scene 2
-        %p(data-stage) Stage 1 scene 1
-        %p(data-stage) Stage 1 scene 2
-        %p(data-stage='bar') Stage bar scene 3
-      .shared_stages
-        %p.actor_1_1(data-stage='foo') foo 1
-        %p.actor_1_2(data-stage='foo') foo 2
-        %p.actor_2_1(data-stage='bar') bar 1
-        %p.actor_2_2(data-stage='bar') bar 2
-        %p.actor_3_1(data-stage='baz') baz 1
-        %p.actor_4(data-stage='foo, baz') foo 3, baz 2
-        %p.actor_5(data-stage='bar, baz') bar 3, baz 3
-      .named_scenes
-        %p.actor_1_1(data-stage='foo' data-scene='my scene') Stage foo scene my scene
-        %p.actor_1_2(data-stage='foo') Stage foo scene 2
-        %p.actor_2_1(data-stage) Stage 1 scene 1
-        %p.actor_2_2(data-stage data-scene='my other scene') Stage 1 scene my other scene
-      .shared_scenes
-        %p.actor_1(data-stage='foo' data-scene='my scene') Stage foo scene my scene
-        %p.actor_2(data-stage='foo' data-scene='my other scene') Stage foo my other scene
-        %p.actor_3(data-stage='foo' data-scene='my third scene') Stage foo my third scene
-        %p.actor_4(data-stage='foo' data-scene='my scene, my other scene') Should be visible in two scenes
-      .scene_attributes
-        %p.actor_1(data-stage data-scene-class='active' data-scene-id='some_id')
-        %p.actor_2(data-stage data-scene-class='active')
-        %p.actor_3(data-stage data-scene-id='some_id')
-      .shared_scene_attributes
-        %p.actor_1(data-stage='foo' data-scene='my scene' data-scene-class='active') Stage foo scene my scene
-        %p.actor_2(data-stage='foo' data-scene='my other scene' data-scene-class='active') Stage foo my other scene
-        %p.actor_3(data-stage='foo' data-scene='my third scene' data-scene-class='active') Stage foo my third scene
-        %p.actor_4(data-stage='foo' data-scene='my scene, my other scene' data-scene-class='active') Should be visible in two scenes
-      .keyword_all
-        %p.actor_1(data-stage data-scene='my scene') Stage foo scene my scene
-        %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
-        %p.actor_3(data-stage data-scene='all') Should be visible in all scenes
-        %p.actor_4(data-stage data-scene='my scene, my other scene') Should be visible in two scenes
+---
+layout: test
+---
+
+.direct_siblings
+  %p Not an actor
+  %p(data-stage) Stage 1 scene 1
+  %p(data-stage) Stage 1 scene 2
+  %p Not an actor
+  %p(data-stage) Stage 2 scene 1
+.named_stages
+  %p(data-stage='foo') Stage foo scene 1
+  %p(data-stage='bar') Stage bar scene 1
+  %p(data-stage='foo') Stage foo scene 2
+  %p(data-stage='bar') Stage bar scene 2
+  %p(data-stage) Stage 1 scene 1
+  %p(data-stage) Stage 1 scene 2
+  %p(data-stage='bar') Stage bar scene 3
+.shared_stages
+  %p.actor_1_1(data-stage='foo') foo 1
+  %p.actor_1_2(data-stage='foo') foo 2
+  %p.actor_2_1(data-stage='bar') bar 1
+  %p.actor_2_2(data-stage='bar') bar 2
+  %p.actor_3_1(data-stage='baz') baz 1
+  %p.actor_4(data-stage='foo, baz') foo 3, baz 2
+  %p.actor_5(data-stage='bar, baz') bar 3, baz 3
+.named_scenes
+  %p.actor_1_1(data-stage='foo' data-scene='my scene') Stage foo scene my scene
+  %p.actor_1_2(data-stage='foo') Stage foo scene 2
+  %p.actor_2_1(data-stage) Stage 1 scene 1
+  %p.actor_2_2(data-stage data-scene='my other scene') Stage 1 scene my other scene
+.shared_scenes
+  %p.actor_1(data-stage='foo' data-scene='my scene') Stage foo scene my scene
+  %p.actor_2(data-stage='foo' data-scene='my other scene') Stage foo my other scene
+  %p.actor_3(data-stage='foo' data-scene='my third scene') Stage foo my third scene
+  %p.actor_4(data-stage='foo' data-scene='my scene, my other scene') Should be visible in two scenes
+.scene_attributes
+  %p.actor_1(data-stage data-scene-class='active' data-scene-id='some_id')
+  %p.actor_2(data-stage data-scene-class='active')
+  %p.actor_3(data-stage data-scene-id='some_id')
+.shared_scene_attributes
+  %p.actor_1(data-stage='foo' data-scene='my scene' data-scene-class='active') Stage foo scene my scene
+  %p.actor_2(data-stage='foo' data-scene='my other scene' data-scene-class='active') Stage foo my other scene
+  %p.actor_3(data-stage='foo' data-scene='my third scene' data-scene-class='active') Stage foo my third scene
+  %p.actor_4(data-stage='foo' data-scene='my scene, my other scene' data-scene-class='active') Should be visible in two scenes
+.keyword_all
+  %p.actor_1(data-stage data-scene='my scene') Stage foo scene my scene
+  %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
+  %p.actor_3(data-stage data-scene='all') Should be visible in all scenes
+  %p.actor_4(data-stage data-scene='my scene, my other scene') Should be visible in two scenes

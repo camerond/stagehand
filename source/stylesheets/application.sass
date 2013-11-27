@@ -1,8 +1,200 @@
+$prefixes: moz, webkit, o
+
+= transition($trans)
+  @each $prefix in $prefixes
+    -#{$prefix}-transition: $trans
+
+= narrow
+  @media screen and (max-width: 600px)
+    @content
+
+// Tantek Celik's Whitespace Reset
+//      Author:   Tantek Celik, Shane Riley
+//     Version:   (CC) 2010 Some Rights Reserved - http://creativecommons.org/licenses/by/2.0
+// Description: Resets default styling of common browsers to a common base
+
+ul,ol
+  list-style: none
+h1,h2,h3,h4,h5,h6,pre,code
+  font-size: 1em
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input,dl,dt,dd, figure, figcaption
+  margin: 0
+  padding: 0
+a img,:link img,:visited img, fieldset
+  border: none
+address
+  font-style: normal
+header, section, article, nav, footer, hgroup, details, summary, figure, main
+  display: block
+mark
+  color: inherit
+  background: transparent
+abbr
+  border: none
+summary::-webkit-details-marker
+  display: none
+
 body
-  background: #fff
-  main
-    padding: 50px
-    div
-      padding: 20px
-      background: #ddd
-      margin: 20px 0
+  background: #222
+  color: #fff
+  font-family: 'Source Sans Pro', sans-serif
+  -webkit-font-smoothing: antialiased
+  font-size: 16px
+  +narrow
+    font-size: 14px
+
+a
+  text-decoration: none
+  color: #fff
+
+body > header
+  text-align: center
+  padding: 40px
+  +narrow
+    padding: 20px
+  h1
+    &:before
+      display: block
+      width: 160px
+      height: 160px
+      border-radius: 80px
+      background: #fff url("/images/stagehand_icon_lg.png") 50% 49% no-repeat
+      background-size: 40px 44px
+      margin: 0 auto 20px auto
+      content: ""
+    font-size: 30px
+    text-transform: uppercase
+    padding-top: 40px
+    font-family: 'Oswald', sans-serif
+    font-weight: 300
+    letter-spacing: 5px
+    margin: 0 0 40px 0
+  nav
+    ul
+      display: inline-block
+      li
+        display: inline-block
+        padding: 0 10px
+        color: #666
+        ul
+          margin-left: 10px
+          li
+            padding: 0 5px
+        a
+          color: #fff
+          display: inline-block
+          padding: 5px 15px
+          border-bottom: 2px solid #444
+          +transition(border-color 100ms)
+        &.active a,
+        a:hover
+          border-bottom-color: #fff
+    +narrow
+      > ul
+        > li
+          display: block
+          padding: 0
+          + li
+            padding-top: 20px
+
+main
+  max-width: 900px
+  padding: 40px
+  margin: 0 auto
+  +narrow
+    padding: 20px
+  h2, h3, h4
+    font-family: 'Oswald', sans-serif
+    font-weight: 300
+    margin: 0 0 40px 0
+    line-height: 120%
+    +narrow
+      margin: 0 0 20px 0
+  h2
+    font-size: 30px
+    border-bottom: 2px solid #444
+    padding: 20px 10px
+    margin: 0 -10px 40px -10px
+    +narrow
+      font-size: 24px
+      padding-top: 10px
+      margin-bottom: 20px
+  h3
+    font-size: 24px
+    +narrow
+      font-size: 20px
+  p
+    margin: 0 0 40px 0
+    line-height: 140%
+    color: #aaa
+    +narrow
+      margin: 0 0 20px 0
+    a
+      +transition(color 100ms)
+      &:hover
+        color: #63fffd
+  pre
+    margin: 0 20px 40px 20px
+    background: #fff
+    overflow: auto
+    max-width: 100%
+    padding: 30px
+    color: #333
+    line-height: 140%
+    font-size: 14px
+    +narrow
+      margin-left: 0
+      margin-right: 0
+      padding: 10px
+      font-size: 13px
+    + p
+      a
+        margin-right: 20px
+        +narrow
+          margin-right: 0
+        display: block
+        float: right
+        margin-top: -40px
+        text-align: right
+        padding: 5px 0 0 0
+        font-size: 12px
+        line-height: 12px
+        &:after
+          content: "→"
+          margin: 0 0 0 5px
+          color: #666
+          +transition(color 100ms)
+          font-size: 16px
+        &:hover
+          color: #fff
+          &:after
+            color: #fff
+
+.example_output
+  padding: 40px
+  background: transparentize(#fff, .95)
+  margin: 0 0 40px 0
+  line-height: 140%
+  +narrow
+    padding: 20px
+    margin: 0 0 20px 0
+  div
+    margin: 0 0 20px 0
+    &.highlighted
+      color: #63fffd
+
+.example_code
+  pre
+    margin: 0 0 40px 0
+  +narrow
+    padding: 0 0 20px 0
+
+footer
+  text-align: center
+  padding: 40px 0
+  font-size: 12px
+  background: url("http://camerondaigle.com/images/logo_footer.png") top center no-repeat
+  background-size: 30px auto
+  color: #999
+  a
+    color: #fff
