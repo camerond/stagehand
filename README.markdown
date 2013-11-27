@@ -1,4 +1,4 @@
-# Stagehand
+<h1><img src="https://raw.github.com/camerond/stagehand/master/source/images/stagehand_icon.png"> Stagehand</img></h1>
 
 ### Preview various interface states without writing a single line of Javascript.
 
