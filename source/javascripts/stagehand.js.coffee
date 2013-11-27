@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.2.3
+# version 0.3
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #

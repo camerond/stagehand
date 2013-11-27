@@ -1,0 +1,28 @@
+# 0.3
+
+- add readme, changelog
+- remove context element from afterSceneChange callback arguments
+- add mobile styles to sidebar
+- add overlay toggle option for sidebar
+
+# 0.2.3
+
+- remove `stages` array from Stagehand object; all unnamed stages are now auto-named
+- allow multiple stages on one element
+
+# 0.2.2
+
+- support `all` scene keyword
+
+# 0.2.1
+
+- add afterSceneChange callback
+
+# 0.2
+
+- add class and id toggling
+- add toolbar styles
+
+# pre-0.2
+
+- these were dark times
