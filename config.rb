@@ -1,6 +1,7 @@
 set :js_dir, 'javascripts'
 activate :livereload
 activate :syntax
+set :relative_links, true
 set :haml, { ugly: true }
 
 (1..4).to_a.each do |i|
