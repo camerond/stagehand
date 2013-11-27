@@ -1,0 +1,268 @@
+/* line 1, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.hll {
+  background-color: #ffffcc; }
+
+/* line 3, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.c {
+  color: #999988;
+  font-style: italic; }
+
+/* line 6, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.err {
+  color: #a61717;
+  background-color: #e3d2d2; }
+
+/* line 9, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.k {
+  color: black;
+  font-weight: bold; }
+
+/* line 12, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.o {
+  color: black;
+  font-weight: bold; }
+
+/* line 15, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.cm {
+  color: #999988;
+  font-style: italic; }
+
+/* line 18, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.cp {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic; }
+
+/* line 22, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.c1 {
+  color: #999988;
+  font-style: italic; }
+
+/* line 25, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic; }
+
+/* line 29, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gd {
+  color: black;
+  background-color: #ffdddd; }
+
+/* line 32, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.ge {
+  color: black;
+  font-style: italic; }
+
+/* line 35, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gr {
+  color: #aa0000; }
+
+/* line 37, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gh {
+  color: #999999; }
+
+/* line 39, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gi {
+  color: black;
+  background-color: #ddffdd; }
+
+/* line 42, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.go {
+  color: #888888; }
+
+/* line 44, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gp {
+  color: #555555; }
+
+/* line 46, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gs {
+  font-weight: bold; }
+
+/* line 48, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gu {
+  color: #aaaaaa; }
+
+/* line 50, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.gt {
+  color: #aa0000; }
+
+/* line 52, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kc {
+  color: black;
+  font-weight: bold; }
+
+/* line 55, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kd {
+  color: black;
+  font-weight: bold; }
+
+/* line 58, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kn {
+  color: black;
+  font-weight: bold; }
+
+/* line 61, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kp {
+  color: black;
+  font-weight: bold; }
+
+/* line 64, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kr {
+  color: black;
+  font-weight: bold; }
+
+/* line 67, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.kt {
+  color: #445588;
+  font-weight: bold; }
+
+/* line 70, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.m {
+  color: #009999; }
+
+/* line 72, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.s {
+  color: #d01040; }
+
+/* line 74, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.na {
+  color: teal; }
+
+/* line 76, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nb {
+  color: #0086b3; }
+
+/* line 78, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nc {
+  color: #445588;
+  font-weight: bold; }
+
+/* line 81, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.no {
+  color: teal; }
+
+/* line 83, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nd {
+  color: #3c5d5d;
+  font-weight: bold; }
+
+/* line 86, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.ni {
+  color: purple; }
+
+/* line 88, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.ne {
+  color: #990000;
+  font-weight: bold; }
+
+/* line 91, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nf {
+  color: #990000;
+  font-weight: bold; }
+
+/* line 94, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nl {
+  color: #990000;
+  font-weight: bold; }
+
+/* line 97, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nn {
+  color: #555555; }
+
+/* line 99, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nt {
+  color: navy; }
+
+/* line 101, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.nv {
+  color: teal; }
+
+/* line 103, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.ow {
+  color: black;
+  font-weight: bold; }
+
+/* line 106, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.w {
+  color: #bbbbbb; }
+
+/* line 108, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.mf {
+  color: #009999; }
+
+/* line 110, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.mh {
+  color: #009999; }
+
+/* line 112, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.mi {
+  color: #009999; }
+
+/* line 114, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.mo {
+  color: #009999; }
+
+/* line 116, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sb {
+  color: #d01040; }
+
+/* line 118, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sc {
+  color: #d01040; }
+
+/* line 120, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sd {
+  color: #d01040; }
+
+/* line 122, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.s2 {
+  color: #d01040; }
+
+/* line 124, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.se {
+  color: #d01040; }
+
+/* line 126, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sh {
+  color: #d01040; }
+
+/* line 128, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.si {
+  color: #d01040; }
+
+/* line 130, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sx {
+  color: #d01040; }
+
+/* line 132, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.sr {
+  color: #009926; }
+
+/* line 134, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.s1 {
+  color: #d01040; }
+
+/* line 136, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.ss {
+  color: #990073; }
+
+/* line 138, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.bp {
+  color: #999999; }
+
+/* line 140, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.vc {
+  color: teal; }
+
+/* line 142, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.vg {
+  color: teal; }
+
+/* line 144, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.vi {
+  color: teal; }
+
+/* line 146, /Users/camerondaigle/Projects/stagehand/source/stylesheets/syntax.sass */
+.il {
+  color: #009999; }
