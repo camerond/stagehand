@@ -195,7 +195,7 @@
 
   module 'Callbacks'
 
-  test 'afterChange callback', ->
+  test 'afterSceneChange callback', ->
     fixture.use '.shared_scenes'
     opts = {
       afterSceneChange: ($actors_on, $actors_off) ->

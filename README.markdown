@@ -115,11 +115,11 @@ You can nest stages and scenes to your heart's content, it'll all work just fine
 
 ## Callbacks
 
-In case you need some supporting Javascript to fire, there's an afterChange callback that provides you with a few useful parameters:
+In case you need some supporting Javascript to fire, there's an afterSceneChange callback that provides you with a few useful parameters:
 
 ```javascript
 $(document.body).stagehand({
-  afterChange: function($actors_on, $actors_off) {
+  afterSceneChange: function($actors_on, $actors_off) {
     // $actors_on is the set of actors that just got toggled on by this scene change
     // $actors_off is the set of actors that just got toggled off by this scene change
   }
