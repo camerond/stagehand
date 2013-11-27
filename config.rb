@@ -1,6 +1,7 @@
 set :js_dir, 'javascripts'
 activate :livereload
 activate :syntax
+activate :relative_assets
 set :relative_links, true
 set :haml, { ugly: true }
 
