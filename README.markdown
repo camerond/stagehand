@@ -1,6 +1,6 @@
 # Stagehand
 
-## Preview various interface states without writing a single line of Javascript.
+### Preview various interface states without writing a single line of Javascript.
 
 Stagehand parses your HTML looking for specific data attributes. It's best used for slicing interfaces into static pages before they're actually implemented into an application. The goal here is for designers familiar with HTML/CSS to not have to rely on Javascript (or tons of additional pages) to represent all of the various states of an interface.
 
@@ -12,11 +12,17 @@ Stagehand parses your HTML looking for specific data attributes. It's best used 
 Or, a practical example:
 
 ```html
-<div data-stage='Search Results' data-scene='initial state'>Search for some stuff!</div>
+<div data-stage='Search Results' data-scene='initial state'>
+  Search for some stuff!
+</div>
+
 <div data-stage='Search Results' data-scene='results'>
   <!-- your sweet search result markup here -->
 </div>
-<div data-stage='Search Results' data-scene='no results'>Sorry, no results, man</div>
+
+<div data-stage='Search Results' data-scene='no results'>
+  Sorry, no results, man
+</div>
 ```
 
 So, to reiterate, this isn't a tool for integrating with your actual app's views: it's a tool to help designers quickly and easily slice static representations of interfaces, without the need for Javascript. Designers can quickly debug issues and check for possible layout issues, and developers can use a Stagehand-enhanced page as a comprehensive reference when they're implementing the markup.
@@ -40,10 +46,21 @@ Stages are groups of elements (or, for the sake of thematic consistency, "actors
 Direct siblings with the same unnamed stage attribute are grouped together into a single stage.
 
 ```html
-<div data-stage>I'm part of Stage 1</div>
-<div data-stage>I'm part of Stage 1</div>
-<div data-stage='hammerpants'>I'm part of stage 'hammerpants'</div>
-<div data-stage>I'm part of Stage 2</div>
+<div data-stage>
+  I'm part of Stage 1
+</div>
+
+<div data-stage>
+  I'm part of Stage 1
+</div>
+
+<div data-stage='hammerpants'>
+  I'm part of stage 'hammerpants'
+</div>
+
+<div data-stage>
+  I'm part of Stage 2
+</div>
 ```
 
 ### Scenes
@@ -51,8 +68,14 @@ Direct siblings with the same unnamed stage attribute are grouped together into 
 Scenes are various states of stages. When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead.
 
 ```html
-<div data-stage data-scene>I'm only shown when Stage 1, scene '1' is active</div>
-<div data-stage data-scene='hammerpants'>I'm only shown when Stage 1, scene 'hammerpants' is active</div>
+<div data-stage data-scene>
+  I'm only shown when Stage 1, scene '1' is active
+</div>
+
+<div data-stage data-scene='hammerpants'>
+  I'm only shown when Stage 1, scene 'hammerpants' is active
+</div>
+
 <div data-stage data-scene='hammerpants' data-scene-class='fancy'>
   I get a class of 'fancy' when Stage 1, scene 'hammerpants' is active
 </div>
@@ -63,8 +86,13 @@ Scenes are various states of stages. When a scene is active, any actors with tha
 One stage name is a keyword: `all`. Anything with a stage name of `all` is shown in all scenes of its stage, and the Stagehand toolbar then provides an additional scene of `none` for that stage – the `none` scene toggles all actors off, including those with a scene of `all`.
 
 ```html
-<div data-stage data-scene>I'm only shown when Stage 1, scene '1' is active</div>
-<div data-stage data-scene='all'>I'm visible in all scenes of Stage 1</a>
+<div data-stage data-scene>
+  I'm only shown when Stage 1, scene '1' is active
+</div>
+
+<div data-stage data-scene='all'>
+  I'm visible in all scenes of Stage 1
+</div>
 ```
 
 You can assign multiple stages and scenes to an element, separated by commas:
@@ -93,7 +121,7 @@ In case you need some supporting Javascript to fire, there's an afterChange call
 $(document.body).stagehand({
   afterChange: function($actors_on, $actors_off) {
     // $actors_on is the set of actors that just got toggled on by this scene change
-    // $actors_off is the set of actors that just got toggled on by this scene change
+    // $actors_off is the set of actors that just got toggled off by this scene change
   }
 });
 ```
@@ -102,9 +130,11 @@ $(document.body).stagehand({
 
 If you'd prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set `overlay` to true:
 
+```javascript
 $(document.body).stagehand({
   overlay: true
 });
+```
 
 ## Issues / Contributing
 
