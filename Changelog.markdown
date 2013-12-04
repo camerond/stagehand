@@ -1,3 +1,7 @@
+# 0.4
+
+- add sessionStorage for panel & active stage state
+
 # 0.3
 
 - add readme, changelog

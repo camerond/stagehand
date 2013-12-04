@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.3
+# version 0.4
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -32,15 +32,32 @@ Stagehand =
     control: "<li><h2></h2><ul></ul></li>"
     control_button: "<li><a href='#'></a></li>"
     toggle: "<a href='#' class='stagehand-toggle'></a>"
+  saveState: ->
+    scenes = {}
+    for $control in @stage_controls
+      $active = $control.find('.stagehand-active')
+      if $active.length
+        scenes[$control.attr('data-stage')] = $active.attr('data-scene-control')
+    sessionStorage.setItem("stagehand-scenes", JSON.stringify(scenes))
+    sessionStorage.setItem("stagehand-toggle", $("body").is(".stagehand-active"))
+  loadState: ->
+    @toggleControls(sessionStorage.getItem('stagehand-toggle') == 'true')
+    for stage, scene of JSON.parse(sessionStorage.getItem("stagehand-scenes"))
+      @$controls.find("[data-stage='#{stage}'] [data-scene-control='#{scene}']").trigger('click.stagehand')
+    @$controls.find("[data-stage]").each ->
+      if !$(@).find('.stagehand-active').length
+        $(@).find('a').eq(0).trigger('click.stagehand')
   teardown: ->
     @$controls.remove()
     @$el.removeData(@name)
+    sessionStorage.setItem("stagehand-scenes", false)
+    sessionStorage.setItem("stagehand-toggle", false)
   buildControls: ->
     if @$controls
       @$controls.empty()
     else
       @$controls = $(@templates.controls).append($(@templates.toggle))
-      $(document.body).append(@$controls).addClass('.stagehand-enabled')
+      $(document.body).append(@$controls)
     for k, v of @stages
       @buildStageControl(k, v)
   buildStageControl: (name, $stage) ->
@@ -92,6 +109,7 @@ Stagehand =
     $actors_on.each ->
       s.toggleActor $(@), true
     @afterSceneChange && @afterSceneChange($actors_on, $actors_off)
+    @saveState()
     false
   toggleActor: ($actor, direction) ->
     klass = $actor.attr('data-scene-class')
@@ -125,19 +143,19 @@ Stagehand =
     @$actor_elements = @$el.find('[data-stage]')
     @detectNamedStages()
     @detectAnonymousStages()
-  toggleControls: ->
-    $(document.body).toggleClass('stagehand-active')
+  toggleControls: (dir) ->
+    $(document.body).toggleClass('stagehand-active', dir)
+    @saveState()
     false
   bindEvents: ->
     @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
-    @$controls.on 'click.stagehand', 'a.stagehand-toggle', @toggleControls
+    @$controls.on 'click.stagehand', 'a.stagehand-toggle', $.proxy(@toggleControls, @)
   init: ->
     @detectScenes()
     @buildControls()
     @bindEvents()
     @overlay && $(document.body).toggleClass('stagehand-overlay')
-    $.each @stage_controls, ->
-      $(@).find('a').eq(0).trigger('click.stagehand')
+    @loadState()
     @$el
 
 $.fn[Stagehand.name] = (opts) ->
