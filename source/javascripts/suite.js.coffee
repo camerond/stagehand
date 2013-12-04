@@ -188,6 +188,7 @@
     equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
     sc.$controls.find('li li').first().shouldSay('none')
     $("[class^='actor']").shouldNotBe(':visible')
+    debugger
     fixture.select(0, 1)
     $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
     fixture.select(0, 2)
