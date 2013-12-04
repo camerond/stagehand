@@ -12,9 +12,41 @@
       control_button: "<li><a href='#'></a></li>",
       toggle: "<a href='#' class='stagehand-toggle'></a>"
     },
+    saveState: function() {
+      var $active, $control, scenes, _i, _len, _ref;
+
+      scenes = {};
+      _ref = this.stage_controls;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        $control = _ref[_i];
+        $active = $control.find('.stagehand-active');
+        if ($active.length) {
+          scenes[$control.attr('data-stage')] = $active.attr('data-scene-control');
+        }
+      }
+      sessionStorage.setItem("stagehand-scenes", JSON.stringify(scenes));
+      return sessionStorage.setItem("stagehand-toggle", $("body").is(".stagehand-active"));
+    },
+    loadState: function() {
+      var scene, stage, _ref;
+
+      this.toggleControls(sessionStorage.getItem('stagehand-toggle') === 'true');
+      _ref = JSON.parse(sessionStorage.getItem("stagehand-scenes"));
+      for (stage in _ref) {
+        scene = _ref[stage];
+        this.$controls.find("[data-stage='" + stage + "'] [data-scene-control='" + scene + "']").trigger('click.stagehand');
+      }
+      return this.$controls.find("[data-stage]").each(function() {
+        if (!$(this).find('.stagehand-active').length) {
+          return $(this).find('a').eq(0).trigger('click.stagehand');
+        }
+      });
+    },
     teardown: function() {
       this.$controls.remove();
-      return this.$el.removeData(this.name);
+      this.$el.removeData(this.name);
+      sessionStorage.setItem("stagehand-scenes", false);
+      return sessionStorage.setItem("stagehand-toggle", false);
     },
     buildControls: function() {
       var k, v, _ref, _results;
@@ -23,7 +55,7 @@
         this.$controls.empty();
       } else {
         this.$controls = $(this.templates.controls).append($(this.templates.toggle));
-        $(document.body).append(this.$controls).addClass('.stagehand-enabled');
+        $(document.body).append(this.$controls);
       }
       _ref = this.stages;
       _results = [];
@@ -96,6 +128,7 @@
         return s.toggleActor($(this), true);
       });
       this.afterSceneChange && this.afterSceneChange($actors_on, $actors_off);
+      this.saveState();
       return false;
     },
     toggleActor: function($actor, direction) {
@@ -156,22 +189,21 @@
       this.detectNamedStages();
       return this.detectAnonymousStages();
     },
-    toggleControls: function() {
-      $(document.body).toggleClass('stagehand-active');
+    toggleControls: function(dir) {
+      $(document.body).toggleClass('stagehand-active', dir);
+      this.saveState();
       return false;
     },
     bindEvents: function() {
       this.$controls.on('click.stagehand', 'ul a', $.proxy(this.changeScene, this));
-      return this.$controls.on('click.stagehand', 'a.stagehand-toggle', this.toggleControls);
+      return this.$controls.on('click.stagehand', 'a.stagehand-toggle', $.proxy(this.toggleControls, this));
     },
     init: function() {
       this.detectScenes();
       this.buildControls();
       this.bindEvents();
       this.overlay && $(document.body).toggleClass('stagehand-overlay');
-      $.each(this.stage_controls, function() {
-        return $(this).find('a').eq(0).trigger('click.stagehand');
-      });
+      this.loadState();
       return this.$el;
     }
   };

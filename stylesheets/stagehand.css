@@ -1,33 +1,30 @@
 /* line 30, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
 body.stagehand-active {
-  padding-left: 150px;
-  -moz-transition: padding-left 200ms;
-  -webkit-transition: padding-left 200ms;
-  -o-transition: padding-left 200ms; }
-  /* line 33, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  padding-left: 150px; }
+  /* line 32, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   body.stagehand-active section#stagehand-controls {
     left: 0; }
-    /* line 35, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+    /* line 34, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
     body.stagehand-active section#stagehand-controls a.stagehand-toggle {
       opacity: 1; }
   @media screen and (max-width: 480px) {
     /* line 30, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
     body.stagehand-active {
       padding-left: inherit; }
-      /* line 39, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+      /* line 38, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
       body.stagehand-active section#stagehand-controls {
         width: 50%;
         padding-right: 40px;
         background: rgba(255, 255, 255, 0.9); } }
 
-/* line 44, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+/* line 43, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
 body.stagehand-overlay.stagehand-active {
   padding-left: inherit; }
-  /* line 46, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  /* line 45, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   body.stagehand-overlay.stagehand-active section#stagehand-controls {
     background: rgba(255, 255, 255, 0.9); }
 
-/* line 49, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+/* line 48, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
 section#stagehand-controls {
   z-index: 1000001;
   margin: 0;
@@ -63,7 +60,7 @@ section#stagehand-controls {
   -moz-transition: left 200ms, width 100ms;
   -webkit-transition: left 200ms, width 100ms;
   -o-transition: left 200ms, width 100ms; }
-  /* line 64, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  /* line 63, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   section#stagehand-controls a.stagehand-toggle {
     display: block;
     position: absolute;
@@ -80,10 +77,10 @@ section#stagehand-controls {
     -moz-transition: opacity 50ms;
     -webkit-transition: opacity 50ms;
     -o-transition: opacity 50ms; }
-    /* line 78, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+    /* line 77, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
     section#stagehand-controls a.stagehand-toggle:hover {
       opacity: 1; }
-  /* line 80, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  /* line 79, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   section#stagehand-controls h1 {
     margin: 0;
     padding: 0;
@@ -120,7 +117,7 @@ section#stagehand-controls {
     padding: 0 10px;
     background: #e7e8e9;
     font-weight: bold; }
-  /* line 95, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  /* line 94, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   section#stagehand-controls ul {
     margin: 0;
     padding: 0;
@@ -142,7 +139,7 @@ section#stagehand-controls {
     o-transition: none;
     o-transform: none;
     list-style-type: none; }
-  /* line 98, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+  /* line 97, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
   section#stagehand-controls > ul {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -151,7 +148,7 @@ section#stagehand-controls {
     padding: 20px 10px;
     max-height: 100%;
     overflow: auto; }
-    /* line 103, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+    /* line 102, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
     section#stagehand-controls > ul li {
       margin: 0;
       padding: 0;
@@ -172,7 +169,7 @@ section#stagehand-controls {
       o-text-shadow: none;
       o-transition: none;
       o-transform: none; }
-      /* line 105, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+      /* line 104, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
       section#stagehand-controls > ul li h2 {
         margin: 0;
         padding: 0;
@@ -196,13 +193,13 @@ section#stagehand-controls {
         font-size: 12px;
         margin: 0 0 5px 0;
         font-weight: bold; }
-      /* line 110, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+      /* line 109, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
       section#stagehand-controls > ul li ul {
         margin: 0 0 10px 0; }
-        /* line 112, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+        /* line 111, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
         section#stagehand-controls > ul li ul li {
           display: inline-block; }
-          /* line 114, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+          /* line 113, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
           section#stagehand-controls > ul li ul li a {
             margin: 0;
             padding: 0;
@@ -239,9 +236,9 @@ section#stagehand-controls {
             font-size: 12px;
             text-align: center;
             margin: 0 5px 5px 0; }
-            /* line 129, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+            /* line 128, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
             section#stagehand-controls > ul li ul li a:hover {
               background: #434547; }
-            /* line 131, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
+            /* line 130, /Users/camerondaigle/Projects/stagehand/source/stylesheets/stagehand.sass */
             section#stagehand-controls > ul li ul li a.stagehand-active {
               background: #e23246; }
