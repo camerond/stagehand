@@ -30,7 +30,7 @@
     loadState: function() {
       var scene, stage, _ref;
 
-      this.toggleControls(sessionStorage.getItem('stagehand-toggle') === 'true');
+      $(document.body).toggleClass('stagehand-active', sessionStorage.getItem('stagehand-toggle') === 'true');
       _ref = JSON.parse(sessionStorage.getItem("stagehand-scenes"));
       for (stage in _ref) {
         scene = _ref[stage];
@@ -189,8 +189,8 @@
       this.detectNamedStages();
       return this.detectAnonymousStages();
     },
-    toggleControls: function(dir) {
-      $(document.body).toggleClass('stagehand-active', dir);
+    toggleControls: function() {
+      $(document.body).toggleClass('stagehand-active');
       this.saveState();
       return false;
     },
