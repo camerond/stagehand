@@ -1,3 +1,7 @@
+# 0.4.1
+
+- support `toggle` scene keyword
+
 # 0.4
 
 - add sessionStorage for panel & active stage state

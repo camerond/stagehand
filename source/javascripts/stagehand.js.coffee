@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.4
+# version 0.4.1
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -68,7 +68,7 @@ Stagehand =
       .find('h2').text(name)
     $stage.each (idx) ->
       $button = s.buildOrAppendControlButton($(@), $li, idx)
-    @prependNoneOption($li, $stage)
+    @prependSpecialOptions($li, $stage)
     $li.find('a').data('$stage', $stage)
     @stage_controls.push($li)
     @$controls.find("> ul").append($li)
@@ -77,10 +77,23 @@ Stagehand =
       $button = $(@templates.control_button)
         .prependTo($li.find('ul'))
         .find('a').text('none')
+        .attr('data-scene-control', 'special')
+  prependSpecialOptions: ($li, $stage) ->
+    special = []
+    if $stage.filter("[data-scene='all']").length
+      special.push('none')
+    else if $stage.filter("[data-scene='toggle']").length
+      special.push('toggle on')
+      special.push('toggle off')
+    for txt in special
+      $button = $(@templates.control_button)
+        .prependTo($li.find('ul'))
+        .find('a').text(txt)
+        .attr('data-scene-control', 'special')
   buildOrAppendControlButton: ($actor, $control, idx) ->
     scenes = if $actor.attr('data-scene') then $actor.attr('data-scene').split(',') else ["#{idx + 1}"]
     for scene, i in scenes
-      if scene == 'all' then return
+      if scene == 'all' or scene == 'toggle' then return
       scene = scene.replace(/^\s+|\s+$/g, '')
       $button = $control.find("[data-scene-control='#{scene}']")
       if $button.length
@@ -96,9 +109,15 @@ Stagehand =
   changeScene: (e) ->
     s = @
     $a = $(e.target)
-    if $a.text() == 'none'
-      $actors_on = $()
-      $actors_off = $a.data('$stage')
+    $actors_on = $actors_off = $()
+    if $a.attr('data-scene-control') == 'special'
+      switch $a.text()
+        when 'none'
+          $actors_off = $a.data('$stage')
+        when 'toggle off'
+          $actors_off = $a.data('$stage').filter("[data-scene='toggle']")
+        when 'toggle on'
+          $actors_on = $a.data('$stage').filter("[data-scene='toggle']")
     else
       $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"))
       $actors_off = $a.data('$stage').not($actors_on)
