@@ -1,3 +1,8 @@
+# 0.4.2
+
+- fix bug where SessionStorage didn't restore `toggle` scenes
+- formatting adjustments to style panel for `toggle on` and `toggle off` options to fit on one line
+
 # 0.4.1
 
 - support `toggle` scene keyword
