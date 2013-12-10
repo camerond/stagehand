@@ -1,3 +1,7 @@
+<div data-stage='toggletown' data-scene='toggle'>
+  You can toggle me on and off.
+</div>
+
 <div data-stage='hammertime, hammerpants' data-scene='all'>
   I'm visible for all scenes of 'hammertime' and 'hammerpants'.
 </div>

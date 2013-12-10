@@ -72,24 +72,18 @@ Stagehand =
     $li.find('a').data('$stage', $stage)
     @stage_controls.push($li)
     @$controls.find("> ul").append($li)
-  prependNoneOption: ($li, $stage) ->
-    if $stage.filter("[data-scene='all']").length
-      $button = $(@templates.control_button)
-        .prependTo($li.find('ul'))
-        .find('a').text('none')
-        .attr('data-scene-control', 'special')
   prependSpecialOptions: ($li, $stage) ->
     special = []
     if $stage.filter("[data-scene='all']").length
       special.push('none')
-    else if $stage.filter("[data-scene='toggle']").length
+    if $stage.filter("[data-scene='toggle']").length
       special.push('toggle on')
       special.push('toggle off')
     for txt in special
       $button = $(@templates.control_button)
         .prependTo($li.find('ul'))
         .find('a').text(txt)
-        .attr('data-scene-control', 'special')
+        .attr('data-scene-control', "special-#{txt.replace(' ', '-')}")
   buildOrAppendControlButton: ($actor, $control, idx) ->
     scenes = if $actor.attr('data-scene') then $actor.attr('data-scene').split(',') else ["#{idx + 1}"]
     for scene, i in scenes
@@ -110,7 +104,7 @@ Stagehand =
     s = @
     $a = $(e.target)
     $actors_on = $actors_off = $()
-    if $a.attr('data-scene-control') == 'special'
+    if $a.is("[data-scene-control^='special']")
       switch $a.text()
         when 'none'
           $actors_off = $a.data('$stage')
