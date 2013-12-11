@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Stagehand</title>
+<title>Stagehand: Simple UI prototyping with(out) JavaScript</title>
 <script src="../javascripts/jquery.min.js" type="text/javascript"></script>
 <script src="../javascripts/stagehand.js" type="text/javascript"></script>
 <link href="../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
@@ -33,9 +33,9 @@ Examples:
 </ul>
 </nav>
 </header>
-<main><h2>Preview various interface states without writing a single line of Javascript.</h2>
+<main><h2>Preview various interface states without writing a single line of JavaScript.</h2>
 
-<p>Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.</p>
+<p>Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Just include some simple data attributes in your HTML, and Stagehand will generate a control panel for toggling states of your page.</p>
 
 <p>Stagehand <strong>isn&rsquo;t</strong> a tool for integrating with your actual app&rsquo;s views; it&rsquo;s a tool that turns static markup into something akin to visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)</p>
 <pre class="highlight html"><span class="nt">&lt;p</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;scene 1&#39;</span><span class="nt">&gt;</span>I&#39;m only shown in Scene 1!<span class="nt">&lt;/p&gt;</span>
@@ -67,7 +67,7 @@ Examples:
 
 <p><strong>Stages</strong> are groups of elements (or, for the sake of thematic consistency, &ldquo;actors&rdquo;). Actors with the same stage will be grouped together in the Stagehand toolbar as one <strong>scene</strong>. Stagehand will name stages &amp; scenes for you (see <a href="/examples/1">example 1</a>) or you can name them yourself (see <a href="/examples/2">example 2</a>).</p>
 
-<p>When a scene is active, any actors with that stage &amp; scene will be shown, else they&rsquo;ll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead – this is shown in <a href="/examples/3">example 3</a>.</p>
+<p>When a scene is active, any actors with that stage &amp; scene will be shown, else they&rsquo;ll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead &ndash; this is shown in <a href="/examples/3">example 3</a>.</p>
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
   I&#39;m an actor in stage 1, scene 1
 <span class="nt">&lt;/div&gt;</span>
@@ -84,7 +84,7 @@ Examples:
 
 <h2>Callbacks</h2>
 
-<p>In case you need some supporting Javascript to fire, there&rsquo;s an afterSceneChange callback that provides you with a few useful parameters:</p>
+<p>In case you need some supporting JavaScript to fire, there&rsquo;s an afterSceneChange callback that provides you with a few useful parameters:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
   <span class="na">afterSceneChange</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$actors_on</span><span class="p">,</span> <span class="nx">$actors_off</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// $actors_on is the set of actors that just got toggled on by this scene change
