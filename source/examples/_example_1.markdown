@@ -1,4 +1,3 @@
-
 <div data-stage data-scene>
   Hey! I'm part of Stage 1, Scene 1.
 </div>
