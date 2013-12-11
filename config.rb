@@ -5,7 +5,6 @@ activate :relative_assets
 set :markdown_engine, :redcarpet
 set :markdown, :fenced_code_blocks => true
 set :js_dir, 'javascripts'
-set :relative_links, true
 
 set :haml, {
   :ugly => true,
@@ -16,7 +15,8 @@ set :sass, {
   :line_comments => false
 }
 
-proxy "/", "index.html"
+proxy "/", "documentation.html"
+proxy "/faq", "faq.html"
 
 (1..4).to_a.each do |i|
   proxy "/examples/#{i}", "/examples/index.html", :locals => { :example => i }, ignore: true

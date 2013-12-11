@@ -1,3 +1,7 @@
+---
+layout: application
+---
+
 ## Preview various interface states without writing a single line of Javascript.
 
 Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.
@@ -31,7 +35,7 @@ Designers can quickly slice designs with filler content and define various state
 
 ## Usage
 
-Stagehand is dependent upon jQuery, so you'll need that. Then include [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee), [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass), download and update the stylesheet URL to the [toolbar icon](https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png), and then just toss this in:
+Stagehand is dependent upon jQuery, so you'll need that. Then include the CoffeeScript & SASS (or JavaScript and CSS) files and the toolbar icon (all provided on [the Stagehand Github page](https://github.com/camerond/stagehand)) and call this method:
 
 ~~~javascript
 $(document.body).stagehand()
