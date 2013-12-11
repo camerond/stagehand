@@ -16,4 +16,4 @@ Especially if you're working on a Backbone or Ember app (or anything else with a
 
 Hey, man, if that's what you want to do, go for it. We've tried all sorts of methods for simulating interfaces, from quick-and-dirty rapid prototyping to maintaining separate interface simulation JavaScript just for our static markup.
 
-However, what we've found is that simulating states rather than specific interactions & animations results in less (almost zero) throwaway Javascript, while accomplishing 95% of what the static markup is there to do anyway. Stagehand is an effort to help us think of static markup as a form of __visual documentation__ – and so far it's done wonders for our communication and process.
+However, what we've found is that simulating states rather than specific interactions & animations results in less (almost zero) throwaway Javascript, while accomplishing 95% of what the static markup is there to do anyway. Stagehand is an effort to help us think of static markup as a form of __visual documentation__ -- and so far it's done wonders for our communication and process.

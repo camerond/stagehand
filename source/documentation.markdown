@@ -4,7 +4,7 @@ layout: application
 
 ## Preview various interface states without writing a single line of Javascript.
 
-Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.
+Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page -- all without requiring any Javascript.
 
 Stagehand __isn't__ a tool for integrating with your actual app's views; it's a tool that turns static markup into something akin to visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)
 
@@ -45,7 +45,7 @@ Stagehand does the rest. You'll se a sidebar control generated in the top left o
 
 __Stages__ are groups of elements (or, for the sake of thematic consistency, "actors"). Actors with the same stage will be grouped together in the Stagehand toolbar as one __scene__. Stagehand will name stages & scenes for you (see [example 1](/examples/1)) or you can name them yourself (see [example 2](/examples/2)).
 
-When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead – this is shown in [example 3](/examples/3).
+When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead -- this is shown in [example 3](/examples/3).
 
 ~~~html
 <div data-stage>
