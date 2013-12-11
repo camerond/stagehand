@@ -3,6 +3,10 @@ activate :livereload
 activate :syntax
 activate :relative_assets
 set :haml, { ugly: true }
+set :sass, {
+  :style => :expanded,
+  :line_comments => false
+}
 
 (1..4).to_a.each do |i|
   proxy "/examples/#{i}/index.html", "/examples/index.html", :locals => { :example => i }, ignore: true

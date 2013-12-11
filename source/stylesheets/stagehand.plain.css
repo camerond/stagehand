@@ -1,0 +1,250 @@
+/*
+Stagehand.css (SASS output)
+for version 0.4.2
+*/
+
+body.stagehand-active {
+  padding-left: 150px;
+}
+body.stagehand-active section#stagehand-controls {
+  left: 0;
+}
+body.stagehand-active section#stagehand-controls a.stagehand-toggle {
+  opacity: 1;
+}
+@media screen and (max-width: 480px) {
+  body.stagehand-active {
+    padding-left: inherit;
+  }
+  body.stagehand-active section#stagehand-controls {
+    width: 50%;
+    padding-right: 40px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+body.stagehand-overlay.stagehand-active {
+  padding-left: inherit;
+}
+body.stagehand-overlay.stagehand-active section#stagehand-controls {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+section#stagehand-controls {
+  z-index: 1000001;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+  color: #161718;
+  position: fixed;
+  left: -151px;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  padding-top: 40px;
+  background: #eff0f1;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  -moz-transition: left 200ms, width 100ms;
+  -webkit-transition: left 200ms, width 100ms;
+  -o-transition: left 200ms, width 100ms;
+}
+section#stagehand-controls a.stagehand-toggle {
+  display: block;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 0;
+  width: 40px;
+  height: 40px;
+  border-left: 0;
+  border-top: 0;
+  background: #e7e8e9 url("../images/stagehand_icon.png") center no-repeat;
+  background-size: 20px 22px;
+  opacity: 0.5;
+  -moz-transition: opacity 50ms;
+  -webkit-transition: opacity 50ms;
+  -o-transition: opacity 50ms;
+}
+section#stagehand-controls a.stagehand-toggle:hover {
+  opacity: 1;
+}
+section#stagehand-controls h1 {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  line-height: 100%;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 10px;
+  background: #e7e8e9;
+  font-weight: bold;
+}
+section#stagehand-controls ul {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+  list-style-type: none;
+}
+section#stagehand-controls > ul {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  max-height: 100%;
+  overflow: auto;
+}
+section#stagehand-controls > ul li {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+}
+section#stagehand-controls > ul li h2 {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  font-weight: bold;
+}
+section#stagehand-controls > ul li ul {
+  margin: 0 0 10px 0;
+}
+section#stagehand-controls > ul li ul li {
+  display: inline-block;
+}
+section#stagehand-controls > ul li ul li a {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition: none;
+  transform: none;
+  font-weight: normal;
+  moz-box-shadow: none;
+  moz-text-shadow: none;
+  moz-transition: none;
+  moz-transform: none;
+  webkit-box-shadow: none;
+  webkit-text-shadow: none;
+  webkit-transition: none;
+  webkit-transform: none;
+  o-box-shadow: none;
+  o-text-shadow: none;
+  o-transition: none;
+  o-transform: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 5px;
+  display: inline-block;
+  min-height: 24px;
+  min-width: 24px;
+  background: #2e2f30;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  line-height: 24px;
+  font-size: 12px;
+  text-align: center;
+  margin: 0 2px 2px 0;
+}
+section#stagehand-controls > ul li ul li a:hover {
+  background: #434547;
+}
+section#stagehand-controls > ul li ul li a.stagehand-active {
+  background: #e23246;
+}
