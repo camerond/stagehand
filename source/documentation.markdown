@@ -29,8 +29,6 @@ Or, a more concrete use case:
 </div>
 ~~~
 
-[view expanded example](http://camerond.github.io/stagehand/examples/1)
-
 Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they're implementing features.
 
 ## Usage
@@ -49,7 +47,6 @@ __Stages__ are groups of elements (or, for the sake of thematic consistency, "ac
 
 When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead – this is shown in [example 3](/examples/3).
 
-
 ~~~html
 <div data-stage>
   I'm an actor in stage 1, scene 1
@@ -59,7 +56,6 @@ When a scene is active, any actors with that stage & scene will be shown, else t
   I'm an actor in stage 'hammerpants', scene 'hammertime'
 </div>
 ~~~
-
 
 ## Complexities
 
