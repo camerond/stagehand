@@ -1,4 +1,4 @@
-// Stagehand (plain Javascript)
+// Stagehand (plain JS)
 // version 0.4.2
 //
 // Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com

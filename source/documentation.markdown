@@ -2,9 +2,9 @@
 layout: application
 ---
 
-## Preview various interface states without writing a single line of Javascript.
+## Preview various interface states without writing a single line of JavaScript.
 
-Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page -- all without requiring any Javascript.
+Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Just include some simple data attributes in your HTML, and Stagehand will generate a control panel for toggling states of your page.
 
 Stagehand __isn't__ a tool for integrating with your actual app's views; it's a tool that turns static markup into something akin to visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)
 
@@ -65,7 +65,7 @@ Check out [example 4](/examples/4) for more info on Stagehand's more complex int
 
 ## Callbacks
 
-In case you need some supporting Javascript to fire, there's an afterSceneChange callback that provides you with a few useful parameters:
+In case you need some supporting JavaScript to fire, there's an afterSceneChange callback that provides you with a few useful parameters:
 
 ~~~javascript
 $(document.body).stagehand({
