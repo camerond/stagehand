@@ -86,6 +86,7 @@ Scene names are entirely optional: if you don't give an actor a `data-scene` att
   I get a class of 'highlighted' when Stage 1, scene 'hammerpants' is active
 </div>
 ~~~
+
 [view expanded example](http://camerond.github.io/stagehand/examples/3)
 
 ## Complexities
