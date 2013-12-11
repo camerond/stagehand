@@ -1,6 +1,8 @@
 ## Preview various interface states without writing a single line of Javascript.
 
-Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug all of the various states of an interface. Stagehand parses your HTML looking for specific data attributes, and generates a control panel for toggling the attributes & visibility of elements on the page, all without requiring any Javascript. (It's best used for slicing interfaces into static pages before they're actually implemented into an application.)
+Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.
+
+Stagehand __isn't__ a tool for integrating with your actual app's views; it's a tool that turns static markup into living visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)
 
 ~~~html
 <p data-stage data-scene='scene 1'>I'm only shown in Scene 1!</p>
@@ -25,7 +27,7 @@ Or, a more concrete use case:
 
 [view expanded example](http://camerond.github.io/stagehand/examples/1)
 
-So, to reiterate, this isn't a tool for integrating with your actual app's views: it's a tool to help you quickly and easily visualize interface states, without the need for Javascript. Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they're implementing features.
+Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they're implementing features.
 
 ## Usage
 
