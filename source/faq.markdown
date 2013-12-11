@@ -4,7 +4,7 @@ layout: application
 
 ## How will this interact with my application's JavaScript?
 
-Ideally, it won't – Stagehand is there to help you __decouple__ application views from static markup views. In an ideal scenario, Stagehand-enabled static views with filler content live in peaceful harmony with actual implemented application views. This is a technique we use at [Hashrocket](http://hashrocket.com) to help designers stay one step ahead of developers, so the devs always have a completed design to implement.
+Ideally, it won't -- Stagehand is there to help you __decouple__ application views from static markup views. In an ideal scenario, Stagehand-enabled static views with filler content live in peaceful harmony with actual implemented application views. This is a technique we use at [Hashrocket](http://hashrocket.com) to help designers stay one step ahead of developers, so the devs always have a completed design to implement.
 
 ## That sounds like a lot to maintain.
 
