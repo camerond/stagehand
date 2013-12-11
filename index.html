@@ -37,7 +37,7 @@ Examples:
 
 <p>Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.</p>
 
-<p>Stagehand <strong>isn&#39;t</strong> a tool for integrating with your actual app&#39;s views; it&#39;s a tool that turns static markup into living visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)</p>
+<p>Stagehand <strong>isn&rsquo;t</strong> a tool for integrating with your actual app&rsquo;s views; it&rsquo;s a tool that turns static markup into something akin to visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)</p>
 <pre class="highlight html"><span class="nt">&lt;p</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;scene 1&#39;</span><span class="nt">&gt;</span>I&#39;m only shown in Scene 1!<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;p</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;scene 2&#39;</span><span class="nt">&gt;</span>I&#39;m only shown in Scene 2!<span class="nt">&lt;/p&gt;</span>
 </pre>
@@ -56,87 +56,37 @@ Examples:
 </pre>
 <p><a href="http://camerond.github.io/stagehand/examples/1">view expanded example</a></p>
 
-<p>Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they&#39;re implementing features.</p>
+<p>Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they&rsquo;re implementing features.</p>
 
 <h2>Usage</h2>
 
-<p>Stagehand is dependent upon jQuery, so you&#39;ll need that. Then include the CoffeeScript &amp; SASS (or JavaScript and CSS) files and the toolbar icon (all provided on <a href="https://github.com/camerond/stagehand">the Stagehand Github page</a>) and call this method:</p>
+<p>Stagehand is dependent upon jQuery, so you&rsquo;ll need that. Then include the CoffeeScript &amp; SASS (or JavaScript and CSS) files and the toolbar icon (all provided on <a href="https://github.com/camerond/stagehand">the Stagehand Github page</a>) and call this method:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">()</span>
 </pre>
-<p>Stagehand does the rest. You&#39;ll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you&#39;ll see controls for manipulating them in there.</p>
+<p>Stagehand does the rest. You&rsquo;ll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you&rsquo;ll see controls for manipulating them in there.</p>
 
-<h2>Stages, scenes, and actors</h2>
+<h2>Stages, scenes &amp; actors</h2>
 
-<h3>Stages</h3>
+<p><strong>Stages</strong> are groups of elements (or, for the sake of thematic consistency, &ldquo;actors&rdquo;). Actors with the same stage will be grouped together in the Stagehand toolbar as one <strong>scene</strong>. Stagehand will name stages &amp; scenes for you (see <a href="/examples/1">example 1</a>) or you can name them yourself (see <a href="/examples/2">example 2</a>).</p>
 
-<p>Stages are groups of elements (or, for the sake of thematic consistency, &quot;actors&quot;). You can either give a stage a name, or it will be auto-named (&quot;Stage 1&quot; and so on).</p>
-
-<p>Direct siblings with the same unnamed stage attribute are grouped together into a single stage.</p>
+<p>When a scene is active, any actors with that stage &amp; scene will be shown, else they&rsquo;ll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead – this is shown in <a href="/examples/3">example 3</a>.</p>
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
-  I&#39;m part of Stage 1
+  I&#39;m an actor in stage 1, scene 1
 <span class="nt">&lt;/div&gt;</span>
 
-<span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
-  I&#39;m part of Stage 1
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammerpants&#39;</span><span class="nt">&gt;</span>
-  I&#39;m part of stage &#39;hammerpants&#39;
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
-  I&#39;m part of Stage 2
+<span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammerpants&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;hammertime&#39;</span><span class="nt">&gt;</span>
+  I&#39;m an actor in stage &#39;hammerpants&#39;, scene &#39;hammertime&#39;
 <span class="nt">&lt;/div&gt;</span>
 </pre>
-<p><a href="http://camerond.github.io/stagehand/examples/2">view expanded example</a></p>
-
-<h3>Scenes</h3>
-
-<p>Scenes are various states of stages. When a scene is active, any actors with that stage &amp; scene will be shown, else they&#39;ll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead.</p>
-
-<p>Scene names are entirely optional: if you don&#39;t give an actor a <code>data-scene</code> attribute, it&#39;ll default to an integer.</p>
-<pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
-  I&#39;m only shown when Stage 1, scene &#39;1&#39; is active
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;hammerpants&#39;</span><span class="nt">&gt;</span>
-  I&#39;m only shown when Stage 1, scene &#39;hammerpants&#39; is active
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;hammerpants&#39;</span> <span class="na">data-scene-class=</span><span class="s">&#39;highlighted&#39;</span><span class="nt">&gt;</span>
-  I get a class of &#39;highlighted&#39; when Stage 1, scene &#39;hammerpants&#39; is active
-<span class="nt">&lt;/div&gt;</span>
-</pre>
-<p><a href="http://camerond.github.io/stagehand/examples/3">view expanded example</a></p>
-
 <h2>Complexities</h2>
 
-<p>One stage name is a keyword: <code>all</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and the Stagehand toolbar then provides an additional scene of <code>none</code> for that stage – the <code>none</code> scene toggles all actors off, including those with a scene of <code>all</code>.</p>
-<pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
-  I&#39;m only shown when Stage 1, scene &#39;1&#39; is active
-<span class="nt">&lt;/div&gt;</span>
+<p>There are two special stage names: <code>all</code> and <code>toggle</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and anything with a stage name of <code>toggle</code> can be toggled on and off. You can nest stages &amp; scenes, and assign multiples of either (separated by commas).</p>
 
-<span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;all&#39;</span><span class="nt">&gt;</span>
-  I&#39;m visible in all scenes of Stage 1
-<span class="nt">&lt;/div&gt;</span>
-</pre>
-<p>You can assign multiple stages and scenes to an element, separated by commas:</p>
-<pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;stop, hammertime&#39;</span><span class="nt">&gt;</span>
-  I&#39;m in scene &#39;stop&#39; and scene &#39;hammertime&#39; of Stage 1
-<span class="nt">&lt;/div&gt;</span>
-</pre>
-<p>You can also assign multiple stages to an element, though that&#39;s a little less likely to be necessary:</p>
-<pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammer, pants&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;all&#39;</span><span class="nt">&gt;</span>
-  I&#39;m in all scenes of stage &#39;hammer&#39; and stage &#39;pants&#39;
-<span class="nt">&lt;/div&gt;</span>
-</pre>
-<p><a href="http://camerond.github.io/stagehand/examples/4">view expanded example</a></p>
-
-<p>You can nest stages and scenes to your heart&#39;s content, it&#39;ll all work just fine.</p>
+<p>Check out <a href="/examples/4">example 4</a> for more info on Stagehand&rsquo;s more complex interactions.</p>
 
 <h2>Callbacks</h2>
 
-<p>In case you need some supporting Javascript to fire, there&#39;s an afterSceneChange callback that provides you with a few useful parameters:</p>
+<p>In case you need some supporting Javascript to fire, there&rsquo;s an afterSceneChange callback that provides you with a few useful parameters:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
   <span class="na">afterSceneChange</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$actors_on</span><span class="p">,</span> <span class="nx">$actors_off</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// $actors_on is the set of actors that just got toggled on by this scene change
@@ -146,7 +96,7 @@ Examples:
 </pre>
 <h2>Styling</h2>
 
-<p>If you&#39;d prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set <code>overlay</code> to true:</p>
+<p>If you&rsquo;d prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set <code>overlay</code> to true:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
   <span class="na">overlay</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">});</span>
@@ -155,7 +105,7 @@ Examples:
 
 <p>I (<a href="http://github.com/camerond">camerond</a>) am actively maintaining this project.</p>
 
-<p>Naturally, submit any bug reports / feature requests on <a href="https://github.com/camerond/stagehand/issues">Github</a>, or just pester me at  <a href="http://twitter.com/camerondaigle">@camerondaigle</a>. Honestly, Stagehand does everything that I can currently imagine needing, but feel free to fork it and contribute your ideas, and I&#39;ll merge &#39;em if they pass muster. Be aware that there&#39;s a QUnit suite as well.</p>
+<p>Naturally, submit any bug reports / feature requests on <a href="https://github.com/camerond/stagehand/issues">Github</a>, or just pester me at  <a href="http://twitter.com/camerondaigle">@camerondaigle</a>. Honestly, Stagehand does everything that I can currently imagine needing, but feel free to fork it and contribute your ideas, and I&rsquo;ll merge &lsquo;em if they pass muster. Be aware that there&rsquo;s a QUnit suite as well.</p>
 
 <p>To run the suite, clone the project, bundle, run <code>bundle exec middleman</code> and visit <code>/test</code>.</p>
 
