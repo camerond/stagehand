@@ -1,6 +1,7 @@
 activate :livereload
 activate :syntax
 activate :relative_assets
+activate :directory_indexes
 
 set :markdown_engine, :redcarpet
 set :markdown, :fenced_code_blocks => true
@@ -15,11 +16,9 @@ set :sass, {
   :line_comments => false
 }
 
-proxy "/", "documentation.html"
-proxy "/faq", "faq.html"
+proxy "/faq/index.html", "faq.html"
 
 (1..4).to_a.each do |i|
-  proxy "/examples/#{i}", "/examples/index.html", :locals => { :example => i }, ignore: true
   proxy "/examples/#{i}/index.html", "/examples/index.html", :locals => { :example => i }, ignore: true
 end
 

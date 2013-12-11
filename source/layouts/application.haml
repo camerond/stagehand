@@ -11,16 +11,16 @@
     = yield_content :head
   %body
     %header
-      %h1= link_to 'Stagehand', '/', :relative => true
+      %h1= link_to 'Stagehand', '/index.html', :relative => true
       %nav
         %ul
-          %li{ :class => if current_page.path == '' then 'active' end }= link_to 'Documentation', '/', :relative => true
+          %li{ :class => if current_page.path == 'index.html' then 'active' end }= link_to 'Documentation', '/index.html', :relative => true
           %li
             Examples:
             %ul
               - (1..4).to_a.each do |i|
-                %li{ :class => if current_page.path == "examples/#{i}" then 'active' end }= link_to i, "/examples/#{i}", :relative => true
-          %li{ :class => if current_page.path == 'faq' then 'active' end }= link_to 'FAQ', '/faq', :relative => true
+                %li{ :class => if current_page.path == "examples/#{i}/index.html" then 'active' end }= link_to i, "/examples/#{i}/index.html", :relative => true
+          %li{ :class => if current_page.path == 'faq/index.html' then 'active' end }= link_to 'FAQ', '/faq/index.html', :relative => true
           %li= link_to 'view on Github &rarr;', 'http://github.com/camerond/stagehand', target: '_blank'
     %main= yield
     %footer
