@@ -6,7 +6,7 @@ layout: application
 
 Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.
 
-Stagehand __isn't__ a tool for integrating with your actual app's views; it's a tool that turns static markup into living visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)
+Stagehand __isn't__ a tool for integrating with your actual app's views; it's a tool that turns static markup into something akin to visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)
 
 ~~~html
 <p data-stage data-scene='scene 1'>I'm only shown in Scene 1!</p>
@@ -43,89 +43,29 @@ $(document.body).stagehand()
 
 Stagehand does the rest. You'll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you'll see controls for manipulating them in there.
 
-## Stages, scenes, and actors
+## Stages, scenes & actors
 
-### Stages
+__Stages__ are groups of elements (or, for the sake of thematic consistency, "actors"). Actors with the same stage will be grouped together in the Stagehand toolbar as one __scene__. Stagehand will name stages & scenes for you (see [example 1](/examples/1)) or you can name them yourself (see [example 2](/examples/2)).
 
-Stages are groups of elements (or, for the sake of thematic consistency, "actors"). You can either give a stage a name, or it will be auto-named ("Stage 1" and so on).
+When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead – this is shown in [example 3](/examples/3).
 
-Direct siblings with the same unnamed stage attribute are grouped together into a single stage.
-
-~~~html
-<div data-stage>
-  I'm part of Stage 1
-</div>
-
-<div data-stage>
-  I'm part of Stage 1
-</div>
-
-<div data-stage='hammerpants'>
-  I'm part of stage 'hammerpants'
-</div>
-
-<div data-stage>
-  I'm part of Stage 2
-</div>
-~~~
-
-[view expanded example](http://camerond.github.io/stagehand/examples/2)
-
-### Scenes
-
-Scenes are various states of stages. When a scene is active, any actors with that stage & scene will be shown, else they'll be hidden. Alternately, if you give an actor a `data-scene-class` or `data-scene-id` attribute, that class and/or id will be toggled instead.
-
-Scene names are entirely optional: if you don't give an actor a `data-scene` attribute, it'll default to an integer.
 
 ~~~html
 <div data-stage>
-  I'm only shown when Stage 1, scene '1' is active
+  I'm an actor in stage 1, scene 1
 </div>
 
-<div data-stage data-scene='hammerpants'>
-  I'm only shown when Stage 1, scene 'hammerpants' is active
-</div>
-
-<div data-stage data-scene='hammerpants' data-scene-class='highlighted'>
-  I get a class of 'highlighted' when Stage 1, scene 'hammerpants' is active
+<div data-stage='hammerpants' data-scene='hammertime'>
+  I'm an actor in stage 'hammerpants', scene 'hammertime'
 </div>
 ~~~
 
-[view expanded example](http://camerond.github.io/stagehand/examples/3)
 
 ## Complexities
 
-One stage name is a keyword: `all`. Anything with a stage name of `all` is shown in all scenes of its stage, and the Stagehand toolbar then provides an additional scene of `none` for that stage – the `none` scene toggles all actors off, including those with a scene of `all`.
+There are two special stage names: `all` and `toggle`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. You can nest stages & scenes, and assign multiples of either (separated by commas).
 
-~~~html
-<div data-stage>
-  I'm only shown when Stage 1, scene '1' is active
-</div>
-
-<div data-stage data-scene='all'>
-  I'm visible in all scenes of Stage 1
-</div>
-~~~
-
-You can assign multiple stages and scenes to an element, separated by commas:
-
-~~~html
-<div data-stage data-scene='stop, hammertime'>
-  I'm in scene 'stop' and scene 'hammertime' of Stage 1
-</div>
-~~~
-
-You can also assign multiple stages to an element, though that's a little less likely to be necessary:
-
-~~~html
-<div data-stage='hammer, pants' data-scene='all'>
-  I'm in all scenes of stage 'hammer' and stage 'pants'
-</div>
-~~~
-
-[view expanded example](http://camerond.github.io/stagehand/examples/4)
-
-You can nest stages and scenes to your heart's content, it'll all work just fine.
+Check out [example 4](/examples/4) for more info on Stagehand's more complex interactions.
 
 ## Callbacks
 
