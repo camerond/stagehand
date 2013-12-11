@@ -14,15 +14,15 @@
       %h1= link_to 'Stagehand', '/'
       %nav
         %ul
-          %li{ :class => if current_page.path == 'index.html' then 'active' end }= link_to 'Documentation', '/'
+          %li{ :class => if current_page.path == '' then 'active' end }= link_to 'Documentation', '/'
           %li
             Examples:
             %ul
               - (1..4).to_a.each do |i|
-                %li{ :class => if current_page.path == "examples/#{i}/index.html" then 'active' end }= link_to i, "/examples/#{i}"
+                %li{ :class => if current_page.path == "examples/#{i}" then 'active' end }= link_to i, "/examples/#{i}"
           %li= link_to 'view on Github &rarr;', 'http://github.com/camerond/stagehand', target: '_blank'
     %main= yield
     %footer
       %p
         code and design &copy 2013 by
-        = link_to "Cameron Daigle", "http://camerondaigle.com"
+        = link_to "Cameron Daigle", "http://camerondaigle.com", :relative => false

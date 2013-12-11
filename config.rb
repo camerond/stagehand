@@ -3,6 +3,7 @@ activate :syntax
 activate :relative_assets
 
 set :markdown_engine, :redcarpet
+set :markdown, :fenced_code_blocks => true, :smartypants => true
 set :js_dir, 'javascripts'
 set :relative_links, true
 
@@ -15,7 +16,7 @@ set :sass, {
   :line_comments => false
 }
 
-proxy "/", "/index,html"
+proxy "/", "index.html"
 
 (1..4).to_a.each do |i|
   proxy "/examples/#{i}", "/examples/index.html", :locals => { :example => i }, ignore: true
