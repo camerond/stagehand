@@ -17,6 +17,7 @@ set :sass, {
 }
 
 proxy "/faq/index.html", "faq.html"
+ignore "/test.html" if build?
 
 (1..4).to_a.each do |i|
   proxy "/examples/#{i}/index.html", "/examples/index.html", :locals => { :example => i }, ignore: true
