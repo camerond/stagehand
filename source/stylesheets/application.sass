@@ -64,11 +64,17 @@ body > header
       content: ""
     font-size: 30px
     text-transform: uppercase
-    padding-top: 40px
+    padding: 40px 0 0 0
     font-family: 'Oswald', sans-serif
     font-weight: 300
     letter-spacing: 5px
     margin: 0 0 40px 0
+    +narrow
+      padding-top: 10px
+      margin-bottom: 20px
+      &:before
+        width: 120px
+        height: 120px
   nav
     ul
       display: inline-block
@@ -102,7 +108,7 @@ main
   padding: 40px
   margin: 0 auto
   +narrow
-    padding: 20px
+    padding: 10px 20px
   h2, h3, h4
     font-family: 'Oswald', sans-serif
     font-weight: 300
