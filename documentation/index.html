@@ -1,12 +1,47 @@
-<h2 id="preview-various-interface-states-without-writing-a-single-line-of-javascript">Preview various interface states without writing a single line of Javascript.</h2>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stagehand</title>
+<script src="../javascripts/jquery.min.js" type="text/javascript"></script>
+<script src="../javascripts/stagehand.js" type="text/javascript"></script>
+<link href="../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../stylesheets/stagehand.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../stylesheets/syntax.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<link href='http://camerond.github.io/stagehand/images/stagehand_icon_lg.png' rel='icon' type='image/png'>
 
-<p>Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug all of the various states of an interface. Stagehand parses your HTML looking for specific data attributes, and generates a control panel for toggling the attributes &amp; visibility of elements on the page, all without requiring any Javascript. (It's best used for slicing interfaces into static pages before they're actually implemented into an application.)</p>
+</head>
+<body>
+<header>
+<h1><a href="../">Stagehand</a></h1>
+<nav>
+<ul>
+<li><a href="../">Documentation</a></li>
+<li>
+Examples:
+<ul>
+<li><a href="../examples/1/">1</a></li>
+<li><a href="../examples/2/">2</a></li>
+<li><a href="../examples/3/">3</a></li>
+<li><a href="../examples/4/">4</a></li>
+</ul>
+</li>
+<li><a href="../faq/">FAQ</a></li>
+<li><a target="_blank" href="http://github.com/camerond/stagehand">view on Github &rarr;</a></li>
+</ul>
+</nav>
+</header>
+<main><h2>Preview various interface states without writing a single line of Javascript.</h2>
 
+<p>Stagehand helps designers (and developers) use simple static markup to describe, visualize, and debug complex interface interactions. Stagehand parses your HTML looking for specific data attributes and generates a control panel for toggling states of your page – all without requiring any Javascript.</p>
+
+<p>Stagehand <strong>isn&#39;t</strong> a tool for integrating with your actual app&#39;s views; it&#39;s a tool that turns static markup into living visual documentation. (Photoshop folks: think of Stagehand as Layer Comps for the browser.)</p>
 <pre class="highlight html"><span class="nt">&lt;p</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;scene 1&#39;</span><span class="nt">&gt;</span>I&#39;m only shown in Scene 1!<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;p</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;scene 2&#39;</span><span class="nt">&gt;</span>I&#39;m only shown in Scene 2!<span class="nt">&lt;/p&gt;</span>
 </pre>
 <p>Or, a more concrete use case:</p>
-
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;Search Results&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;initial state&#39;</span><span class="nt">&gt;</span>
   Search for some stuff!
 <span class="nt">&lt;/div&gt;</span>
@@ -21,24 +56,22 @@
 </pre>
 <p><a href="http://camerond.github.io/stagehand/examples/1">view expanded example</a></p>
 
-<p>So, to reiterate, this isn't a tool for integrating with your actual app's views: it's a tool to help you quickly and easily visualize interface states, without the need for Javascript. Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they're implementing features.</p>
+<p>Designers can quickly slice designs with filler content and define various states using Stagehand, and developers can then use the Stagehand-enhanced page as a comprehensive reference when they&#39;re implementing features.</p>
 
-<h2 id="usage">Usage</h2>
+<h2>Usage</h2>
 
-<p>Stagehand is dependent upon jQuery, so you'll need that. Then include <a href="https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee">stagehand.js.coffee</a>, <a href="https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass">stagehand.sass</a>, download and update the stylesheet URL to the <a href="https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png">toolbar icon</a>, and then just toss this in:</p>
-
+<p>Stagehand is dependent upon jQuery, so you&#39;ll need that. Then include the CoffeeScript &amp; SASS (or JavaScript and CSS) files and the toolbar icon (all provided on <a href="https://github.com/camerond/stagehand">the Stagehand Github page</a>) and call this method:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">()</span>
 </pre>
-<p>Stagehand does the rest. You'll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you'll see controls for manipulating them in there.</p>
+<p>Stagehand does the rest. You&#39;ll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you&#39;ll see controls for manipulating them in there.</p>
 
-<h2 id="stages-scenes-and-actors">Stages, scenes, and actors</h2>
+<h2>Stages, scenes, and actors</h2>
 
-<h3 id="stages">Stages</h3>
+<h3>Stages</h3>
 
-<p>Stages are groups of elements (or, for the sake of thematic consistency, "actors"). You can either give a stage a name, or it will be auto-named ("Stage 1" and so on).</p>
+<p>Stages are groups of elements (or, for the sake of thematic consistency, &quot;actors&quot;). You can either give a stage a name, or it will be auto-named (&quot;Stage 1&quot; and so on).</p>
 
 <p>Direct siblings with the same unnamed stage attribute are grouped together into a single stage.</p>
-
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
   I&#39;m part of Stage 1
 <span class="nt">&lt;/div&gt;</span>
@@ -57,12 +90,11 @@
 </pre>
 <p><a href="http://camerond.github.io/stagehand/examples/2">view expanded example</a></p>
 
-<h3 id="scenes">Scenes</h3>
+<h3>Scenes</h3>
 
-<p>Scenes are various states of stages. When a scene is active, any actors with that stage &amp; scene will be shown, else they'll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead.</p>
+<p>Scenes are various states of stages. When a scene is active, any actors with that stage &amp; scene will be shown, else they&#39;ll be hidden. Alternately, if you give an actor a <code>data-scene-class</code> or <code>data-scene-id</code> attribute, that class and/or id will be toggled instead.</p>
 
-<p>Scene names are entirely optional: if you don't give an actor a <code>data-scene</code> attribute, it'll default to an integer.</p>
-
+<p>Scene names are entirely optional: if you don&#39;t give an actor a <code>data-scene</code> attribute, it&#39;ll default to an integer.</p>
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
   I&#39;m only shown when Stage 1, scene &#39;1&#39; is active
 <span class="nt">&lt;/div&gt;</span>
@@ -74,12 +106,12 @@
 <span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;hammerpants&#39;</span> <span class="na">data-scene-class=</span><span class="s">&#39;highlighted&#39;</span><span class="nt">&gt;</span>
   I get a class of &#39;highlighted&#39; when Stage 1, scene &#39;hammerpants&#39; is active
 <span class="nt">&lt;/div&gt;</span>
-</pre><p><a href="http://camerond.github.io/stagehand/examples/3">view expanded example</a></p>
+</pre>
+<p><a href="http://camerond.github.io/stagehand/examples/3">view expanded example</a></p>
 
-<h2 id="complexities">Complexities</h2>
+<h2>Complexities</h2>
 
 <p>One stage name is a keyword: <code>all</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and the Stagehand toolbar then provides an additional scene of <code>none</code> for that stage – the <code>none</code> scene toggles all actors off, including those with a scene of <code>all</code>.</p>
-
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span><span class="nt">&gt;</span>
   I&#39;m only shown when Stage 1, scene &#39;1&#39; is active
 <span class="nt">&lt;/div&gt;</span>
@@ -89,25 +121,22 @@
 <span class="nt">&lt;/div&gt;</span>
 </pre>
 <p>You can assign multiple stages and scenes to an element, separated by commas:</p>
-
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;stop, hammertime&#39;</span><span class="nt">&gt;</span>
   I&#39;m in scene &#39;stop&#39; and scene &#39;hammertime&#39; of Stage 1
 <span class="nt">&lt;/div&gt;</span>
 </pre>
-<p>You can also assign multiple stages to an element, though that's a little less likely to be necessary:</p>
-
+<p>You can also assign multiple stages to an element, though that&#39;s a little less likely to be necessary:</p>
 <pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammer, pants&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;all&#39;</span><span class="nt">&gt;</span>
   I&#39;m in all scenes of stage &#39;hammer&#39; and stage &#39;pants&#39;
 <span class="nt">&lt;/div&gt;</span>
 </pre>
 <p><a href="http://camerond.github.io/stagehand/examples/4">view expanded example</a></p>
 
-<p>You can nest stages and scenes to your heart's content, it'll all work just fine.</p>
+<p>You can nest stages and scenes to your heart&#39;s content, it&#39;ll all work just fine.</p>
 
-<h2 id="callbacks">Callbacks</h2>
+<h2>Callbacks</h2>
 
-<p>In case you need some supporting Javascript to fire, there's an afterSceneChange callback that provides you with a few useful parameters:</p>
-
+<p>In case you need some supporting Javascript to fire, there&#39;s an afterSceneChange callback that provides you with a few useful parameters:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
   <span class="na">afterSceneChange</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$actors_on</span><span class="p">,</span> <span class="nx">$actors_off</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// $actors_on is the set of actors that just got toggled on by this scene change
@@ -115,18 +144,35 @@
 </span>  <span class="p">}</span>
 <span class="p">});</span>
 </pre>
-<h2 id="styling">Styling</h2>
+<h2>Styling</h2>
 
-<p>If you'd prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set <code>overlay</code> to true:</p>
-
+<p>If you&#39;d prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set <code>overlay</code> to true:</p>
 <pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
   <span class="na">overlay</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">});</span>
 </pre>
-<h2 id="issues--contributing">Issues / Contributing</h2>
+<h2>Issues / Contributing</h2>
 
 <p>I (<a href="http://github.com/camerond">camerond</a>) am actively maintaining this project.</p>
 
-<p>Naturally, submit any bug reports / feature requests on <a href="https://github.com/camerond/stagehand/issues">Github</a>, or just pester me at  <a href="http://twitter.com/camerondaigle">@camerondaigle</a>. Honestly, Stagehand does everything that I can currently imagine needing, but feel free to fork it and contribute your ideas, and I'll merge 'em if they pass muster. Be aware that there's a QUnit suite as well.</p>
+<p>Naturally, submit any bug reports / feature requests on <a href="https://github.com/camerond/stagehand/issues">Github</a>, or just pester me at  <a href="http://twitter.com/camerondaigle">@camerondaigle</a>. Honestly, Stagehand does everything that I can currently imagine needing, but feel free to fork it and contribute your ideas, and I&#39;ll merge &#39;em if they pass muster. Be aware that there&#39;s a QUnit suite as well.</p>
 
 <p>To run the suite, clone the project, bundle, run <code>bundle exec middleman</code> and visit <code>/test</code>.</p>
+</main>
+<footer>
+<p>
+code and design &copy 2013 by
+<a href="http://camerondaigle.com">Cameron Daigle</a>
+</p>
+</footer>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+  ga('create', 'UA-308731-17', 'camerond.github.io');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

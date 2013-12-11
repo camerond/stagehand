@@ -1,263 +1,308 @@
 @charset "UTF-8";
-/* line 16, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 ul, ol {
-  list-style: none; }
+  list-style: none;
+}
 
-/* line 18, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 h1, h2, h3, h4, h5, h6, pre, code {
-  font-size: 1em; }
+  font-size: 1em;
+}
 
-/* line 20, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fieldset, input, dl, dt, dd, figure, figcaption {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
-/* line 23, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 a img, :link img, :visited img, fieldset {
-  border: none; }
+  border: none;
+}
 
-/* line 25, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 address {
-  font-style: normal; }
+  font-style: normal;
+}
 
-/* line 27, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 header, section, article, nav, footer, hgroup, details, summary, figure, main {
-  display: block; }
+  display: block;
+}
 
-/* line 29, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 mark {
   color: inherit;
-  background: transparent; }
+  background: transparent;
+}
 
-/* line 32, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 abbr {
-  border: none; }
+  border: none;
+}
 
-/* line 34, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 summary::-webkit-details-marker {
-  display: none; }
+  display: none;
+}
 
-/* line 37, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 body {
-  background: #222222;
+  background: #252525;
   color: white;
   font-family: "Source Sans Pro", sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-size: 16px; }
-  @media screen and (max-width: 600px) {
-    /* line 37, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    body {
-      font-size: 14px; } }
+  font-size: 16px;
+}
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+}
 
-/* line 46, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 a {
   text-decoration: none;
-  color: white; }
+  color: white;
+}
 
-/* line 50, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 body > header {
   text-align: center;
-  padding: 40px; }
-  @media screen and (max-width: 600px) {
-    /* line 50, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    body > header {
-      padding: 20px; } }
-  /* line 55, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+  padding: 40px;
+}
+@media screen and (max-width: 600px) {
+  body > header {
+    padding: 20px;
+  }
+}
+body > header h1 {
+  font-size: 30px;
+  text-transform: uppercase;
+  padding: 40px 0 0 0;
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  letter-spacing: 5px;
+  margin: 0 0 40px 0;
+}
+body > header h1:before {
+  display: block;
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+  background: white url("http://camerond.github.io/stagehand/images/stagehand_icon_lg.png") 50% 49% no-repeat;
+  background-size: 40px 44px;
+  margin: 0 auto 20px auto;
+  content: "";
+}
+@media screen and (max-width: 600px) {
   body > header h1 {
-    font-size: 30px;
-    text-transform: uppercase;
-    padding-top: 40px;
-    font-family: "Oswald", sans-serif;
-    font-weight: 300;
-    letter-spacing: 5px;
-    margin: 0 0 40px 0; }
-    /* line 56, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    body > header h1:before {
-      display: block;
-      width: 160px;
-      height: 160px;
-      border-radius: 80px;
-      background: white url("http://camerond.github.io/stagehand/images/stagehand_icon_lg.png") 50% 49% no-repeat;
-      background-size: 40px 44px;
-      margin: 0 auto 20px auto;
-      content: ""; }
-  /* line 73, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-  body > header nav ul {
-    display: inline-block; }
-    /* line 75, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    body > header nav ul li {
-      display: inline-block;
-      padding: 0 10px;
-      color: #666666; }
-      /* line 79, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      body > header nav ul li ul {
-        margin-left: 10px; }
-        /* line 81, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-        body > header nav ul li ul li {
-          padding: 0 5px; }
-      /* line 83, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      body > header nav ul li a {
-        color: white;
-        display: inline-block;
-        padding: 5px 15px;
-        border-bottom: 2px solid #444444;
-        -moz-transition: border-color 100ms;
-        -webkit-transition: border-color 100ms;
-        -o-transition: border-color 100ms; }
-      /* line 89, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      body > header nav ul li.active a,
-      body > header nav ul li a:hover {
-        border-bottom-color: white; }
-  @media screen and (max-width: 600px) {
-    /* line 94, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    body > header nav > ul > li {
-      display: block;
-      padding: 0; }
-      /* line 97, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      body > header nav > ul > li + li {
-        padding-top: 20px; } }
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+  body > header h1:before {
+    width: 120px;
+    height: 120px;
+  }
+}
+body > header nav ul {
+  display: inline-block;
+}
+body > header nav ul li {
+  display: inline-block;
+  padding: 0 10px;
+  color: #666666;
+}
+body > header nav ul li ul {
+  margin-left: 10px;
+}
+body > header nav ul li ul li {
+  padding: 0 5px;
+}
+body > header nav ul li a {
+  color: white;
+  display: inline-block;
+  padding: 5px 15px;
+  border-bottom: 2px solid #444444;
+  -moz-transition: border-color 100ms;
+  -webkit-transition: border-color 100ms;
+  -o-transition: border-color 100ms;
+}
+body > header nav ul li.active a,
+body > header nav ul li a:hover {
+  border-bottom-color: white;
+}
+@media screen and (max-width: 600px) {
+  body > header nav > ul > li {
+    display: block;
+    padding: 0;
+  }
+  body > header nav > ul > li + li {
+    padding-top: 20px;
+  }
+}
 
-/* line 100, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 main {
   max-width: 900px;
   padding: 40px;
-  margin: 0 auto; }
-  @media screen and (max-width: 600px) {
-    /* line 100, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    main {
-      padding: 20px; } }
-  /* line 106, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+  margin: 0 auto;
+}
+@media screen and (max-width: 600px) {
+  main {
+    padding: 10px 20px;
+  }
+}
+main h2, main h3, main h4 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  margin: 0 0 40px 0;
+  line-height: 120%;
+}
+@media screen and (max-width: 600px) {
   main h2, main h3, main h4 {
-    font-family: "Oswald", sans-serif;
-    font-weight: 300;
-    margin: 0 0 40px 0;
-    line-height: 120%; }
-    @media screen and (max-width: 600px) {
-      /* line 106, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main h2, main h3, main h4 {
-        margin: 0 0 20px 0; } }
-  /* line 113, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+    margin: 0 0 20px 0;
+  }
+}
+main h2 {
+  font-size: 30px;
+  border-bottom: 2px solid #444444;
+  padding: 20px 10px;
+  margin: 0 -10px 40px -10px;
+}
+@media screen and (max-width: 600px) {
   main h2 {
-    font-size: 30px;
-    border-bottom: 2px solid #444444;
-    padding: 20px 10px;
-    margin: 0 -10px 40px -10px; }
-    @media screen and (max-width: 600px) {
-      /* line 113, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main h2 {
-        font-size: 24px;
-        padding-top: 10px;
-        margin-bottom: 20px; } }
-  /* line 122, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+    font-size: 24px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+}
+main h3 {
+  font-size: 24px;
+}
+@media screen and (max-width: 600px) {
   main h3 {
-    font-size: 24px; }
-    @media screen and (max-width: 600px) {
-      /* line 122, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main h3 {
-        font-size: 20px; } }
-  /* line 126, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+    font-size: 20px;
+  }
+}
+main h3 small {
+  color: #aaaaaa;
+  font-size: 18px;
+  line-height: 24px;
+  margin-left: 5px;
+}
+main p {
+  margin: 0 0 30px 0;
+  line-height: 140%;
+  color: #aaaaaa;
+}
+@media screen and (max-width: 600px) {
   main p {
-    margin: 0 0 40px 0;
-    line-height: 140%;
-    color: #aaaaaa; }
-    @media screen and (max-width: 600px) {
-      /* line 126, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main p {
-        margin: 0 0 20px 0; } }
-    /* line 132, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    main p a {
-      -moz-transition: color 100ms;
-      -webkit-transition: color 100ms;
-      -o-transition: color 100ms; }
-      /* line 134, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main p a:hover {
-        color: #63fffd; }
-  /* line 136, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+    margin: 0 0 20px 0;
+  }
+}
+main p a {
+  -moz-transition: color 100ms;
+  -webkit-transition: color 100ms;
+  -o-transition: color 100ms;
+}
+main p a:hover {
+  color: #63fffd;
+}
+main code {
+  display: inline-block;
+  color: white;
+  margin: 0 2px;
+  background: #333333;
+  padding: 0 3px;
+}
+main pre {
+  margin: 0 20px 40px 20px;
+  background: white;
+  overflow: auto;
+  max-width: 100%;
+  padding: 30px;
+  color: #333333;
+  line-height: 140%;
+  font-size: 14px;
+}
+@media screen and (max-width: 600px) {
   main pre {
-    margin: 0 20px 40px 20px;
-    background: white;
-    overflow: auto;
-    max-width: 100%;
-    padding: 30px;
-    color: #333333;
-    line-height: 140%;
-    font-size: 14px; }
-    @media screen and (max-width: 600px) {
-      /* line 136, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main pre {
-        margin-left: 0;
-        margin-right: 0;
-        padding: 10px;
-        font-size: 13px; } }
-    /* line 151, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    main pre + p a {
-      margin-right: 20px;
-      display: block;
-      float: right;
-      margin-top: -40px;
-      text-align: right;
-      padding: 5px 0 0 0;
-      font-size: 12px;
-      line-height: 12px; }
-      @media screen and (max-width: 600px) {
-        /* line 151, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-        main pre + p a {
-          margin-right: 0; } }
-      /* line 162, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main pre + p a:after {
-        content: "→";
-        margin: 0 0 0 5px;
-        color: #666666;
-        -moz-transition: color 100ms;
-        -webkit-transition: color 100ms;
-        -o-transition: color 100ms;
-        font-size: 16px; }
-      /* line 168, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-      main pre + p a:hover {
-        color: white; }
-        /* line 170, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-        main pre + p a:hover:after {
-          color: white; }
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+main pre + p a {
+  margin-right: 20px;
+  display: block;
+  float: right;
+  margin-top: -40px;
+  text-align: right;
+  padding: 5px 0 0 0;
+  font-size: 12px;
+  line-height: 12px;
+}
+@media screen and (max-width: 600px) {
+  main pre + p a {
+    margin-right: 0;
+  }
+}
+main pre + p a:after {
+  content: "→";
+  margin: 0 0 0 5px;
+  color: #666666;
+  -moz-transition: color 100ms;
+  -webkit-transition: color 100ms;
+  -o-transition: color 100ms;
+  font-size: 16px;
+}
+main pre + p a:hover {
+  color: white;
+}
+main pre + p a:hover:after {
+  color: white;
+}
 
-/* line 173, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
 .example_output {
   padding: 40px 40px 20px 40px;
+  margin: 0 0 5px 0;
   background: rgba(255, 255, 255, 0.05);
-  margin: 0 0 40px 0;
-  line-height: 140%; }
-  @media screen and (max-width: 600px) {
-    /* line 173, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    .example_output {
-      padding: 20px 20px 1px 20px;
-      margin: 0 0 20px 0; } }
-  /* line 181, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-  .example_output div {
-    padding: 5px 10px;
-    margin: 0 0 20px 0;
-    background: rgba(255, 255, 255, 0.05); }
-    /* line 185, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-    .example_output div#ugly {
-      background: #944229; }
-  /* line 187, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-  .example_output .highlighted {
-    color: #63fffd; }
-
-/* line 191, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-.example_code pre {
-  margin: 0 0 40px 0; }
+  line-height: 140%;
+}
 @media screen and (max-width: 600px) {
-  /* line 190, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-  .example_code {
-    padding: 0 0 20px 0; } }
+  .example_output {
+    padding: 20px 20px 1px 20px;
+    margin: 0 0 20px 0;
+  }
+}
+.example_output div {
+  padding: 5px 10px;
+  margin: 0 0 20px 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+.example_output div#ugly {
+  background: #944229;
+}
+.example_output .highlighted {
+  color: #63fffd;
+}
+.example_output + p {
+  text-align: right;
+  font-size: 14px;
+  margin: 0 0 40px 0;
+}
+@media screen and (max-width: 600px) {
+  .example_output + p {
+    margin-bottom: 20px;
+  }
+}
 
-/* line 196, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
+.example_code pre {
+  margin: 0 0 40px 0;
+}
+@media screen and (max-width: 600px) {
+  .example_code {
+    padding: 0 0 20px 0;
+  }
+}
+
 footer {
   text-align: center;
   padding: 40px 0;
   font-size: 12px;
   background: url("http://camerondaigle.com/images/logo_footer.png") top center no-repeat;
   background-size: 30px auto;
-  color: #999999; }
-  /* line 203, /Users/camerondaigle/Projects/stagehand/source/stylesheets/application.sass */
-  footer a {
-    color: white; }
+  color: #999999;
+}
+footer a {
+  color: white;
+}

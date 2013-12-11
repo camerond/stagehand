@@ -238,6 +238,17 @@
       fixture.select(0, 2);
       return $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible');
     });
+    test('support special `data-scene` attribute of `toggle`', function() {
+      var sc;
+
+      fixture.use('.keyword_toggle');
+      sc = fixture.init().get();
+      equal(sc.$controls.find('li li').length, 2, 'scene control has 2 options');
+      sc.$controls.find('li li').first().shouldSay('toggle off').next().shouldSay('toggle on');
+      $("[class^='actor']").shouldNotBe('.active');
+      fixture.select(0, 1);
+      return $("[class^='actor']").shouldBe('.active');
+    });
     module('Callbacks');
     return test('afterSceneChange callback', function() {
       var opts;
