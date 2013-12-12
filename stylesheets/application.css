@@ -177,23 +177,33 @@ main h3 small {
   line-height: 24px;
   margin-left: 5px;
 }
-main p {
+main p, main ul {
   margin: 0 0 30px 0;
   line-height: 140%;
   color: #aaaaaa;
 }
 @media screen and (max-width: 600px) {
-  main p {
+  main p, main ul {
     margin: 0 0 20px 0;
   }
 }
-main p a {
+main p a, main ul a {
   -moz-transition: color 100ms;
   -webkit-transition: color 100ms;
   -o-transition: color 100ms;
 }
-main p a:hover {
+main p a:hover, main ul a:hover {
   color: #63fffd;
+}
+main ul {
+  padding: 0 60px;
+  color: #cccccc;
+  list-style-type: square;
+}
+@media screen and (max-width: 600px) {
+  main ul {
+    padding: 0 20px;
+  }
 }
 main code {
   display: inline-block;
