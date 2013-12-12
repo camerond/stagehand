@@ -2,7 +2,17 @@
 layout: application
 ---
 
-## How will this interact with my application's JavaScript?
+## Can you give me some examples of ways I'd use Stagehand?
+
+Certainly! In the weeks since Stagehand's initial conception, I've personally used it to mock up:
+
+- states of a paginated slideshow that could contain anywhere from 1 to hundreds of items
+- various states of the toolbar & tool panels for a WYSIWYG website builder
+- collapsed/expanded state of some simple header navigation dropdowns
+- states of a search interface (initial state, no results, some results, pages of results)
+- some in-page forms (click 'add person', see 'add person' form pop out, see person added ... that sort of thing)
+
+## Okay, sure, but how will this interact with my application's existing JavaScript?
 
 Ideally, it won't -- Stagehand is there to help you __decouple__ application views from static markup views. In an ideal scenario, Stagehand-enabled static views with filler content live in peaceful harmony with actual implemented application views. This is a technique we use at [Hashrocket](http://hashrocket.com) to help designers stay one step ahead of developers, so the devs always have a completed design to implement.
 
