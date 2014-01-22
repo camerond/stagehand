@@ -199,6 +199,11 @@
       fixture.select('foo', 2);
       return $('.actor_3').shouldBeOnly(':visible');
     });
+    test('user can use `data-default-scene` to set a specific initial scene', function() {
+      fixture.use('.default_scene');
+      fixture.init();
+      return $('.actor_2').shouldBeOnly(':visible');
+    });
     module('Changing attributes');
     test('toggle classes via `data-scene-class` attribute', function() {
       fixture.use('.scene_attributes');

@@ -36,6 +36,7 @@
         scene = _ref[stage];
         this.$controls.find("[data-stage='" + stage + "'] [data-scene-control='" + scene + "']").trigger('click.stagehand');
       }
+      this.$controls.find('[data-default-scene]').trigger('click.stagehand');
       return this.$controls.find("[data-stage]").each(function() {
         if (!$(this).find('.stagehand-active').length) {
           return $(this).find('a').eq(0).trigger('click.stagehand');
@@ -115,6 +116,9 @@
         } else {
           $button = $(this.templates.control_button).appendTo($control.find('ul')).find('a').attr('data-scene-control', scene).data('$actor', $actor).text(scene);
         }
+      }
+      if ($actor.is('[data-default-scene]')) {
+        $button.attr('data-default-scene', '');
       }
       return $button;
     },

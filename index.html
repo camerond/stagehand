@@ -85,6 +85,19 @@ Examples:
   I&#39;m an actor in stage &#39;hammerpants&#39;, scene &#39;hammertime&#39;
 <span class="nt">&lt;/div&gt;</span>
 </pre>
+<h2>Persistence</h2>
+
+<p>Stagehand uses sessionStorage to remember each scene&rsquo;s state after page refresh.</p>
+
+<p>You can also add <code>data-default-scene</code> to set any scene as the first to be displayed (Stagehand will otherwise default to displaying the first scene listed):</p>
+<pre class="highlight html"><span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;stop&#39;</span><span class="nt">&gt;</span>
+  I&#39;ll be hidden when the page is loaded
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">data-stage</span> <span class="na">data-scene=</span><span class="s">&#39;hammertime&#39;</span> <span class="na">data-default-scene</span><span class="nt">&gt;</span>
+  I&#39;ll be shown when the page is loaded
+<span class="nt">&lt;/div&gt;</span>
+</pre>
 <h2>Complexities</h2>
 
 <p>There are two special stage names: <code>all</code> and <code>toggle</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and anything with a stage name of <code>toggle</code> can be toggled on and off. You can nest stages &amp; scenes, and assign multiples of either (separated by commas).</p>
