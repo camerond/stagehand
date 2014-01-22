@@ -1,3 +1,7 @@
+# 0.4.3
+
+- support default scenes through `stagehand-default-scene` attribute
+
 # 0.4.2
 
 - fix bug where SessionStorage didn't restore `toggle` scenes

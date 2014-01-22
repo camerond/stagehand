@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.4.2
+# version 0.4.3
 #
 # Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
 #
@@ -44,6 +44,7 @@ Stagehand =
     $(document.body).toggleClass('stagehand-active', sessionStorage.getItem('stagehand-toggle') == 'true')
     for stage, scene of JSON.parse(sessionStorage.getItem("stagehand-scenes"))
       @$controls.find("[data-stage='#{stage}'] [data-scene-control='#{scene}']").trigger('click.stagehand')
+    @$controls.find('[data-default-scene]').trigger('click.stagehand')
     @$controls.find("[data-stage]").each ->
       if !$(@).find('.stagehand-active').length
         $(@).find('a').eq(0).trigger('click.stagehand')
@@ -99,6 +100,7 @@ Stagehand =
             .attr('data-scene-control', scene)
             .data('$actor', $actor)
             .text(scene)
+    if $actor.is('[data-default-scene]') then $button.attr('data-default-scene', '')
     $button
   changeScene: (e) ->
     s = @

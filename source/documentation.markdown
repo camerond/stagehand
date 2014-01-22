@@ -57,6 +57,22 @@ When a scene is active, any actors with that stage & scene will be shown, else t
 </div>
 ~~~
 
+## Persistence
+
+Stagehand uses sessionStorage to remember each scene's state after page refresh.
+
+You can also add `data-default-scene` to set any scene as the first to be displayed (Stagehand will otherwise default to displaying the first scene listed):
+
+~~~html
+<div data-stage data-scene='stop'>
+  I'll be hidden when the page is loaded
+</div>
+
+<div data-stage data-scene='hammertime' data-default-scene>
+  I'll be shown when the page is loaded
+</div>
+~~~
+
 ## Complexities
 
 There are two special stage names: `all` and `toggle`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. You can nest stages & scenes, and assign multiples of either (separated by commas).

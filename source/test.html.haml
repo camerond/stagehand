@@ -50,3 +50,7 @@ layout: test
   %p.actor_4(data-stage data-scene='my scene, my other scene') Should be visible in two scenes
 .keyword_toggle
   %p.actor_1(data-stage data-scene='toggle' data-scene-class='active') Should generate 'on' and 'off' controls
+.default_scene
+  %p.actor_1(data-stage data-scene) Scene 1
+  %p.actor_2(data-stage data-scene data-default-scene) Scene 2 should be default
+  %p.actor_3(data-stage data-scene) Scene 3
