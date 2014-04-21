@@ -189,5 +189,5 @@ $.fn[Stagehand.name] = (opts) ->
       $(@).data(Stagehand.name, plugin_instance)
       plugin_instance.init()
   else
-    $.error('Method #{method} does not exist on jQuery. #{Stagehand.name}');
-  return $els;
+    $.error('Method #{method} does not exist on jQuery. #{Stagehand.name}')
+  return $els
