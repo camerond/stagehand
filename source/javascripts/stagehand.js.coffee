@@ -54,11 +54,8 @@ Stagehand =
     sessionStorage.setItem("stagehand-scenes", false)
     sessionStorage.setItem("stagehand-toggle", false)
   buildControls: ->
-    if @$controls
-      @$controls.empty()
-    else
-      @$controls = $(@templates.controls).append($(@templates.toggle))
-      $(document.body).append(@$controls)
+    @$controls = $(@templates.controls).append($(@templates.toggle))
+    $(document.body).append(@$controls)
     for k, v of @stages
       @buildStageControl(k, v)
   buildStageControl: (name, $stage) ->
@@ -66,16 +63,17 @@ Stagehand =
     $li = $(@templates.control)
     $li
       .attr('data-stage', name)
+      .data('exclude', {})
       .find('h2').text(name)
     $stage.each (idx) ->
-      $button = s.buildOrAppendControlButton($(@), $li, idx)
+      s.buildOrAppendControlButton($(@), $li, idx)
     @prependSpecialOptions($li, $stage)
     $li.find('a').data('$stage', $stage)
     @stage_controls.push($li)
     @$controls.find("> ul").append($li)
   prependSpecialOptions: ($li, $stage) ->
     special = []
-    if $stage.filter("[data-scene='all']").length
+    if $stage.filter("[data-scene^='all'], [data-scene^='!']").length
       special.push('none')
     if $stage.filter("[data-scene='toggle']").length
       special.push('toggle on')
@@ -85,23 +83,27 @@ Stagehand =
         .prependTo($li.find('ul'))
         .find('a').text(txt)
         .attr('data-scene-control', "special-#{txt.replace(' ', '-')}")
-  buildOrAppendControlButton: ($actor, $control, idx) ->
+  buildOrAppendControlButton: ($actor, $controls, idx) ->
     scenes = if $actor.attr('data-scene') then $actor.attr('data-scene').split(',') else ["#{idx + 1}"]
     for scene, i in scenes
-      if scene == 'all' or scene == 'toggle' then return
-      scene = scene.replace(/^\s+|\s+$/g, '')
-      $button = $control.find("[data-scene-control='#{scene}']")
-      if $button.length
-        $button.data('$actor', $button.data('$actor').add($actor))
-      else
-        $button = $(@templates.control_button)
-          .appendTo($control.find('ul'))
-          .find('a')
-            .attr('data-scene-control', scene)
-            .data('$actor', $actor)
-            .text(scene)
-    if $actor.is('[data-default-scene]') then $button.attr('data-default-scene', '')
-    $button
+      if scene != 'all' and scene != 'toggle'
+        scene = scene.replace(/^\s+|\s+$/g, '')
+        if scene[0] == '!'
+          to_exclude = scene.substr(1)
+          !$controls.data('exclude')[to_exclude] && $controls.data('exclude')[to_exclude] = $()
+          $controls.data('exclude')[to_exclude] = $controls.data('exclude')[to_exclude].add($actor)
+        else
+          $button = $controls.find("[data-scene-control='#{scene}']")
+          if $button.length
+            $button.data('$actor', $button.data('$actor').add($actor))
+          else
+            $button = $(@templates.control_button)
+              .appendTo($controls.find('ul'))
+              .find('a')
+                .attr('data-scene-control', scene)
+                .data('$actor', $actor)
+                .text(scene)
+          if $actor.is('[data-default-scene]') then $button.attr('data-default-scene', '')
   changeScene: (e) ->
     s = @
     $a = $(e.target)
@@ -115,7 +117,9 @@ Stagehand =
         when 'toggle on'
           $actors_on = $a.data('$stage').filter("[data-scene='toggle']")
     else
-      $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"))
+      $actors_on = $a.data('$actor')
+        .add($a.data('$stage').filter("[data-scene^='all']"))
+        .not($a.closest('li[data-stage]').data('exclude')[$a.attr('data-scene-control')])
       $actors_off = $a.data('$stage').not($actors_on)
     $a.closest('ul').find('a').removeClass('stagehand-active')
     $a.addClass('stagehand-active')
@@ -169,7 +173,7 @@ Stagehand =
     @detectScenes()
     @buildControls()
     @bindEvents()
-    @overlay && $(document.body).toggleClass('stagehand-overlay')
+    @overlay && $(document.body).addClass('stagehand-overlay')
     @loadState()
     @$el
 

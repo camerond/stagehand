@@ -61,6 +61,7 @@
     reset: ->
       @get() && @get().teardown()
     select: (stage, scene) ->
+      ok true, "selecting stage #{stage} scene #{scene}"
       if typeof stage == 'number'
         @get().$controls.find('li').eq(stage).find('li').eq(scene).find('a').click()
       else
@@ -197,6 +198,20 @@
     $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
     fixture.select(0, 2)
     $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
+
+  test 'support special ! character to exclude scenes', ->
+    fixture.use '.keyword_not'
+    sc = fixture.init().get()
+    equal sc.$controls.find('li li').length, 4, 'scene control has 4 options'
+    sc.$controls.find('li li').first().shouldSay('none')
+    fixture.select(0, 0)
+    $("[class^='actor']").shouldNotBe(':visible')
+    fixture.select(0, 1)
+    $('.actor_1').shouldBeOnly(':visible')
+    fixture.select(0, 2)
+    $('.actor_2, .actor_4').shouldBeOnly(':visible')
+    fixture.select(0, 3)
+    $('.actor_3, .actor_4, .actor_5').shouldBeOnly(':visible')
 
   test 'support special `data-scene` attribute of `toggle`', ->
     fixture.use '.keyword_toggle'
