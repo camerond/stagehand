@@ -61,7 +61,7 @@ fixture =
   select: (stage, scene) ->
     ok true, "selecting stage #{stage} scene #{scene}"
     if typeof stage == 'number'
-      @get().$controls.find('li').eq(stage).find('li').eq(scene).find('a').click()
+      @get().$controls.find('> ul > li').eq(stage).find('li').eq(scene).find('a').click()
     else
       @stageControls(stage).eq(scene).find("a").click()
   stageControls: (name) ->
@@ -163,33 +163,33 @@ test 'user can use `data-default-scene` to set a specific initial scene', ->
   fixture.use '.default_scene'
   fixture.init()
   $('.actor_2').shouldBeOnly(':visible')
-#
-#  module 'Changing attributes'
-#
-#  test 'toggle classes via `data-scene-class` attribute', ->
-#    fixture.use '.scene_attributes'
-#    fixture.init()
-#    $('.actor_1').shouldBeOnly('.active')
-#    fixture.select(0, 1)
-#    $('.actor_2').shouldBeOnly('.active')
-#
-#  test 'toggle ids via `data-scene-id` attribute', ->
-#    fixture.use '.scene_attributes'
-#    fixture.init()
-#    $('.actor_1').shouldBeOnly('#some_id')
-#    fixture.select(0, 1)
-#    equal $("#some_id").length, 0, 'correctly does not apply an id to any element in this scene'
-#    fixture.select(0, 2)
-#    $('.actor_3').shouldBeOnly('#some_id')
-#
-#  test 'support toggling attributes while using multiple named `data-scene` attributes', ->
-#    fixture.use '.shared_scene_attributes'
-#    fixture.init()
-#    $('.actor_1, .actor_4').shouldBeOnly('.active')
-#    fixture.select('foo', 1)
-#    $('.actor_2, .actor_4').shouldBeOnly('.active')
-#    fixture.select('foo', 2)
-#    $('.actor_3').shouldBeOnly('.active')
+
+module 'Changing attributes'
+
+test 'toggle classes via `data-scene-class` attribute', ->
+  fixture.use '.scene_attributes'
+  fixture.init()
+  $('.actor_1').shouldBeOnly('.active')
+  fixture.select(0, 1)
+  $('.actor_2').shouldBeOnly('.active')
+
+test 'toggle ids via `data-scene-id` attribute', ->
+  fixture.use '.scene_attributes'
+  fixture.init()
+  $('.actor_1').shouldBeOnly('#some_id')
+  fixture.select(0, 1)
+  equal $("#some_id").length, 0, 'correctly does not apply an id to any element in this scene'
+  fixture.select(0, 2)
+  $('.actor_3').shouldBeOnly('#some_id')
+
+test 'support toggling attributes while using multiple named `data-scene` attributes', ->
+  fixture.use '.shared_scene_attributes'
+  fixture.init()
+  $('.actor_1, .actor_4').shouldBeOnly('.active')
+  fixture.select('foo', 1)
+  $('.actor_2, .actor_4').shouldBeOnly('.active')
+  fixture.select('foo', 2)
+  $('.actor_3').shouldBeOnly('.active')
 #
 #  test 'support special `data-scene` attribute of `all`', ->
 #    fixture.use '.keyword_all'

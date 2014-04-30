@@ -63,7 +63,7 @@ class Scene
     @$el.find('a').text(@name)
   template: "<li><a href='#'></a></li>"
   addActor: ($el) ->
-    @actors.push($el)
+    @actors.push new Actor($el)
     @
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
