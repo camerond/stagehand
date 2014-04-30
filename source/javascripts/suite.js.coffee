@@ -74,6 +74,9 @@ fixture =
     @$el = $("#qunit-fixture")
     @
 
+QUnit.testDone ->
+  $(document.body).data('stagehand').teardown()
+
 module 'Base Functionality'
 
 test 'it chains properly', ->
@@ -138,28 +141,28 @@ test 'support multiple named `data-stage` attributes', ->
   fixture.select('baz', 2)
   $('.actor_4').shouldNotBe(':visible')
   $('.actor_5').shouldBe(':visible')
-#
-#  test 'support named `data-scene` attributes', ->
-#    fixture.use '.named_scenes'
-#    sc = fixture.init().get()
-#    $('.actor_1_1, .actor_2_1').shouldBeOnly(':visible')
-#    fixture.select('foo', 1)
-#    fixture.select('Stage 1', 1)
-#    $('.actor_1_2, .actor_2_2').shouldBeOnly(':visible')
-#
-#  test 'support multiple named `data-scene` attributes', ->
-#    fixture.use '.shared_scenes'
-#    fixture.init()
-#    $('.actor_1, .actor_4').shouldBeOnly(':visible')
-#    fixture.select('foo', 1)
-#    $('.actor_2, .actor_4').shouldBeOnly(':visible')
-#    fixture.select('foo', 2)
-#    $('.actor_3').shouldBeOnly(':visible')
-#
-#  test 'user can use `data-default-scene` to set a specific initial scene', ->
-#    fixture.use '.default_scene'
-#    fixture.init()
-#    $('.actor_2').shouldBeOnly(':visible')
+
+test 'support named `data-scene` attributes', ->
+  fixture.use '.named_scenes'
+  sc = fixture.init().get()
+  $('.actor_1_1, .actor_2_1').shouldBeOnly(':visible')
+  fixture.select('foo', 1)
+  fixture.select('Stage 1', 1)
+  $('.actor_1_2, .actor_2_2').shouldBeOnly(':visible')
+
+test 'support multiple named `data-scene` attributes', ->
+  fixture.use '.shared_scenes'
+  fixture.init()
+  $('.actor_1, .actor_4').shouldBeOnly(':visible')
+  fixture.select('foo', 1)
+  $('.actor_2, .actor_4').shouldBeOnly(':visible')
+  fixture.select('foo', 2)
+  $('.actor_3').shouldBeOnly(':visible')
+
+test 'user can use `data-default-scene` to set a specific initial scene', ->
+  fixture.use '.default_scene'
+  fixture.init()
+  $('.actor_2').shouldBeOnly(':visible')
 #
 #  module 'Changing attributes'
 #

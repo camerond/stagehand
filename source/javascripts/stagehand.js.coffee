@@ -28,22 +28,29 @@ class Stage
     @$els = $()
     @$el = $(@template)
     @$el.find('h2').text(name)
+    @$default = false
   template: "<li><h2></h2><ul></ul></li>"
   addEls: ($els) ->
     @$els = @$els.add($els)
+  initialize: ->
+    (@$default || @$el.find('a:first')).click()
   parseScenes: ->
     idx = 0
     @$els.each (k, v) =>
       $el = $(v)
-      for scene_name in $el.attr('data-scene')?.split(',') || [idx = idx + 1]
+      names = if $el.attr('data-scene') then $el.attr('data-scene').split(',')
+      for scene_name in names || [idx = idx + 1]
         scene_name = ('' + scene_name).replace(/^\s+|\s+$/g, '')
-        @addScene(scene_name)
-          .addActor($el, scene_name)
+        new_scene = @addScene(scene_name)
+        new_scene.addActor($el, scene_name)
+        $el.is('[data-default-scene]') && @setDefault(new_scene)
   addScene: (name) ->
     if !@scenes[name]
       @scenes[name] = new Scene(name, @)
       @$el.find('ul').append(@scenes[name].$el)
     @scenes[name]
+  setDefault: (scene) ->
+    @$default = scene.$el.find('a')
   toggleScene: (name) ->
     scene.toggle(false) for k, scene of @scenes
     @scenes[name].toggle(true)
@@ -106,8 +113,11 @@ Stagehand =
   bindEvents: ->
     @$controls.on 'click.stagehand', 'a.stagehand-toggle', $.proxy(@toggleControls, @)
     @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
+  teardown: ->
+    @$controls.remove()
+    @$el.removeData(@name)
   init: ->
-    @$controls = $(@template)
+    @$controls = $(@template).appendTo($(document.body))
     @$controls.append($(@template_toggle))
     @$stage_cache = $('[data-stage]')
     @parseAnonymousStages()
@@ -115,7 +125,7 @@ Stagehand =
     @bindEvents()
     for name, stage of @stages
       stage.parseScenes()
-      stage.$el.find('a:first').click()
+      stage.initialize()
     @$el
 
 #old_Stagehand =
