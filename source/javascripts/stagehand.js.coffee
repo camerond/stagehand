@@ -50,23 +50,26 @@ class Stage
 
 class Scene
   constructor: (@name, @stage) ->
-    @$actors = $()
+    @actors = []
     @$el = $(@template)
     @$el.data('scene', @)
     @$el.find('a').text(@name)
   template: "<li><a href='#'></a></li>"
   addActor: ($el) ->
-    @$actors = @$actors.add($el)
+    @actors.push($el)
     @
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
-    @$actors.each ->
-      $actor = $(@)
-      klass = $actor.attr('data-scene-class')
-      id = $actor.attr('data-scene-id')
-      if klass then $actor.toggleClass(klass, direction)
-      if id then $actor.attr("id", if direction then id else '')
-      if !id and !klass then $actor.toggle(direction)
+    actor.toggle(direction) for actor in @actors
+
+class Actor
+  constructor: (@$el) ->
+  toggle: (direction) ->
+    klass = @$el.attr('data-scene-class')
+    id = @$el.attr('data-scene-id')
+    if klass then @$el.toggleClass(klass, direction)
+    if id then @$el.attr("id", if direction then id else '')
+    if !id and !klass then @$el.toggle(direction)
 
 Stagehand =
   template: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"
