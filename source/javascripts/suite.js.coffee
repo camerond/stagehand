@@ -190,17 +190,17 @@ test 'support toggling attributes while using multiple named `data-scene` attrib
   $('.actor_2, .actor_4').shouldBeOnly('.active')
   fixture.select('foo', 2)
   $('.actor_3').shouldBeOnly('.active')
-#
-#  test 'support special `data-scene` attribute of `all`', ->
-#    fixture.use '.keyword_all'
-#    sc = fixture.init().get()
-#    equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
-#    sc.$controls.find('li li').first().shouldSay('none')
-#    $("[class^='actor']").shouldNotBe(':visible')
-#    fixture.select(0, 1)
-#    $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
-#    fixture.select(0, 2)
-#    $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
+
+test 'support special `data-scene` attribute of `all`', ->
+  fixture.use '.keyword_all'
+  sc = fixture.init().get()
+  equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
+  sc.$controls.find('li li').first().shouldSay('none')
+  $("[class^='actor']").shouldNotBe(':visible')
+  fixture.select(0, 1)
+  $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
+  fixture.select(0, 2)
+  $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
 #
 #  test 'support special ! character to exclude scenes', ->
 #    fixture.use '.keyword_not'
