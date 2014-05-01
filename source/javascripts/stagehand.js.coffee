@@ -29,56 +29,54 @@ class Stage
     @$els = $()
     @$el = $(@template)
     @$el.find('h2').text(name)
-    @$default = false
+    @default_scene_idx = false
   template: "<li><h2></h2><ul></ul></li>"
   addEls: ($els) ->
     @$els = @$els.add($els)
   initialize: ->
-    (@$default || @$el.find('a:first')).click()
+    if @default_scene_idx?
+      @$el.find('li').eq(@default_scene_idx).find('a').click()
+    else
+      @$el.find('a:first').click()
   parseScenes: ->
     idx = 0
     @$els.each (k, v) =>
       $el = $(v)
       names = if $el.attr('data-scene') then $el.attr('data-scene').split(',')
       for scene_name in names || [idx = idx + 1]
-        scene_name = ('' + scene_name).replace(/^\s?!?|\s+$/g, '')
-        new_scene = @addScene(scene_name)
-        new_scene.addActor($el)
-        $el.is('[data-default-scene]') && @setDefault(new_scene)
-  addScene: (name) ->
+        new_scene = @getScene(@trimSceneName(scene_name)).addActor($el)
+        if !@default_scene_idx && $el.is('[data-default-scene]')
+          @default_scene_idx = new_scene.$el.index()
+  getScene: (name) ->
     if name == 'all'
-      @appendNoneOption()
+      @prependSpecialOption('none', new NoneScene(@))
       return @keyword_scenes.all ||= new AllScene(@)
     else if name == 'toggle'
-      @appendToggleOptions()
+      @prependSpecialOption('toggle on')
+      @prependSpecialOption('toggle off')
       return @keyword_scenes['toggle on']
-    if !@scenes[name]
+    else if !@scenes[name]
       @scenes[name] = new Scene(@, name)
       @$el.find('ul').append(@scenes[name].$el)
     return @scenes[name]
-  appendNoneOption: ->
-    if !@keyword_scenes.none
-      @keyword_scenes.none = new NoneScene(@)
-      @$el.find('ul').prepend(@keyword_scenes.none.$el)
-    @scenes['none']
-  appendToggleOptions: ->
-    if !@keyword_scenes.toggle_on
-      @keyword_scenes['toggle on'] = new ToggleOnScene(@)
-      @keyword_scenes['toggle off'] = new ToggleOffScene(@)
-      @$el.find('ul').prepend(@keyword_scenes['toggle on'].$el)
-      @$el.find('ul').prepend(@keyword_scenes['toggle off'].$el)
-  setDefault: (scene) ->
-    @$default = scene.$el.find('a')
+  prependSpecialOption: (name, scene) ->
+    s = scene || new Scene(@, name)
+    if !@keyword_scenes[name]
+      @keyword_scenes[name] = s
+      @$el.find('ul').prepend(s.$el)
+  trimSceneName: (name) ->
+    ('' + name).replace(/^\s?!?|\s+$/g, '')
   toggleScene: (name) ->
     (@scenes[name] || @keyword_scenes[name]).handleClick()
+  verify: ->
+    @$el.find('.stagehand-active').data('scene')?.verify()
 
 class Scene
   constructor: (@stage, @name) ->
     @$actors = $()
     @$exclusions = $()
     @$el = $(@template)
-    @$el.data('scene', @)
-    @$el.find('a').text(@name)
+    @$el.data('scene', @).find('a').text(@name)
   template: "<li><a href='#'></a></li>"
   addActor: ($el) ->
     if $el.attr('data-scene')?.indexOf("!#{@name}") > -1
@@ -109,6 +107,9 @@ class Scene
     @$el.toggleClass('stagehand-active', direction)
     @toggleActors(@$exclusions, false) if direction
     @toggleActors(@$actors.not(@$exclusions), direction)
+  verify: ->
+    @toggleKeywordAll()
+    @toggle(true)
 
 class AllScene extends Scene
   constructor: (@stage) ->
@@ -120,14 +121,8 @@ class NoneScene extends Scene
     super(@stage, 'none')
   toggleKeywordAll: ->
     @stage.keyword_scenes.all.toggle(false)
-
-class ToggleOnScene extends Scene
-  constructor: (@stage) ->
-    super(@stage, 'toggle on')
-
-class ToggleOffScene extends Scene
-  constructor: (@stage) ->
-    super(@stage, 'toggle off')
+  verify: ->
+    @toggle(true)
 
 Stagehand =
   afterSceneChange: $.noop
@@ -143,7 +138,10 @@ Stagehand =
   changeScene: (e) ->
     scene = $(e.target).closest('li').data('scene')
     scene.stage.toggleScene(scene.name)
+    for name, stage of @stages
+      stage.verify()
     @afterSceneChange(scene.$actors)
+    @saveState()
   parseAnonymousStages: ->
     $anons = @$stage_cache.filter('[data-stage=""]')
     @$stage_cache = @$stage_cache.not($anons)
@@ -162,6 +160,7 @@ Stagehand =
         @addStage(stage_name).addEls($actor)
   toggleControls: ->
     $(document.body).toggleClass('stagehand-active')
+    @saveState()
     false
   bindEvents: ->
     @$controls.on 'click.stagehand', 'a.stagehand-toggle', $.proxy(@toggleControls, @)
@@ -169,6 +168,19 @@ Stagehand =
   teardown: ->
     @$controls.remove()
     @$el.removeData(@name)
+    sessionStorage.setItem("stagehand-scenes", false)
+    sessionStorage.setItem("stagehand-toggle", false)
+  saveState: ->
+    stages = {}
+    for name, stage of @stages
+      $active = stage.$el.find('.stagehand-active')
+      if $active.length then stages[name] = $active.index()
+    sessionStorage.setItem("stagehand-scenes", JSON.stringify(stages))
+    sessionStorage.setItem("stagehand-toggle", $(document.body).is(".stagehand-active"))
+  loadState: ->
+    for stage_name, idx of JSON.parse(sessionStorage.getItem("stagehand-scenes"))
+      @stages[stage_name]?.default_scene_idx = idx
+    if sessionStorage.getItem('stagehand-toggle') == "true" then @toggleControls()
   init: ->
     @$controls = $(@template).appendTo($(document.body))
     @$controls.append($(@template_toggle))
@@ -176,6 +188,7 @@ Stagehand =
     @parseAnonymousStages()
     @parseNamedStages()
     @bindEvents()
+    @loadState()
     for name, stage of @stages
       stage.parseScenes()
       stage.initialize()

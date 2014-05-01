@@ -202,6 +202,17 @@ test 'support special `data-scene` attribute of `all`', ->
   fixture.select(0, 2)
   $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
 
+test 'switching to `none` scene should not override shared `all` actors', ->
+  fixture.use '.keyword_shared_all'
+  fixture.init()
+  $("[class^='actor']").shouldNotBe(':visible')
+  fixture.select(0, 1)
+  $('.actor_1, .actor_3').shouldBeOnly(':visible')
+  fixture.select(1, 1)
+  $('.actor_1, .actor_2, .actor_3').shouldBeOnly(':visible')
+  fixture.select(0, 0)
+  $('.actor_2, .actor_3').shouldBeOnly(':visible')
+
 test 'support special ! character to exclude scenes', ->
   fixture.use '.keyword_not'
   sc = fixture.init().get()

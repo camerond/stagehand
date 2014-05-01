@@ -48,6 +48,10 @@ layout: test
   %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
   %p.actor_3(data-stage data-scene='all') Should be visible in all scenes
   %p.actor_4(data-stage data-scene='my scene, my other scene') Should be visible in two scenes
+.keyword_shared_all
+  %p.actor_1(data-stage='foo' data-scene) Stage foo scene my scene
+  %p.actor_2(data-stage='bar' data-scene) Stage foo my other scene
+  %p.actor_3(data-stage='foo, bar' data-scene='all') Should be visible in all scenes
 .keyword_toggle
   %p.actor_1(data-stage data-scene='my scene') Stage foo scene my scene
   %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
