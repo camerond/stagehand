@@ -49,6 +49,9 @@ class Stage
     if name == 'all'
       @appendNoneOption()
       return @keyword_scenes.all ||= new AllScene(@)
+    else if name == 'toggle'
+      @appendToggleOptions()
+      return @keyword_scenes['toggle on']
     if !@scenes[name]
       @scenes[name] = new Scene(@, name)
       @$el.find('ul').append(@scenes[name].$el)
@@ -58,6 +61,12 @@ class Stage
       @keyword_scenes.none = new NoneScene(@)
       @$el.find('ul').prepend(@keyword_scenes.none.$el)
     @scenes['none']
+  appendToggleOptions: ->
+    if !@keyword_scenes.toggle_on
+      @keyword_scenes['toggle on'] = new ToggleOnScene(@)
+      @keyword_scenes['toggle off'] = new ToggleOffScene(@)
+      @$el.find('ul').prepend(@keyword_scenes['toggle on'].$el)
+      @$el.find('ul').prepend(@keyword_scenes['toggle off'].$el)
   setDefault: (scene) ->
     @$default = scene.$el.find('a')
   toggleScene: (name) ->
@@ -78,10 +87,14 @@ class Scene
       @$actors = @$actors.add($el)
     @
   toggleKeywordAll: ->
-    @stage.keyword_scenes.all && @stage.keyword_scenes.all.toggle(true)
-  handleClick: ->
+    @stage.keyword_scenes.all?.toggle(true)
+  toggleOffOtherScenes: ->
+    @$el.siblings().removeClass('stagehand-active')
+    @stage.keyword_scenes['toggle on']?.toggle(false)
     for k, scene of @stage.scenes
       scene.name != @name && scene.toggle(false)
+  handleClick: ->
+    @toggleOffOtherScenes()
     @toggleKeywordAll()
     @toggle(true)
   toggleActors: ($actors, direction) ->
@@ -94,7 +107,7 @@ class Scene
       if !id and !klass then $actor.toggle(direction)
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
-    @toggleActors(@$exclusions, false)
+    @toggleActors(@$exclusions, false) if direction
     @toggleActors(@$actors.not(@$exclusions), direction)
 
 class AllScene extends Scene
@@ -107,6 +120,14 @@ class NoneScene extends Scene
     super(@stage, 'none')
   toggleKeywordAll: ->
     @stage.keyword_scenes.all.toggle(false)
+
+class ToggleOnScene extends Scene
+  constructor: (@stage) ->
+    super(@stage, 'toggle on')
+
+class ToggleOffScene extends Scene
+  constructor: (@stage) ->
+    super(@stage, 'toggle off')
 
 Stagehand =
   template: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"

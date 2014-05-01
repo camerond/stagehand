@@ -213,19 +213,20 @@ test 'support special ! character to exclude scenes', ->
   $('.actor_1').shouldBeOnly(':visible')
   fixture.select(0, 2)
   $('.actor_2, .actor_4').shouldBeOnly(':visible')
-  fixture.select(0, 3)
-  $('.actor_3, .actor_4, .actor_5').shouldBeOnly(':visible')
-#
-#  test 'support special `data-scene` attribute of `toggle`', ->
-#    fixture.use '.keyword_toggle'
-#    sc = fixture.init().get()
-#    equal sc.$controls.find('li li').length, 2, 'scene control has 2 options'
-#    sc.$controls.find('li li')
-#      .first().shouldSay('toggle off')
-#      .next().shouldSay('toggle on')
-#    $("[class^='actor']").shouldNotBe('.active')
-#    fixture.select(0, 1)
-#    $("[class^='actor']").shouldBe('.active')
+
+test 'support special `data-scene` attribute of `toggle`', ->
+  fixture.use '.keyword_toggle'
+  sc = fixture.init().get()
+  console.log $("#stagehand-controls")[0]
+  equal sc.$controls.find('li li').length, 4, 'scene control has 4 options'
+  sc.$controls.find('li li')
+    .first().shouldSay('toggle off')
+    .next().shouldSay('toggle on')
+  $("[class^='actor']").shouldNotBe(':visible')
+  fixture.select(0, 1)
+  $(".actor_3").shouldBeOnly(':visible')
+  fixture.select(0, 2)
+  $(".actor_1").shouldBeOnly(':visible')
 #
 #  module 'Callbacks'
 #
