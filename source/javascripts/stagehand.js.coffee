@@ -167,7 +167,7 @@ Stagehand =
     @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
   teardown: ->
     @$controls.remove()
-    @$el.removeData(@name)
+    @$el.removeData('stagehand')
     sessionStorage.setItem("stagehand-scenes", false)
     sessionStorage.setItem("stagehand-toggle", false)
   saveState: ->
@@ -197,18 +197,13 @@ Stagehand =
 $.fn.stagehand = (opts) ->
   $els = @
   method = if $.isPlainObject(opts) or !opts then '' else opts
-  if method and Stagehand[method]
-    Stagehand[method].apply($els, Array.prototype.slice.call(arguments, 1))
-  else if !method
-    $els.each ->
-      plugin_instance = $.extend(
-        true,
-        $el: $(@),
-        Stagehand,
-        opts
-      )
-      $(@).data('stagehand', plugin_instance)
-      plugin_instance.init()
-  else
-    $.error('Method #{method} does not exist on jQuery.')
+  $els.each ->
+    plugin_instance = $.extend(
+      true,
+      $el: $(@),
+      Stagehand,
+      opts
+    )
+    $(@).data('stagehand', plugin_instance)
+    plugin_instance.init()
   return $els
