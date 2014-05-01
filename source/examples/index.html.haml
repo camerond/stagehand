@@ -31,11 +31,13 @@ layout: application
     :markdown
       You can assign multiple stages and scenes to actors (separated by commas), and you can nest scenes and stages to your heart's content; hey, whether the resulting states make any sense is up to you.
 
-      There are two special keywords in Stagehand: `all` and `toggle`.
+      There are three special keywords in Stagehand: `toggle`, `all`, and `!`.
+
+      Sometimes, instead of switching between actors, you might want to toggle a single actor (or group of actors). If an actor has a scene of `toggle`, its stage is given two scenes, 'toggle on' and 'toggle off'.
 
       If an actor has a scene of `all`, it's visible for all scenes of a stage, and that stage is also given a scene option of 'none' in the toolbar (which toggles every associated actor off),
 
-      Sometimes, instead of switching between actors, you might want to toggle a single actor (or group of actors). If an actor has a scene of `toggle`, its stage is given two scenes, 'toggle on' and 'toggle off'.
+      If you need to have an actor show for everything _except_ a particular scene (or scenes), add a scene of `all` and follow it up with a scene name prepended with `!`, e.g. `!pants`.
 
 %h3
   Example output

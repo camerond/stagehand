@@ -75,7 +75,9 @@ You can also add `data-default-scene` to set any scene as the first to be displa
 
 ## Complexities
 
-There are two special stage names: `all` and `toggle`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. You can nest stages & scenes, and assign multiples of either (separated by commas).
+There are three special stage names: `all`, `toggle`, and `!`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. If you have an element with a scene of `all`, you can exclude certain scenes with `!` (e.g. `data-scene='all, !hammertime'`)
+
+You can nest stages & scenes, and assign multiples of either (separated by commas).
 
 Check out [example 4](/examples/4) for more info on Stagehand's more complex interactions.
 
@@ -85,9 +87,8 @@ In case you need some supporting JavaScript to fire, there's an afterSceneChange
 
 ~~~javascript
 $(document.body).stagehand({
-  afterSceneChange: function($actors_on, $actors_off) {
+  afterSceneChange: function($actors_on) {
     // $actors_on is the set of actors that just got toggled on by this scene change
-    // $actors_off is the set of actors that just got toggled off by this scene change
   }
 });
 ~~~
