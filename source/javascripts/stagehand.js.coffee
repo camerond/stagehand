@@ -130,6 +130,7 @@ class ToggleOffScene extends Scene
     super(@stage, 'toggle off')
 
 Stagehand =
+  afterSceneChange: $.noop
   template: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"
   template_toggle: "<a href='#' class='stagehand-toggle'></a>"
   stages: {}
@@ -142,6 +143,7 @@ Stagehand =
   changeScene: (e) ->
     scene = $(e.target).closest('li').data('scene')
     scene.stage.toggleScene(scene.name)
+    @afterSceneChange(scene.$actors)
   parseAnonymousStages: ->
     $anons = @$stage_cache.filter('[data-stage=""]')
     @$stage_cache = @$stage_cache.not($anons)

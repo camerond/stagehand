@@ -217,7 +217,6 @@ test 'support special ! character to exclude scenes', ->
 test 'support special `data-scene` attribute of `toggle`', ->
   fixture.use '.keyword_toggle'
   sc = fixture.init().get()
-  console.log $("#stagehand-controls")[0]
   equal sc.$controls.find('li li').length, 4, 'scene control has 4 options'
   sc.$controls.find('li li')
     .first().shouldSay('toggle off')
@@ -227,19 +226,16 @@ test 'support special `data-scene` attribute of `toggle`', ->
   $(".actor_3").shouldBeOnly(':visible')
   fixture.select(0, 2)
   $(".actor_1").shouldBeOnly(':visible')
-#
-#  module 'Callbacks'
-#
-#  test 'afterSceneChange callback', ->
-#    fixture.use '.shared_scenes'
-#    opts = {
-#      afterSceneChange: ($actors_on, $actors_off) ->
-#        $actors_on.addClass('changed')
-#        $actors_off.removeClass('changed')
-#    }
-#    $("#qunit-fixture").find('p').shouldNotBe('.changed')
-#    fixture.init(opts)
-#    $('.actor_1, .actor_4').shouldBeOnly('.changed')
-#    fixture.select(0, 1)
-#    $('.actor_2, .actor_4').shouldBeOnly('.changed')
-#
+
+module 'Callbacks'
+
+test 'afterSceneChange callback', ->
+  fixture.use '.shared_scenes'
+  opts = {
+    afterSceneChange: ($actors_on) ->
+      $actors_on.addClass('changed')
+  }
+  $("#qunit-fixture").find('p').shouldNotBe('.changed')
+  fixture.init(opts)
+  $('.actor_1, .actor_4').shouldBeOnly('.changed')
+
