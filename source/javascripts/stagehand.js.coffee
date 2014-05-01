@@ -25,8 +25,7 @@
 class Stage
   constructor: (@name) ->
     @scenes = {}
-    @keyword_scenes =
-      all: false
+    @keyword_scenes = {}
     @$els = $()
     @$el = $(@template)
     @$el.find('h2').text(name)
@@ -49,23 +48,23 @@ class Stage
   addScene: (name) ->
     if name == 'all'
       @appendNoneOption()
-      return @keyword_scenes.all ||= new AllScene(name, @)
+      return @keyword_scenes.all ||= new AllScene(@)
     if !@scenes[name]
-      @scenes[name] = new Scene(name, @)
+      @scenes[name] = new Scene(@, name)
       @$el.find('ul').append(@scenes[name].$el)
     return @scenes[name]
   appendNoneOption: ->
-    if !@scenes['none']
-      @scenes['none'] = new NoneScene(name, @)
-      @$el.find('ul').prepend(@scenes['none'].$el)
+    if !@keyword_scenes.none
+      @keyword_scenes.none = new NoneScene(@)
+      @$el.find('ul').prepend(@keyword_scenes.none.$el)
     @scenes['none']
   setDefault: (scene) ->
     @$default = scene.$el.find('a')
   toggleScene: (name) ->
-    @scenes[name].handleClick()
+    (@scenes[name] || @keyword_scenes[name]).handleClick()
 
 class Scene
-  constructor: (@name, @stage) ->
+  constructor: (@stage, @name) ->
     @$actors = $()
     @$exclusions = $()
     @$el = $(@template)
@@ -99,11 +98,13 @@ class Scene
     @toggleActors(@$actors.not(@$exclusions), direction)
 
 class AllScene extends Scene
+  constructor: (@stage) ->
+    super(@stage, 'all')
   @$exclusions: $.noop()
 
 class NoneScene extends Scene
-  constructor: (@name, @stage) ->
-    super 'none', @stage
+  constructor: (@stage) ->
+    super(@stage, 'none')
   toggleKeywordAll: ->
     @stage.keyword_scenes.all.toggle(false)
 
