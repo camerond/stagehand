@@ -25,7 +25,8 @@
 class Stage
   constructor: (@name) ->
     @scenes = {}
-    @inclusive_scenes = []
+    @keyword_scenes =
+      all: false
     @$els = $()
     @$el = $(@template)
     @$el.find('h2').text(name)
@@ -49,7 +50,7 @@ class Stage
     new_scene = @scenes[name] || new Scene(name, @)
     if name == 'all'
       @appendNoneOption()
-      @inclusive_scenes.push(new_scene)
+      @keyword_scenes.all = new_scene
     else if !@scenes[name]
       @scenes[name] = new_scene
       @$el.find('ul').append(new_scene.$el)
@@ -74,12 +75,12 @@ class Scene
   addActor: ($el) ->
     @actors.push(new Actor($el))
     @
-  toggleInclusiveScenes: ->
-    scene.toggle(true) for scene in @stage.inclusive_scenes
+  toggleKeywordAll: ->
+    @stage.keyword_scenes.all && @stage.keyword_scenes.all.toggle(true)
   handleClick: ->
     for k, scene of @stage.scenes
       scene.name != @name && scene.toggle(false)
-    @toggleInclusiveScenes()
+    @toggleKeywordAll()
     @toggle(true)
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
@@ -88,8 +89,8 @@ class Scene
 class NoneScene extends Scene
   constructor: (@name, @stage) ->
     super 'none', @stage
-  toggleInclusiveScenes: ->
-    scene.toggle(false) for scene in @stage.inclusive_scenes
+  toggleKeywordAll: ->
+    @stage.keyword_scenes.all.toggle(false)
 
 class Actor
   constructor: (@$el) ->
