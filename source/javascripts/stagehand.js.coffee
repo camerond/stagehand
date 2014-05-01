@@ -42,19 +42,18 @@ class Stage
       $el = $(v)
       names = if $el.attr('data-scene') then $el.attr('data-scene').split(',')
       for scene_name in names || [idx = idx + 1]
-        scene_name = ('' + scene_name).replace(/^\s+|\s+$/g, '')
+        scene_name = ('' + scene_name).replace(/^\s?!?|\s+$/g, '')
         new_scene = @addScene(scene_name)
-        new_scene.addActor($el, scene_name)
+        new_scene.addActor($el)
         $el.is('[data-default-scene]') && @setDefault(new_scene)
   addScene: (name) ->
-    new_scene = @scenes[name] || new Scene(name, @)
     if name == 'all'
       @appendNoneOption()
-      @keyword_scenes.all = new_scene
-    else if !@scenes[name]
-      @scenes[name] = new_scene
-      @$el.find('ul').append(new_scene.$el)
-    new_scene
+      return @keyword_scenes.all ||= new AllScene(name, @)
+    if !@scenes[name]
+      @scenes[name] = new Scene(name, @)
+      @$el.find('ul').append(@scenes[name].$el)
+    return @scenes[name]
   appendNoneOption: ->
     if !@scenes['none']
       @scenes['none'] = new NoneScene(name, @)
@@ -67,13 +66,17 @@ class Stage
 
 class Scene
   constructor: (@name, @stage) ->
-    @actors = []
+    @$actors = $()
+    @$exclusions = $()
     @$el = $(@template)
     @$el.data('scene', @)
     @$el.find('a').text(@name)
   template: "<li><a href='#'></a></li>"
   addActor: ($el) ->
-    @actors.push(new Actor($el))
+    if $el.attr('data-scene')?.indexOf("!#{@name}") > -1
+      @$exclusions = @$exclusions.add($el)
+    else
+      @$actors = @$actors.add($el)
     @
   toggleKeywordAll: ->
     @stage.keyword_scenes.all && @stage.keyword_scenes.all.toggle(true)
@@ -82,24 +85,27 @@ class Scene
       scene.name != @name && scene.toggle(false)
     @toggleKeywordAll()
     @toggle(true)
+  toggleActors: ($actors, direction) ->
+    $actors.each ->
+      $actor = $(@)
+      klass = $actor.attr('data-scene-class')
+      id = $actor.attr('data-scene-id')
+      if klass then $actor.toggleClass(klass, direction)
+      if id then $actor.attr("id", if direction then id else '')
+      if !id and !klass then $actor.toggle(direction)
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
-    actor.toggle(direction) for actor in @actors
+    @toggleActors(@$exclusions, false)
+    @toggleActors(@$actors.not(@$exclusions), direction)
+
+class AllScene extends Scene
+  @$exclusions: $.noop()
 
 class NoneScene extends Scene
   constructor: (@name, @stage) ->
     super 'none', @stage
   toggleKeywordAll: ->
     @stage.keyword_scenes.all.toggle(false)
-
-class Actor
-  constructor: (@$el) ->
-  toggle: (direction) ->
-    klass = @$el.attr('data-scene-class')
-    id = @$el.attr('data-scene-id')
-    if klass then @$el.toggleClass(klass, direction)
-    if id then @$el.attr("id", if direction then id else '')
-    if !id and !klass then @$el.toggle(direction)
 
 Stagehand =
   template: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>"
