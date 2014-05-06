@@ -1,3 +1,8 @@
+# 0.5
+
+- far-reaching rewrite behind the scenes, more extensible and easy to read now
+- add support for `!` to exclude specific scenes
+
 # 0.4.3
 
 - support default scenes through `stagehand-default-scene` attribute
