@@ -1,6 +1,6 @@
 /*
 Stagehand.css (SASS output)
-for version 0.4.2
+for version 0.5
 */
 
 
@@ -77,7 +77,7 @@ section#stagehand-controls a.stagehand-toggle {
   height: 40px;
   border-left: 0;
   border-top: 0;
-  background: #e7e8e9 url("../images/stagehand_icon.png") center no-repeat;
+  background: #e7e8e9 url("https://s3.amazonaws.com/stagehand/stagehand_icon.png") center no-repeat;
   background-size: 20px 22px;
   opacity: 0.5;
   -moz-transition: opacity 50ms;
@@ -246,6 +246,6 @@ section#stagehand-controls > ul li ul li a {
 section#stagehand-controls > ul li ul li a:hover {
   background: #434547;
 }
-section#stagehand-controls > ul li ul li a.stagehand-active {
+section#stagehand-controls > ul li ul li.stagehand-active a {
   background: #e23246;
 }

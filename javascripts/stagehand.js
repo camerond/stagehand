@@ -1,217 +1,282 @@
 (function() {
-  var Stagehand;
+  var AllScene, NoneScene, Scene, Stage, Stagehand,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Stagehand = {
-    name: 'stagehand',
-    afterSceneChange: $.noop(),
-    stages: {},
-    stage_controls: [],
-    templates: {
-      controls: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>",
-      control: "<li><h2></h2><ul></ul></li>",
-      control_button: "<li><a href='#'></a></li>",
-      toggle: "<a href='#' class='stagehand-toggle'></a>"
-    },
-    saveState: function() {
-      var $active, $control, scenes, _i, _len, _ref;
+  Stage = (function() {
+    function Stage(name) {
+      this.name = name;
+      this.scenes = {};
+      this.keyword_scenes = {};
+      this.$els = $();
+      this.$el = $(this.template);
+      this.$el.find('h2').text(name);
+      this.default_scene_idx = false;
+    }
 
-      scenes = {};
-      _ref = this.stage_controls;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        $control = _ref[_i];
-        $active = $control.find('.stagehand-active');
-        if ($active.length) {
-          scenes[$control.attr('data-stage')] = $active.attr('data-scene-control');
-        }
-      }
-      sessionStorage.setItem("stagehand-scenes", JSON.stringify(scenes));
-      return sessionStorage.setItem("stagehand-toggle", $("body").is(".stagehand-active"));
-    },
-    loadState: function() {
-      var scene, stage, _ref;
+    Stage.prototype.template = "<li><h2></h2><ul></ul></li>";
 
-      $(document.body).toggleClass('stagehand-active', sessionStorage.getItem('stagehand-toggle') === 'true');
-      _ref = JSON.parse(sessionStorage.getItem("stagehand-scenes"));
-      for (stage in _ref) {
-        scene = _ref[stage];
-        this.$controls.find("[data-stage='" + stage + "'] [data-scene-control='" + scene + "']").trigger('click.stagehand');
-      }
-      this.$controls.find('[data-default-scene]').trigger('click.stagehand');
-      return this.$controls.find("[data-stage]").each(function() {
-        if (!$(this).find('.stagehand-active').length) {
-          return $(this).find('a').eq(0).trigger('click.stagehand');
-        }
-      });
-    },
-    teardown: function() {
-      this.$controls.remove();
-      this.$el.removeData(this.name);
-      sessionStorage.setItem("stagehand-scenes", false);
-      return sessionStorage.setItem("stagehand-toggle", false);
-    },
-    buildControls: function() {
-      var k, v, _ref, _results;
+    Stage.prototype.addEls = function($els) {
+      return this.$els = this.$els.add($els);
+    };
 
-      if (this.$controls) {
-        this.$controls.empty();
+    Stage.prototype.initialize = function() {
+      if (this.default_scene_idx != null) {
+        return this.$el.find('li').eq(this.default_scene_idx).find('a').click();
       } else {
-        this.$controls = $(this.templates.controls).append($(this.templates.toggle));
-        $(document.body).append(this.$controls);
+        return this.$el.find('a:first').click();
       }
-      _ref = this.stages;
-      _results = [];
-      for (k in _ref) {
-        v = _ref[k];
-        _results.push(this.buildStageControl(k, v));
-      }
-      return _results;
-    },
-    buildStageControl: function(name, $stage) {
-      var $li, s;
+    };
 
-      s = this;
-      $li = $(this.templates.control);
-      $li.attr('data-stage', name).find('h2').text(name);
-      $stage.each(function(idx) {
-        var $button;
+    Stage.prototype.parseScenes = function() {
+      var idx,
+        _this = this;
 
-        return $button = s.buildOrAppendControlButton($(this), $li, idx);
-      });
-      this.prependSpecialOptions($li, $stage);
-      $li.find('a').data('$stage', $stage);
-      this.stage_controls.push($li);
-      return this.$controls.find("> ul").append($li);
-    },
-    prependSpecialOptions: function($li, $stage) {
-      var $button, special, txt, _i, _len, _results;
+      idx = 0;
+      return this.$els.each(function(k, v) {
+        var $el, names, new_scene, scene_name, _i, _len, _ref, _results;
 
-      special = [];
-      if ($stage.filter("[data-scene='all']").length) {
-        special.push('none');
-      }
-      if ($stage.filter("[data-scene='toggle']").length) {
-        special.push('toggle on');
-        special.push('toggle off');
-      }
-      _results = [];
-      for (_i = 0, _len = special.length; _i < _len; _i++) {
-        txt = special[_i];
-        _results.push($button = $(this.templates.control_button).prependTo($li.find('ul')).find('a').text(txt).attr('data-scene-control', "special-" + (txt.replace(' ', '-'))));
-      }
-      return _results;
-    },
-    buildOrAppendControlButton: function($actor, $control, idx) {
-      var $button, i, scene, scenes, _i, _len;
-
-      scenes = $actor.attr('data-scene') ? $actor.attr('data-scene').split(',') : ["" + (idx + 1)];
-      for (i = _i = 0, _len = scenes.length; _i < _len; i = ++_i) {
-        scene = scenes[i];
-        if (scene === 'all' || scene === 'toggle') {
-          return;
-        }
-        scene = scene.replace(/^\s+|\s+$/g, '');
-        $button = $control.find("[data-scene-control='" + scene + "']");
-        if ($button.length) {
-          $button.data('$actor', $button.data('$actor').add($actor));
-        } else {
-          $button = $(this.templates.control_button).appendTo($control.find('ul')).find('a').attr('data-scene-control', scene).data('$actor', $actor).text(scene);
-        }
-      }
-      if ($actor.is('[data-default-scene]')) {
-        $button.attr('data-default-scene', '');
-      }
-      return $button;
-    },
-    changeScene: function(e) {
-      var $a, $actors_off, $actors_on, s;
-
-      s = this;
-      $a = $(e.target);
-      $actors_on = $actors_off = $();
-      if ($a.is("[data-scene-control^='special']")) {
-        switch ($a.text()) {
-          case 'none':
-            $actors_off = $a.data('$stage');
-            break;
-          case 'toggle off':
-            $actors_off = $a.data('$stage').filter("[data-scene='toggle']");
-            break;
-          case 'toggle on':
-            $actors_on = $a.data('$stage').filter("[data-scene='toggle']");
-        }
-      } else {
-        $actors_on = $a.data('$actor').add($a.data('$stage').filter("[data-scene='all']"));
-        $actors_off = $a.data('$stage').not($actors_on);
-      }
-      $a.closest('ul').find('a').removeClass('stagehand-active');
-      $a.addClass('stagehand-active');
-      $actors_off.each(function() {
-        return s.toggleActor($(this), false);
-      });
-      $actors_on.each(function() {
-        return s.toggleActor($(this), true);
-      });
-      this.afterSceneChange && this.afterSceneChange($actors_on, $actors_off);
-      this.saveState();
-      return false;
-    },
-    toggleActor: function($actor, direction) {
-      var id, klass;
-
-      klass = $actor.attr('data-scene-class');
-      id = $actor.attr('data-scene-id');
-      if (klass) {
-        $actor.toggleClass(klass, direction);
-      }
-      if (id) {
-        $actor.attr("id", direction ? id : '');
-      }
-      if (!id && !klass) {
-        return $actor.toggle(direction);
-      }
-    },
-    detectNamedStages: function() {
-      var $actor, $actor_cache, stage_name, _i, _len, _ref, _results;
-
-      $actor_cache = $.extend(this.$actor_elements, {}).filter('[data-stage]').filter("[data-stage!='']");
-      _results = [];
-      while ($actor_cache.length) {
-        $actor = $actor_cache.eq(0);
-        _ref = $actor.attr('data-stage').split(',');
+        $el = $(v);
+        names = $el.attr('data-scene') ? $el.attr('data-scene').split(',') : void 0;
+        _ref = names || [idx = idx + 1];
+        _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          stage_name = _ref[_i];
-          stage_name = stage_name.replace(/^\s+|\s+$/g, '');
-          if (this.stages[stage_name]) {
-            this.stages[stage_name] = this.stages[stage_name].add($actor);
+          scene_name = _ref[_i];
+          new_scene = _this.getScene(_this.trimSceneName(scene_name)).addActor($el);
+          if (!_this.default_scene_idx && $el.is('[data-default-scene]')) {
+            _results.push(_this.default_scene_idx = new_scene.$el.index());
           } else {
-            this.stages[stage_name] = $actor;
+            _results.push(void 0);
           }
         }
-        this.$actor_elements = this.$actor_elements.not($actor);
-        _results.push($actor_cache = $actor_cache.not($actor));
+        return _results;
+      });
+    };
+
+    Stage.prototype.getScene = function(name) {
+      var _base;
+
+      if (name === 'all') {
+        this.prependSpecialOption('none', new NoneScene(this));
+        return (_base = this.keyword_scenes).all || (_base.all = new AllScene(this));
+      } else if (name === 'toggle') {
+        this.prependSpecialOption('toggle on');
+        this.prependSpecialOption('toggle off');
+        return this.keyword_scenes['toggle on'];
+      } else if (!this.scenes[name]) {
+        this.scenes[name] = new Scene(this, name);
+        this.$el.find('ul').append(this.scenes[name].$el);
+      }
+      return this.scenes[name];
+    };
+
+    Stage.prototype.prependSpecialOption = function(name, scene) {
+      var s;
+
+      s = scene || new Scene(this, name);
+      if (!this.keyword_scenes[name]) {
+        this.keyword_scenes[name] = s;
+        return this.$el.find('ul').prepend(s.$el);
+      }
+    };
+
+    Stage.prototype.trimSceneName = function(name) {
+      return ('' + name).replace(/^\s?!?|\s+$/g, '');
+    };
+
+    Stage.prototype.toggleScene = function(name) {
+      return (this.scenes[name] || this.keyword_scenes[name]).handleClick();
+    };
+
+    Stage.prototype.verify = function() {
+      var _ref;
+
+      return (_ref = this.$el.find('.stagehand-active').data('scene')) != null ? _ref.verify() : void 0;
+    };
+
+    return Stage;
+
+  })();
+
+  Scene = (function() {
+    function Scene(stage, name) {
+      this.stage = stage;
+      this.name = name;
+      this.$actors = $();
+      this.$exclusions = $();
+      this.$el = $(this.template);
+      this.$el.data('scene', this).find('a').text(this.name);
+    }
+
+    Scene.prototype.template = "<li><a href='#'></a></li>";
+
+    Scene.prototype.addActor = function($el) {
+      var _ref;
+
+      if (((_ref = $el.attr('data-scene')) != null ? _ref.indexOf("!" + this.name) : void 0) > -1) {
+        this.$exclusions = this.$exclusions.add($el);
+      } else {
+        this.$actors = this.$actors.add($el);
+      }
+      return this;
+    };
+
+    Scene.prototype.toggleKeywordAll = function() {
+      var _ref;
+
+      return (_ref = this.stage.keyword_scenes.all) != null ? _ref.toggle(true) : void 0;
+    };
+
+    Scene.prototype.toggleOffOtherScenes = function() {
+      var k, scene, _ref, _ref1, _results;
+
+      this.$el.siblings().removeClass('stagehand-active');
+      if ((_ref = this.stage.keyword_scenes['toggle on']) != null) {
+        _ref.toggle(false);
+      }
+      _ref1 = this.stage.scenes;
+      _results = [];
+      for (k in _ref1) {
+        scene = _ref1[k];
+        _results.push(scene.name !== this.name && scene.toggle(false));
       }
       return _results;
-    },
-    detectAnonymousStages: function() {
-      var $actor, $actor_cache, $stage, i, _results;
+    };
 
-      $actor_cache = $.extend(this.$actor_elements, {});
-      i = 1;
+    Scene.prototype.handleClick = function() {
+      this.toggleOffOtherScenes();
+      this.toggleKeywordAll();
+      return this.toggle(true);
+    };
+
+    Scene.prototype.toggleActors = function($actors, direction) {
+      return $actors.each(function() {
+        var $actor, id, klass;
+
+        $actor = $(this);
+        klass = $actor.attr('data-scene-class');
+        id = $actor.attr('data-scene-id');
+        if (klass) {
+          $actor.toggleClass(klass, direction);
+        }
+        if (id) {
+          $actor.attr("id", direction ? id : '');
+        }
+        if (!id && !klass) {
+          return $actor.toggle(direction);
+        }
+      });
+    };
+
+    Scene.prototype.toggle = function(direction) {
+      this.$el.toggleClass('stagehand-active', direction);
+      if (direction) {
+        this.toggleActors(this.$exclusions, false);
+      }
+      return this.toggleActors(this.$actors.not(this.$exclusions), direction);
+    };
+
+    Scene.prototype.verify = function() {
+      this.toggleKeywordAll();
+      return this.toggle(true);
+    };
+
+    return Scene;
+
+  })();
+
+  AllScene = (function(_super) {
+    __extends(AllScene, _super);
+
+    function AllScene(stage) {
+      this.stage = stage;
+      AllScene.__super__.constructor.call(this, this.stage, 'all');
+    }
+
+    AllScene.$exclusions = $.noop();
+
+    return AllScene;
+
+  })(Scene);
+
+  NoneScene = (function(_super) {
+    __extends(NoneScene, _super);
+
+    function NoneScene(stage) {
+      this.stage = stage;
+      NoneScene.__super__.constructor.call(this, this.stage, 'none');
+    }
+
+    NoneScene.prototype.toggleKeywordAll = function() {
+      return this.stage.keyword_scenes.all.toggle(false);
+    };
+
+    NoneScene.prototype.verify = function() {
+      return this.toggle(true);
+    };
+
+    return NoneScene;
+
+  })(Scene);
+
+  Stagehand = {
+    afterSceneChange: $.noop,
+    template: "<section id='stagehand-controls'><h1>Stagehand</h1><ul></ul></section>",
+    template_toggle: "<a href='#' class='stagehand-toggle'></a>",
+    stages: {},
+    addStage: function(name) {
+      name = name.replace(/^\s+|\s+$/g, '');
+      if (!this.stages[name]) {
+        this.stages[name] = new Stage(name);
+        this.$controls.find('> ul').append(this.stages[name].$el);
+      }
+      return this.stages[name];
+    },
+    changeScene: function(e) {
+      var name, scene, stage, _ref;
+
+      scene = $(e.target).closest('li').data('scene');
+      scene.stage.toggleScene(scene.name);
+      _ref = this.stages;
+      for (name in _ref) {
+        stage = _ref[name];
+        stage.verify();
+      }
+      this.afterSceneChange(scene.$actors);
+      return this.saveState();
+    },
+    parseAnonymousStages: function() {
+      var $actor, $anons, $stage, idx, _results;
+
+      $anons = this.$stage_cache.filter('[data-stage=""]');
+      this.$stage_cache = this.$stage_cache.not($anons);
+      idx = 1;
       _results = [];
-      while ($actor_cache.length) {
-        $actor = $actor_cache.eq(0);
+      while ($anons.length) {
+        $actor = $anons.eq(0);
         $stage = $actor.add($actor.nextUntil("[data-stage!='']"));
         $stage = $stage.add($actor.prevUntil("[data-stage!='']"));
-        this.stages["Stage " + i] = $stage;
-        $actor_cache = $actor_cache.not($stage);
-        _results.push(i = i + 1);
+        this.addStage("Stage " + idx).addEls($stage);
+        $anons = $anons.not($stage);
+        _results.push(idx = idx + 1);
       }
       return _results;
     },
-    detectScenes: function() {
-      this.$actor_elements = this.$el.find('[data-stage]');
-      this.detectNamedStages();
-      return this.detectAnonymousStages();
+    parseNamedStages: function() {
+      var _this = this;
+
+      return this.$stage_cache.each(function(k, v) {
+        var $actor, stage_name, _i, _len, _ref, _results;
+
+        $actor = $(v);
+        _ref = $actor.attr('data-stage').split(',');
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          stage_name = _ref[_i];
+          _results.push(_this.addStage(stage_name).addEls($actor));
+        }
+        return _results;
+      });
     },
     toggleControls: function() {
       $(document.body).toggleClass('stagehand-active');
@@ -219,39 +284,78 @@
       return false;
     },
     bindEvents: function() {
-      this.$controls.on('click.stagehand', 'ul a', $.proxy(this.changeScene, this));
-      return this.$controls.on('click.stagehand', 'a.stagehand-toggle', $.proxy(this.toggleControls, this));
+      this.$controls.on('click.stagehand', 'a.stagehand-toggle', $.proxy(this.toggleControls, this));
+      return this.$controls.on('click.stagehand', 'ul a', $.proxy(this.changeScene, this));
+    },
+    teardown: function() {
+      this.$controls.remove();
+      this.$el.removeData('stagehand');
+      sessionStorage.setItem("stagehand-scenes", false);
+      return sessionStorage.setItem("stagehand-toggle", false);
+    },
+    saveState: function() {
+      var $active, name, stage, stages, _ref;
+
+      stages = {};
+      _ref = this.stages;
+      for (name in _ref) {
+        stage = _ref[name];
+        $active = stage.$el.find('.stagehand-active');
+        if ($active.length) {
+          stages[name] = $active.index();
+        }
+      }
+      sessionStorage.setItem("stagehand-scenes", JSON.stringify(stages));
+      return sessionStorage.setItem("stagehand-toggle", $(document.body).is(".stagehand-active"));
+    },
+    loadState: function() {
+      var idx, stage_name, _ref, _ref1;
+
+      _ref = JSON.parse(sessionStorage.getItem("stagehand-scenes"));
+      for (stage_name in _ref) {
+        idx = _ref[stage_name];
+        if ((_ref1 = this.stages[stage_name]) != null) {
+          _ref1.default_scene_idx = idx;
+        }
+      }
+      if (sessionStorage.getItem('stagehand-toggle') === "true") {
+        return this.toggleControls();
+      }
     },
     init: function() {
-      this.detectScenes();
-      this.buildControls();
+      var name, stage, _ref;
+
+      this.$controls = $(this.template).appendTo($(document.body));
+      this.$controls.append($(this.template_toggle));
+      this.$stage_cache = $('[data-stage]');
+      this.parseAnonymousStages();
+      this.parseNamedStages();
       this.bindEvents();
-      this.overlay && $(document.body).toggleClass('stagehand-overlay');
       this.loadState();
+      _ref = this.stages;
+      for (name in _ref) {
+        stage = _ref[name];
+        stage.parseScenes();
+        stage.initialize();
+      }
       return this.$el;
     }
   };
 
-  $.fn[Stagehand.name] = function(opts) {
+  $.fn.stagehand = function(opts) {
     var $els, method;
 
     $els = this;
     method = $.isPlainObject(opts) || !opts ? '' : opts;
-    if (method && Stagehand[method]) {
-      Stagehand[method].apply($els, Array.prototype.slice.call(arguments, 1));
-    } else if (!method) {
-      $els.each(function() {
-        var plugin_instance;
+    $els.each(function() {
+      var plugin_instance;
 
-        plugin_instance = $.extend(true, {
-          $el: $(this)
-        }, Stagehand, opts);
-        $(this).data(Stagehand.name, plugin_instance);
-        return plugin_instance.init();
-      });
-    } else {
-      $.error('Method #{method} does not exist on jQuery. #{Stagehand.name}');
-    }
+      plugin_instance = $.extend(true, {
+        $el: $(this)
+      }, Stagehand, opts);
+      $(this).data('stagehand', plugin_instance);
+      return plugin_instance.init();
+    });
     return $els;
   };
 
