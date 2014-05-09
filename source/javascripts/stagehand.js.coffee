@@ -136,6 +136,7 @@ Stagehand =
       @$controls.find('> ul').append(@stages[name].$el)
     @stages[name]
   changeScene: (e) ->
+    e.preventDefault()
     scene = $(e.target).closest('li').data('scene')
     scene.stage.toggleScene(scene.name)
     for name, stage of @stages
@@ -158,7 +159,8 @@ Stagehand =
       $actor = $(v)
       for stage_name in $actor.attr('data-stage').split(',')
         @addStage(stage_name).addEls($actor)
-  toggleControls: ->
+  toggleControls: (e) ->
+    e.preventDefault()
     $(document.body).toggleClass('stagehand-active')
     @saveState()
     false
