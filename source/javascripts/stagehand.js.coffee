@@ -185,6 +185,7 @@ Stagehand =
     if sessionStorage.getItem('stagehand-toggle') == "true" then @toggleControls()
   init: ->
     @$controls = $(@template).appendTo($(document.body))
+    @overlay && $(document.body).addClass('stagehand-overlay')
     @$controls.append($(@template_toggle))
     @$stage_cache = $('[data-stage]')
     @parseAnonymousStages()

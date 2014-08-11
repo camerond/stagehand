@@ -350,6 +350,7 @@
       var name, stage, _ref;
 
       this.$controls = $(this.template).appendTo($(document.body));
+      this.overlay && $(document.body).addClass('stagehand-overlay');
       this.$controls.append($(this.template_toggle));
       this.$stage_cache = $('[data-stage]');
       this.parseAnonymousStages();
