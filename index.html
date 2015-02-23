@@ -100,7 +100,7 @@ Examples:
 </pre>
 <h2>Complexities</h2>
 
-<p>There are three special stage names: <code>all</code>, <code>toggle</code>, and <code>!</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and anything with a stage name of <code>toggle</code> can be toggled on and off. If you have an element with a scene of <code>all</code>, you can exclude certain scenes with <code>!</code> (e.g. <code>data-scene=&#39;all, !hammertime&#39;</code>)</p>
+<p>There are three special stage names: <code>all</code>, <code>toggle</code>, and <code>!</code>. Anything with a stage name of <code>all</code> is shown in all scenes of its stage, and anything with a stage name of <code>toggle</code> can be toggled on and off. If a scene name begins with <code>!</code>, it&rsquo;ll be active for every scene except the one(s) listed (e.g. <code>data-scene=&#39;!bar&#39;</code>)</p>
 
 <p>You can nest stages &amp; scenes, and assign multiples of either (separated by commas).</p>
 

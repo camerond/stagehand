@@ -1,5 +1,5 @@
 (function() {
-  var AllScene, NoneScene, Scene, Stage, Stagehand,
+  var AllScene, ExclusionScene, NoneScene, Scene, Stage, Stagehand,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -7,6 +7,7 @@
     function Stage(name) {
       this.name = name;
       this.scenes = {};
+      this.exclusion_scenes = {};
       this.keyword_scenes = {};
       this.$els = $();
       this.$el = $(this.template);
@@ -42,23 +43,40 @@
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           scene_name = _ref[_i];
-          new_scene = _this.getScene(_this.trimSceneName(scene_name)).addActor($el);
-          if (!_this.default_scene_idx && $el.is('[data-default-scene]')) {
-            _results.push(_this.default_scene_idx = new_scene.$el.index());
+          scene_name = _this.trimSceneName(scene_name);
+          if (scene_name[0] === '!') {
+            _this.getExclusionScene(scene_name).addActor($el);
+            _results.push(_this.getAllScene().addActor($el));
           } else {
-            _results.push(void 0);
+            new_scene = _this.getScene(scene_name).addActor($el);
+            if (!_this.default_scene_idx && $el.is('[data-default-scene]')) {
+              _results.push(_this.default_scene_idx = new_scene.$el.index());
+            } else {
+              _results.push(void 0);
+            }
           }
         }
         return _results;
       });
     };
 
-    Stage.prototype.getScene = function(name) {
+    Stage.prototype.getAllScene = function() {
       var _base;
 
+      return (_base = this.keyword_scenes).all || (_base.all = new AllScene(this));
+    };
+
+    Stage.prototype.getExclusionScene = function(name) {
+      var _base;
+
+      name = name.substring(1);
+      return (_base = this.exclusion_scenes)[name] || (_base[name] = new ExclusionScene(this, name));
+    };
+
+    Stage.prototype.getScene = function(name) {
       if (name === 'all') {
         this.prependSpecialOption('none', new NoneScene(this));
-        return (_base = this.keyword_scenes).all || (_base.all = new AllScene(this));
+        return this.getAllScene();
       } else if (name === 'toggle') {
         this.prependSpecialOption('toggle on');
         this.prependSpecialOption('toggle off');
@@ -81,7 +99,7 @@
     };
 
     Stage.prototype.trimSceneName = function(name) {
-      return ('' + name).replace(/^\s?!?|\s+$/g, '');
+      return ('' + name).replace(/^\s?|\s+$/g, '');
     };
 
     Stage.prototype.toggleScene = function(name) {
@@ -103,7 +121,6 @@
       this.stage = stage;
       this.name = name;
       this.$actors = $();
-      this.$exclusions = $();
       this.$el = $(this.template);
       this.$el.data('scene', this).find('a').text(this.name);
     }
@@ -111,13 +128,7 @@
     Scene.prototype.template = "<li><a href='#'></a></li>";
 
     Scene.prototype.addActor = function($el) {
-      var _ref;
-
-      if (((_ref = $el.attr('data-scene')) != null ? _ref.indexOf("!" + this.name) : void 0) > -1) {
-        this.$exclusions = this.$exclusions.add($el);
-      } else {
-        this.$actors = this.$actors.add($el);
-      }
+      this.$actors = this.$actors.add($el);
       return this;
     };
 
@@ -168,12 +179,16 @@
       });
     };
 
+    Scene.prototype.toggleExclusions = function(direction) {
+      var _ref;
+
+      return (_ref = this.stage.exclusion_scenes[this.name]) != null ? _ref.toggle(direction) : void 0;
+    };
+
     Scene.prototype.toggle = function(direction) {
       this.$el.toggleClass('stagehand-active', direction);
-      if (direction) {
-        this.toggleActors(this.$exclusions, false);
-      }
-      return this.toggleActors(this.$actors.not(this.$exclusions), direction);
+      this.toggleActors(this.$actors, direction);
+      return this.toggleExclusions(!direction);
     };
 
     Scene.prototype.verify = function() {
@@ -185,6 +200,23 @@
 
   })();
 
+  ExclusionScene = (function(_super) {
+    __extends(ExclusionScene, _super);
+
+    function ExclusionScene(stage, name) {
+      this.stage = stage;
+      this.name = name;
+      this.$actors = $();
+    }
+
+    ExclusionScene.prototype.toggle = function(direction) {
+      return this.toggleActors(this.$actors, direction);
+    };
+
+    return ExclusionScene;
+
+  })(Scene);
+
   AllScene = (function(_super) {
     __extends(AllScene, _super);
 
@@ -192,8 +224,6 @@
       this.stage = stage;
       AllScene.__super__.constructor.call(this, this.stage, 'all');
     }
-
-    AllScene.$exclusions = $.noop();
 
     return AllScene;
 
@@ -206,6 +236,8 @@
       this.stage = stage;
       NoneScene.__super__.constructor.call(this, this.stage, 'none');
     }
+
+    NoneScene.prototype.toggleExclusions = $.noop;
 
     NoneScene.prototype.toggleKeywordAll = function() {
       return this.stage.keyword_scenes.all.toggle(false);
@@ -235,6 +267,9 @@
     changeScene: function(e) {
       var name, scene, stage, _ref;
 
+      if (e) {
+        e.preventDefault();
+      }
       scene = $(e.target).closest('li').data('scene');
       scene.stage.toggleScene(scene.name);
       _ref = this.stages;
@@ -278,7 +313,10 @@
         return _results;
       });
     },
-    toggleControls: function() {
+    toggleControls: function(e) {
+      if (e) {
+        e.preventDefault();
+      }
       $(document.body).toggleClass('stagehand-active');
       this.saveState();
       return false;
@@ -326,6 +364,7 @@
       var name, stage, _ref;
 
       this.$controls = $(this.template).appendTo($(document.body));
+      this.overlay && $(document.body).addClass('stagehand-overlay');
       this.$controls.append($(this.template_toggle));
       this.$stage_cache = $('[data-stage]');
       this.parseAnonymousStages();

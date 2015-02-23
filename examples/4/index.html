@@ -55,7 +55,7 @@ Sharing scenes, sharing stages, nesting, and special keywords
 
 <p>If an actor has a scene of <code>all</code>, it&#39;s visible for all scenes of a stage, and that stage is also given a scene option of &#39;none&#39; in the toolbar (which toggles every associated actor off),</p>
 
-<p>If you need to have an actor show for everything <em>except</em> a particular scene (or scenes), add a scene of <code>all</code> and follow it up with a scene name prepended with <code>!</code>, e.g. <code>!pants</code>.</p>
+<p>If you need to have an actor show for everything <em>except</em> a particular scene (or scenes), start the scene name with <code>!</code>, e.g. <code>!pants</code>.</p>
 <h3>
 Example output
 </h3>
@@ -80,7 +80,7 @@ Example output
   </span>
 </div>
 
-<div data-stage='hammertime' data-scene='all, !stop'>
+<div data-stage='hammertime' data-scene='!stop'>
   I'm visible for all scenes of 'hammertime' EXCEPT 'stop'.
 </div>
 
@@ -111,7 +111,7 @@ Example output
   <span class="nt">&lt;/span&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 
-<span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammertime&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;all, !stop&#39;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">data-stage=</span><span class="s">&#39;hammertime&#39;</span> <span class="na">data-scene=</span><span class="s">&#39;!stop&#39;</span><span class="nt">&gt;</span>
   I&#39;m visible for all scenes of &#39;hammertime&#39; EXCEPT &#39;stop&#39;.
 <span class="nt">&lt;/div&gt;</span>
 
