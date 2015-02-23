@@ -57,10 +57,15 @@ layout: test
   %p.actor_2(data-stage data-scene='my other scene') Stage foo my other scene
   %p.actor_3(data-stage data-scene='toggle') Should generate 'on' and 'off' controls
 .keyword_not
-  %p.actor_1(data-stage data-scene='foo')
   %p.actor_2(data-stage data-scene='bar')
+  %p.actor_4(data-stage data-scene='!foo') should be visible in all but 'foo' scene
+  %p.actor_3(data-stage data-scene='baz')
+  %p.actor_1(data-stage data-scene='foo')
+.keyword_all_not
   %p.actor_3(data-stage data-scene='baz')
   %p.actor_4(data-stage data-scene='all, !foo') should be visible in all but 'foo' scene
+  %p.actor_1(data-stage data-scene='foo')
+  %p.actor_2(data-stage data-scene='bar')
   %p.actor_5(data-stage data-scene='all, !foo, !bar') should be visible in all but 'foo' and 'bar' scenes
 .default_scene
   %p.actor_1(data-stage data-scene) Scene 1

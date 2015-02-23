@@ -25,6 +25,7 @@
 class Stage
   constructor: (@name) ->
     @scenes = {}
+    @exclusion_scenes = {}
     @keyword_scenes = {}
     @$els = $()
     @$el = $(@template)
@@ -44,13 +45,23 @@ class Stage
       $el = $(v)
       names = if $el.attr('data-scene') then $el.attr('data-scene').split(',')
       for scene_name in names || [idx = idx + 1]
-        new_scene = @getScene(@trimSceneName(scene_name)).addActor($el)
-        if !@default_scene_idx && $el.is('[data-default-scene]')
-          @default_scene_idx = new_scene.$el.index()
+        scene_name = @trimSceneName(scene_name)
+        if scene_name[0] == '!'
+          @getExclusionScene(scene_name).addActor($el)
+          @getAllScene().addActor($el)
+        else
+          new_scene = @getScene(scene_name).addActor($el)
+          if !@default_scene_idx && $el.is('[data-default-scene]')
+            @default_scene_idx = new_scene.$el.index()
+  getAllScene: ->
+    @keyword_scenes.all ||= new AllScene(@)
+  getExclusionScene: (name) ->
+    name = name.substring(1)
+    @exclusion_scenes[name] ||= new ExclusionScene(@, name)
   getScene: (name) ->
     if name == 'all'
       @prependSpecialOption('none', new NoneScene(@))
-      return @keyword_scenes.all ||= new AllScene(@)
+      return @getAllScene()
     else if name == 'toggle'
       @prependSpecialOption('toggle on')
       @prependSpecialOption('toggle off')
@@ -65,7 +76,7 @@ class Stage
       @keyword_scenes[name] = s
       @$el.find('ul').prepend(s.$el)
   trimSceneName: (name) ->
-    ('' + name).replace(/^\s?!?|\s+$/g, '')
+    ('' + name).replace(/^\s?|\s+$/g, '')
   toggleScene: (name) ->
     (@scenes[name] || @keyword_scenes[name]).handleClick()
   verify: ->
@@ -74,15 +85,11 @@ class Stage
 class Scene
   constructor: (@stage, @name) ->
     @$actors = $()
-    @$exclusions = $()
     @$el = $(@template)
     @$el.data('scene', @).find('a').text(@name)
   template: "<li><a href='#'></a></li>"
   addActor: ($el) ->
-    if $el.attr('data-scene')?.indexOf("!#{@name}") > -1
-      @$exclusions = @$exclusions.add($el)
-    else
-      @$actors = @$actors.add($el)
+    @$actors = @$actors.add($el)
     @
   toggleKeywordAll: ->
     @stage.keyword_scenes.all?.toggle(true)
@@ -103,22 +110,30 @@ class Scene
       if klass then $actor.toggleClass(klass, direction)
       if id then $actor.attr("id", if direction then id else '')
       if !id and !klass then $actor.toggle(direction)
+  toggleExclusions: (direction) ->
+    @stage.exclusion_scenes[@name]?.toggle(direction)
   toggle: (direction) ->
     @$el.toggleClass('stagehand-active', direction)
-    @toggleActors(@$exclusions, false) if direction
-    @toggleActors(@$actors.not(@$exclusions), direction)
+    @toggleActors(@$actors, direction)
+    @toggleExclusions(!direction)
   verify: ->
     @toggleKeywordAll()
     @toggle(true)
 
+class ExclusionScene extends Scene
+  constructor: (@stage, @name) ->
+    @$actors = $()
+  toggle: (direction) ->
+    @toggleActors(@$actors, direction)
+
 class AllScene extends Scene
   constructor: (@stage) ->
     super(@stage, 'all')
-  @$exclusions: $.noop()
 
 class NoneScene extends Scene
   constructor: (@stage) ->
     super(@stage, 'none')
+  toggleExclusions: $.noop
   toggleKeywordAll: ->
     @stage.keyword_scenes.all.toggle(false)
   verify: ->
