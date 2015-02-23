@@ -75,7 +75,7 @@ You can also add `data-default-scene` to set any scene as the first to be displa
 
 ## Complexities
 
-There are three special stage names: `all`, `toggle`, and `!`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. If you have an element with a scene of `all`, you can exclude certain scenes with `!` (e.g. `data-scene='all, !hammertime'`)
+There are three special stage names: `all`, `toggle`, and `!`. Anything with a stage name of `all` is shown in all scenes of its stage, and anything with a stage name of `toggle` can be toggled on and off. If a scene name begins with `!`, it'll be active for every scene except the one(s) listed (e.g. `data-scene='!bar'`)
 
 You can nest stages & scenes, and assign multiples of either (separated by commas).
 

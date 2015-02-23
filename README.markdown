@@ -11,14 +11,10 @@ You'll need:
 - [stagehand.js.coffee](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.js.coffee)
 - [stagehand.sass](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.sass)
 
-Or, if you're old-school like that:
+Or, if you prefer:
 
-- [stagehand.plain.js](https://github.com/camerond/stagehand/blob/master/source/javascripts/stagehand.plain.js)
-- [stagehand.plain.css](https://github.com/camerond/stagehand/blob/master/source/stylesheets/stagehand.plain.css)
-
-And the toolbar icon:
-
-- [stagehand_icon.png](https://github.com/camerond/stagehand/blob/master/source/images/stagehand_icon.png)
+- [stagehand.js](https://github.com/camerond/stagehand/blob/gh-pages/javascripts/stagehand.js)
+- [stagehand.css](https://github.com/camerond/stagehand/blob/gh-pages/stylesheets/stagehand.css)
 
 ## Usage
 

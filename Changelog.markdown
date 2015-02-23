@@ -1,3 +1,8 @@
+# 0.5.1
+
+- fix buggy behavior of `!` and bake it into native Scene class more explicitly
+- `!` is no longer depended on an actor also having the `all` scene assigned
+
 # 0.5
 
 - far-reaching rewrite behind the scenes, more extensible and easy to read now

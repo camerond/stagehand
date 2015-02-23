@@ -1,7 +1,7 @@
 # Stagehand
-# version 0.5
+# version 0.5.1
 #
-# Copyright (c) 2013 Cameron Daigle, http://camerondaigle.com
+# Copyright (c) 2015 Cameron Daigle, http://camerondaigle.com
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
