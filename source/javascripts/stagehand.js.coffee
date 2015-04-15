@@ -29,7 +29,7 @@ class Stage
     @keyword_scenes = {}
     @$els = $()
     @$el = $(@template)
-    @$el.find('h2').text(name)
+    @$el.find('h2').text(@name)
     @default_scene_idx = false
   template: "<li><h2></h2><ul></ul></li>"
   addEls: ($els) ->
