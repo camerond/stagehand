@@ -11,7 +11,7 @@
       this.keyword_scenes = {};
       this.$els = $();
       this.$el = $(this.template);
-      this.$el.find('h2').text(name);
+      this.$el.find('h2').text(this.name);
       this.default_scene_idx = false;
     }
 
@@ -327,7 +327,7 @@
     },
     teardown: function() {
       this.$controls.remove();
-      this.$el.removeData('stagehand');
+      this.stages = {};
       sessionStorage.setItem("stagehand-scenes", false);
       return sessionStorage.setItem("stagehand-toggle", false);
     },
@@ -360,42 +360,50 @@
         return this.toggleControls();
       }
     },
-    init: function() {
-      var name, stage, _ref;
+    refresh: function() {
+      this.clear();
+      return this.render();
+    },
+    build: function() {
+      this.$el = $(document.body);
+      this.$controls = $(this.template).appendTo(this.$el);
+      this.overlay && this.$el.addClass('stagehand-overlay');
+      return this.$controls.append($(this.template_toggle));
+    },
+    clear: function() {
+      this.$controls.find('ul').empty();
+      return this.stages = {};
+    },
+    render: function() {
+      var name, stage, _ref, _results;
 
-      this.$controls = $(this.template).appendTo($(document.body));
-      this.overlay && $(document.body).addClass('stagehand-overlay');
-      this.$controls.append($(this.template_toggle));
       this.$stage_cache = $('[data-stage]');
       this.parseAnonymousStages();
       this.parseNamedStages();
       this.bindEvents();
       this.loadState();
       _ref = this.stages;
+      _results = [];
       for (name in _ref) {
         stage = _ref[name];
         stage.parseScenes();
-        stage.initialize();
+        _results.push(stage.initialize());
       }
-      return this.$el;
+      return _results;
+    },
+    init: function(opts) {
+      $.extend(this, opts);
+      this.build();
+      this.render();
+      return this;
     }
   };
 
+  window.Stagehand = Stagehand;
+
   $.fn.stagehand = function(opts) {
-    var $els, method;
-
-    $els = this;
-    method = $.isPlainObject(opts) || !opts ? '' : opts;
-    $els.each(function() {
-      var plugin_instance;
-
-      plugin_instance = $.extend(true, {
-        $el: $(this)
-      }, Stagehand, opts);
-      $(this).data('stagehand', plugin_instance);
-      return plugin_instance.init();
-    });
-    return $els;
+    console.log("$.fn.stagehand() is deprecated; please use Stagehand.init() and refer to the docts for more info");
+    return Stagehand.init(opts);
   };
 
 }).call(this);

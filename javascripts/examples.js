@@ -4,7 +4,8 @@
 
     $body = $(document.body);
     $code = $body.find('pre code').remove();
-    return $body.stagehand().find('pre').append($code);
+    Stagehand.init();
+    return $body.find('pre').append($code);
   });
 
 }).call(this);

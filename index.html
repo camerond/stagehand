@@ -68,7 +68,7 @@ Examples:
 <h2>Usage</h2>
 
 <p>Stagehand is dependent upon jQuery, so you&rsquo;ll need that. Then include the CoffeeScript &amp; SASS (or JavaScript and CSS) files and the toolbar icon (all provided on <a href="https://github.com/camerond/stagehand">the Stagehand Github page</a>) and call this method:</p>
-<pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">()</span>
+<pre class="highlight javascript"><span class="nx">Stagehand</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
 </pre>
 <p>Stagehand does the rest. You&rsquo;ll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you&rsquo;ll see controls for manipulating them in there.</p>
 
@@ -109,18 +109,21 @@ Examples:
 <h2>Callbacks</h2>
 
 <p>In case you need some supporting JavaScript to fire, there&rsquo;s an afterSceneChange callback that provides you with a few useful parameters:</p>
-<pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
-  <span class="na">afterSceneChange</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$actors_on</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// $actors_on is the set of actors that just got toggled on by this scene change
-</span>  <span class="p">}</span>
-<span class="p">});</span>
+<pre class="highlight javascript"><span class="nx">Stagehand</span><span class="p">.</span><span class="nx">afterSceneChange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$actors_on</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// $actors_on is the set of actors that just got toggled on by this scene change
+</span><span class="p">};</span>
 </pre>
 <h2>Styling</h2>
 
 <p>If you&rsquo;d prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set <code>overlay</code> to true:</p>
-<pre class="highlight javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">stagehand</span><span class="p">({</span>
+<pre class="highlight javascript"><span class="nx">Stagehand</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
   <span class="na">overlay</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">});</span>
+</pre>
+<h2>Refreshing</h2>
+
+<p>If you&rsquo;re running Stagehand inside a single-page app (Ember or some such), you&rsquo;ll need to reparse the document if something changes:</p>
+<pre class="highlight javascript"><span class="nx">Stagehand</span><span class="p">.</span><span class="nx">refresh</span><span class="p">();</span>
 </pre>
 <h2>Issues / Contributing</h2>
 
