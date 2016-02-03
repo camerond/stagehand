@@ -36,7 +36,7 @@ Designers can quickly slice designs with filler content and define various state
 Stagehand is dependent upon jQuery, so you'll need that. Then include the CoffeeScript & SASS (or JavaScript and CSS) files and the toolbar icon (all provided on [the Stagehand Github page](https://github.com/camerond/stagehand)) and call this method:
 
 ~~~javascript
-$(document.body).stagehand()
+Stagehand.init();
 ~~~
 
 Stagehand does the rest. You'll se a sidebar control generated in the top left of your page, and once you have stages and scenes in your markup, you'll see controls for manipulating them in there.
@@ -86,11 +86,9 @@ Check out [example 4](/examples/4) for more info on Stagehand's more complex int
 In case you need some supporting JavaScript to fire, there's an afterSceneChange callback that provides you with a few useful parameters:
 
 ~~~javascript
-$(document.body).stagehand({
-  afterSceneChange: function($actors_on) {
-    // $actors_on is the set of actors that just got toggled on by this scene change
-  }
-});
+Stagehand.afterSceneChange = function($actors_on) {
+  // $actors_on is the set of actors that just got toggled on by this scene change
+};
 ~~~
 
 ## Styling
@@ -98,9 +96,17 @@ $(document.body).stagehand({
 If you'd prefer that the Stagehand toolbar overlay on top of your page rather than pushing everything to the right when it expands, set `overlay` to true:
 
 ~~~javascript
-$(document.body).stagehand({
+Stagehand.init({
   overlay: true
 });
+~~~
+
+## Refreshing
+
+If you're running Stagehand inside a single-page app (Ember or some such), you'll need to reparse the document if something changes:
+
+~~~javascript
+Stagehand.refresh();
 ~~~
 
 ## Issues / Contributing

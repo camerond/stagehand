@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.6a
+# version 0.6
 #
 # Copyright (c) 2015 Cameron Daigle, http://camerondaigle.com
 #
@@ -225,3 +225,7 @@ Stagehand =
     this
 
 window.Stagehand = Stagehand
+
+$.fn.stagehand = (opts) ->
+  console.log("$.fn.stagehand() is deprecated; please use Stagehand.init() and refer to the docts for more info")
+  Stagehand.init(opts)
