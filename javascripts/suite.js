@@ -102,6 +102,13 @@
     return Stagehand.$controls.parent().shouldBe($(document.body), 'controls should be appended to body');
   });
 
+  test('it toggles via the toggle control', function() {
+    fixture.init();
+    $(document.body).shouldNotBe('stagehand-active');
+    $('.stagehand-toggle').click();
+    return $(document.body).shouldBe('.stagehand-active');
+  });
+
   test('it detects siblings with `data-stage` attributes as one scene', function() {
     fixture.init('.direct_siblings');
     equal(Stagehand.$controls.find('> ul > li').length, 2, 'two scene controls built');

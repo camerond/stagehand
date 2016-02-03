@@ -321,9 +321,15 @@
       this.saveState();
       return false;
     },
+    setControls: function(direction) {
+      return $(document.body).toggleClass('stagehand-active', direction);
+    },
     bindEvents: function() {
       this.$controls.on('click.stagehand', 'a.stagehand-toggle', $.proxy(this.toggleControls, this));
       return this.$controls.on('click.stagehand', 'ul a', $.proxy(this.changeScene, this));
+    },
+    clearEvents: function() {
+      return this.$controls.off('click.stagehand');
     },
     teardown: function() {
       this.$controls.remove();
@@ -347,7 +353,7 @@
       return sessionStorage.setItem("stagehand-toggle", $(document.body).is(".stagehand-active"));
     },
     loadState: function() {
-      var idx, stage_name, _ref, _ref1;
+      var idx, stage_name, toggle, _ref, _ref1;
 
       _ref = JSON.parse(sessionStorage.getItem("stagehand-scenes"));
       for (stage_name in _ref) {
@@ -356,31 +362,24 @@
           _ref1.default_scene_idx = idx;
         }
       }
-      if (sessionStorage.getItem('stagehand-toggle') === "true") {
-        return this.toggleControls();
-      }
+      toggle = sessionStorage.getItem('stagehand-toggle') === "true" ? true : false;
+      return this.setControls(toggle);
     },
     refresh: function() {
-      this.clear();
-      return this.render();
-    },
-    build: function() {
-      this.$el = $(document.body);
-      this.$controls = $(this.template).appendTo(this.$el);
-      this.overlay && this.$el.addClass('stagehand-overlay');
-      return this.$controls.append($(this.template_toggle));
-    },
-    clear: function() {
+      if (!this.$el) {
+        return;
+      }
       this.$controls.find('ul').empty();
-      return this.stages = {};
+      this.stages = {};
+      return this.render();
     },
     render: function() {
       var name, stage, _ref, _results;
 
+      this.$el.toggleClass('stagehand-overlay', this.overlay);
       this.$stage_cache = $('[data-stage]');
       this.parseAnonymousStages();
       this.parseNamedStages();
-      this.bindEvents();
       this.loadState();
       _ref = this.stages;
       _results = [];
@@ -393,7 +392,10 @@
     },
     init: function(opts) {
       $.extend(this, opts);
-      this.build();
+      this.$el = $(document.body);
+      this.$controls = $(this.template).appendTo(this.$el);
+      this.$controls.append($(this.template_toggle));
+      this.bindEvents();
       this.render();
       return this;
     }
