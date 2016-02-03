@@ -179,9 +179,13 @@ Stagehand =
     $(document.body).toggleClass('stagehand-active')
     @saveState()
     false
+  setControls: (direction) ->
+    $(document.body).toggleClass('stagehand-active', direction)
   bindEvents: ->
     @$controls.on 'click.stagehand', 'a.stagehand-toggle', $.proxy(@toggleControls, @)
     @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
+  clearEvents: ->
+    @$controls.off 'click.stagehand'
   teardown: ->
     @$controls.remove()
     @stages = {}
@@ -197,30 +201,30 @@ Stagehand =
   loadState: ->
     for stage_name, idx of JSON.parse(sessionStorage.getItem("stagehand-scenes"))
       @stages[stage_name]?.default_scene_idx = idx
-    if sessionStorage.getItem('stagehand-toggle') == "true" then @toggleControls()
+    toggle = if sessionStorage.getItem('stagehand-toggle') == "true" then true else false
+    @setControls(toggle)
   refresh: ->
-    @clear()
-    @render()
-  build: ->
-    @$el = $(document.body)
-    @$controls = $(@template).appendTo(@$el)
-    @overlay && @$el.addClass('stagehand-overlay')
-    @$controls.append($(@template_toggle))
-  clear: ->
+    if !@$el then return
     @$controls.find('ul').empty()
     @stages = {}
+    @render()
   render: ->
+    @$el.toggleClass('stagehand-overlay', @overlay)
     @$stage_cache = $('[data-stage]')
     @parseAnonymousStages()
     @parseNamedStages()
-    @bindEvents()
     @loadState()
     for name, stage of @stages
       stage.parseScenes()
       stage.initialize()
   init: (opts) ->
     $.extend(this, opts)
-    @build()
+    @$el = $(document.body)
+
+    @$controls = $(@template).appendTo(@$el)
+    @$controls.append($(@template_toggle))
+    @bindEvents()
+
     @render()
     this
 
