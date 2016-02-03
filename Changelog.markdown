@@ -1,3 +1,8 @@
+# 0.6
+
+- change initialization to global `Stagehand.init()` call
+- add `Stagehand.refresh()`
+
 # 0.5.1
 
 - fix buggy behavior of `!` and bake it into native Scene class more explicitly

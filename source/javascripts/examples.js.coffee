@@ -6,4 +6,5 @@ $ ->
 
   $body = $(document.body)
   $code = $body.find('pre code').remove()
-  $body.stagehand().find('pre').append($code)
+  Stagehand.init()
+  $body.find('pre').append($code)

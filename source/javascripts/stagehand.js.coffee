@@ -1,5 +1,5 @@
 # Stagehand
-# version 0.5.1
+# version 0.6a
 #
 # Copyright (c) 2015 Cameron Daigle, http://camerondaigle.com
 #
@@ -184,7 +184,7 @@ Stagehand =
     @$controls.on 'click.stagehand', 'ul a', $.proxy(@changeScene, @)
   teardown: ->
     @$controls.remove()
-    @$el.removeData('stagehand')
+    @stages = {}
     sessionStorage.setItem("stagehand-scenes", false)
     sessionStorage.setItem("stagehand-toggle", false)
   saveState: ->
@@ -198,10 +198,18 @@ Stagehand =
     for stage_name, idx of JSON.parse(sessionStorage.getItem("stagehand-scenes"))
       @stages[stage_name]?.default_scene_idx = idx
     if sessionStorage.getItem('stagehand-toggle') == "true" then @toggleControls()
-  init: ->
-    @$controls = $(@template).appendTo($(document.body))
-    @overlay && $(document.body).addClass('stagehand-overlay')
+  refresh: ->
+    @clear()
+    @render()
+  build: ->
+    @$el = $(document.body)
+    @$controls = $(@template).appendTo(@$el)
+    @overlay && @$el.addClass('stagehand-overlay')
     @$controls.append($(@template_toggle))
+  clear: ->
+    @$controls.find('ul').empty()
+    @stages = {}
+  render: ->
     @$stage_cache = $('[data-stage]')
     @parseAnonymousStages()
     @parseNamedStages()
@@ -210,18 +218,10 @@ Stagehand =
     for name, stage of @stages
       stage.parseScenes()
       stage.initialize()
-    @$el
+  init: (opts) ->
+    $.extend(this, opts)
+    @build()
+    @render()
+    this
 
-$.fn.stagehand = (opts) ->
-  $els = @
-  method = if $.isPlainObject(opts) or !opts then '' else opts
-  $els.each ->
-    plugin_instance = $.extend(
-      true,
-      $el: $(@),
-      Stagehand,
-      opts
-    )
-    $(@).data('stagehand', plugin_instance)
-    plugin_instance.init()
-  return $els
+window.Stagehand = Stagehand

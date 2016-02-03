@@ -44,70 +44,48 @@ $.fn.shouldSay = (text, msg) ->
   @
 
 fixture =
-  buildElements: ->
-    $set = $()
-    for el, text in elements
-      if typeof text == "String"
-        $set.add($("<div />").text(text))
-      else
-        $set.add($("<div />").append(@buildElements(text)))
-    $set
-  generate: (elements) ->
-    @$el.append @buildElements(elements)
-  get: ->
-    @$ctx && @$ctx.data('stagehand')
   use: (selector) ->
     $("#qunit-fixture").children().not(selector).remove()
   select: (stage, scene) ->
     ok true, "selecting stage #{stage} scene #{scene}"
     if typeof stage == 'number'
-      @get().$controls.find('> ul > li').eq(stage).find('li').eq(scene).find('a').click()
+      Stagehand.$controls.find('> ul > li').eq(stage).find('li').eq(scene).find('a').click()
     else
       @stageControls(stage).eq(scene).find("a").click()
   stageControls: (name) ->
-    @get().$controls.find("h2:contains('#{name}')").next('ul').find("li")
+    Stagehand.$controls.find("h2:contains('#{name}')").next('ul').find("li")
   stage: (name) ->
     $("#qunit-fixture [data-stage='#{name}']")
-  init: (opts, $context) ->
-    $context ?= $(document.body)
-    @$ctx = $context.stagehand(opts)
+  init: (selector) ->
+    selector && this.use(selector)
+    Stagehand.init()
+    @$stagehand = $('#stagehand-controls')
     @$el = $("#qunit-fixture")
     @
 
 QUnit.testDone ->
-  $(document.body).data('stagehand').teardown()
+  Stagehand.teardown()
 
 module 'Base Functionality'
 
-test 'it chains properly', ->
-  deepEqual fixture.init().$ctx.hide().show(), $(document.body), '.stagehand() returns proper element'
-
-test 'it produces a Stage object', ->
-  sc = fixture.init().get()
-  deepEqual sc.$el.hide().show(), $(document.body), "stagehand().data('stagehand') returns stagehand object"
-
 test 'it appends controls to the body', ->
-  sc = fixture.init().get()
-  sc.$controls.shouldBe('#stagehand-controls')
-  sc.$controls.parent().shouldBe($(document.body), 'controls should be appended to body')
+  fixture.init()
+  Stagehand.$controls.parent().shouldBe($(document.body), 'controls should be appended to body')
 
 test 'it detects siblings with `data-stage` attributes as one scene', ->
-  fixture.use '.direct_siblings'
-  sc = fixture.init().get()
-  equal sc.$controls.find('> ul > li').length, 2, 'two scene controls built'
-  sc.$controls.find('.stagehand-active').eq(0).shouldSay('1')
-  equal sc.$controls.find('> ul > li').eq(0).find('li').length, 2, 'first scene control has two options'
-  equal sc.$controls.find('> ul > li').eq(1).find('li').length, 1, 'second scene control has one option'
+  fixture.init '.direct_siblings'
+  equal Stagehand.$controls.find('> ul > li').length, 2, 'two scene controls built'
+  Stagehand.$controls.find('.stagehand-active').eq(0).shouldSay('1')
+  equal Stagehand.$controls.find('> ul > li').eq(0).find('li').length, 2, 'first scene control has two options'
+  equal Stagehand.$controls.find('> ul > li').eq(1).find('li').length, 1, 'second scene control has one option'
 
 test 'it shows the first scene of each stage by default', ->
-  fixture.use '.direct_siblings'
-  sc = fixture.init().get()
+  fixture.init '.direct_siblings'
   $('p[data-stage]').eq(0).shouldBe(':visible')
   $('p[data-stage]').eq(1).shouldNotBe(':visible')
 
 test 'changing a stage control to a new scene changes the associated stage', ->
-  fixture.use '.direct_siblings'
-  sc = fixture.init().get()
+  fixture.init '.direct_siblings'
   fixture.select(0, 1)
   $('p[data-stage]').eq(0).shouldNotBe(':visible')
   $('p[data-stage]').eq(1).shouldBe(':visible')
@@ -115,9 +93,8 @@ test 'changing a stage control to a new scene changes the associated stage', ->
 module 'Named stages and scenes'
 
 test 'support named `data-stage` attributes', ->
-  fixture.use '.named_stages'
-  sc = fixture.init().get()
-  sc.$controls.find("h2").eq(1).shouldSay('foo')
+  fixture.init '.named_stages'
+  Stagehand.$controls.find("h2").eq(1).shouldSay('foo')
   fixture.select('foo', 1)
   fixture.select('bar', 2)
   fixture.select('Stage 1', 1)
@@ -129,8 +106,7 @@ test 'support named `data-stage` attributes', ->
   fixture.stage('Stage 1').eq(1).shouldBe(':visible')
 
 test 'support multiple named `data-stage` attributes', ->
-  fixture.use '.shared_stages'
-  sc = fixture.init().get()
+  fixture.init '.shared_stages'
   equal fixture.stageControls('foo').length, 3, '3 items in foo control'
   equal fixture.stageControls('bar').length, 3, '3 items in bar control'
   equal fixture.stageControls('baz').length, 3, '3 items in baz control'
@@ -143,16 +119,14 @@ test 'support multiple named `data-stage` attributes', ->
   $('.actor_5').shouldBe(':visible')
 
 test 'support named `data-scene` attributes', ->
-  fixture.use '.named_scenes'
-  sc = fixture.init().get()
+  fixture.init '.named_scenes'
   $('.actor_1_1, .actor_2_1').shouldBeOnly(':visible')
   fixture.select('foo', 1)
   fixture.select('Stage 1', 1)
   $('.actor_1_2, .actor_2_2').shouldBeOnly(':visible')
 
 test 'support multiple named `data-scene` attributes', ->
-  fixture.use '.shared_scenes'
-  fixture.init()
+  fixture.init '.shared_scenes'
   $('.actor_1, .actor_4').shouldBeOnly(':visible')
   fixture.select('foo', 1)
   $('.actor_2, .actor_4').shouldBeOnly(':visible')
@@ -160,22 +134,19 @@ test 'support multiple named `data-scene` attributes', ->
   $('.actor_3').shouldBeOnly(':visible')
 
 test 'user can use `data-default-scene` to set a specific initial scene', ->
-  fixture.use '.default_scene'
-  fixture.init()
+  fixture.init '.default_scene'
   $('.actor_2').shouldBeOnly(':visible')
 
 module 'Changing attributes'
 
 test 'toggle classes via `data-scene-class` attribute', ->
-  fixture.use '.scene_attributes'
-  fixture.init()
+  fixture.init '.scene_attributes'
   $('.actor_1').shouldBeOnly('.active')
   fixture.select(0, 1)
   $('.actor_2').shouldBeOnly('.active')
 
 test 'toggle ids via `data-scene-id` attribute', ->
-  fixture.use '.scene_attributes'
-  fixture.init()
+  fixture.init '.scene_attributes'
   $('.actor_1').shouldBeOnly('#some_id')
   fixture.select(0, 1)
   equal $("#some_id").length, 0, 'correctly does not apply an id to any element in this scene'
@@ -183,8 +154,7 @@ test 'toggle ids via `data-scene-id` attribute', ->
   $('.actor_3').shouldBeOnly('#some_id')
 
 test 'support toggling attributes while using multiple named `data-scene` attributes', ->
-  fixture.use '.shared_scene_attributes'
-  fixture.init()
+  fixture.init '.shared_scene_attributes'
   $('.actor_1, .actor_4').shouldBeOnly('.active')
   fixture.select('foo', 1)
   $('.actor_2, .actor_4').shouldBeOnly('.active')
@@ -192,10 +162,9 @@ test 'support toggling attributes while using multiple named `data-scene` attrib
   $('.actor_3').shouldBeOnly('.active')
 
 test 'support special `data-scene` attribute of `all`', ->
-  fixture.use '.keyword_all'
-  sc = fixture.init().get()
-  equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
-  sc.$controls.find('li li').first().shouldSay('none')
+  fixture.init '.keyword_all'
+  equal Stagehand.$controls.find('li li').length, 3, 'scene control has 3 options'
+  Stagehand.$controls.find('li li').first().shouldSay('none')
   $("[class^='actor']").shouldNotBe(':visible')
   fixture.select(0, 1)
   $('.actor_1, .actor_3, .actor_4').shouldBeOnly(':visible')
@@ -203,8 +172,7 @@ test 'support special `data-scene` attribute of `all`', ->
   $('.actor_2, .actor_3, .actor_4').shouldBeOnly(':visible')
 
 test 'switching to `none` scene should not override shared `all` actors', ->
-  fixture.use '.keyword_shared_all'
-  fixture.init()
+  fixture.init '.keyword_shared_all'
   $("[class^='actor']").shouldNotBe(':visible')
   fixture.select(0, 1)
   $('.actor_1, .actor_3').shouldBeOnly(':visible')
@@ -214,9 +182,8 @@ test 'switching to `none` scene should not override shared `all` actors', ->
   $('.actor_2, .actor_3').shouldBeOnly(':visible')
 
 test 'support special ! character to exclude scenes', ->
-  fixture.use '.keyword_not'
-  sc = fixture.init().get()
-  equal sc.$controls.find('li li').length, 3, 'scene control has 3 options'
+  fixture.init '.keyword_not'
+  equal Stagehand.$controls.find('li li').length, 3, 'scene control has 3 options'
   $('.actor_2, .actor_4').shouldBeOnly(':visible')
   fixture.select(0, 1)
   $('.actor_3, .actor_4').shouldBeOnly(':visible')
@@ -224,10 +191,9 @@ test 'support special ! character to exclude scenes', ->
   $('.actor_1').shouldBeOnly(':visible')
 
 test 'support special ! character to exclude scenes, with explicit "all"', ->
-  fixture.use '.keyword_all_not'
-  sc = fixture.init().get()
-  equal sc.$controls.find('li li').length, 4, 'scene control has 4 options'
-  sc.$controls.find('li li').first().shouldSay('none')
+  fixture.init '.keyword_all_not'
+  equal Stagehand.$controls.find('li li').length, 4, 'scene control has 4 options'
+  Stagehand.$controls.find('li li').first().shouldSay('none')
   fixture.select(0, 0)
   $("[class^='actor']").shouldNotBe(':visible')
   fixture.select(0, 1)
@@ -236,10 +202,9 @@ test 'support special ! character to exclude scenes, with explicit "all"', ->
   $('.actor_1').shouldBeOnly(':visible')
 
 test 'support special `data-scene` attribute of `toggle`', ->
-  fixture.use '.keyword_toggle'
-  sc = fixture.init().get()
-  equal sc.$controls.find('li li').length, 4, 'scene control has 4 options'
-  sc.$controls.find('li li')
+  fixture.init '.keyword_toggle'
+  equal Stagehand.$controls.find('li li').length, 4, 'scene control has 4 options'
+  Stagehand.$controls.find('li li')
     .first().shouldSay('toggle off')
     .next().shouldSay('toggle on')
   $("[class^='actor']").shouldNotBe(':visible')
@@ -251,12 +216,9 @@ test 'support special `data-scene` attribute of `toggle`', ->
 module 'Callbacks'
 
 test 'afterSceneChange callback', ->
-  fixture.use '.shared_scenes'
-  opts = {
-    afterSceneChange: ($actors_on) ->
-      $actors_on.addClass('changed')
-  }
+  fixture.init '.shared_scenes'
+  Stagehand.afterSceneChange = ($actors_on) ->
+    $actors_on.addClass('changed')
   $("#qunit-fixture").find('p').shouldNotBe('.changed')
-  fixture.init(opts)
+  fixture.select(0, 0)
   $('.actor_1, .actor_4').shouldBeOnly('.changed')
-
