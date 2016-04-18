@@ -33,4 +33,4 @@ ratings:
   - "**.py"
   - "**.rb"
 exclude_paths:
-  - "lib/*"
+  - "source/lib/*"
