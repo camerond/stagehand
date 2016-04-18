@@ -11,11 +11,11 @@ $prefixes: moz, webkit, o
   transition: none
   transform: none
   font-weight: normal
+  box-shadow: none
   @each $prefix in $prefixes
-    #{$prefix}-box-shadow: none
-    #{$prefix}-text-shadow: none
-    #{$prefix}-transition: none
-    #{$prefix}-transform: none
+    -#{$prefix}-text-shadow: none
+    -#{$prefix}-transition: none
+    -#{$prefix}-transform: none
 
 = box-sizing($type: border-box)
   @each $prefix in $prefixes
