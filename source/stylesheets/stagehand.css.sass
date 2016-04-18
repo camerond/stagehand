@@ -16,6 +16,7 @@ $prefixes: moz, webkit, o
     -#{$prefix}-text-shadow: none
     -#{$prefix}-transition: none
     -#{$prefix}-transform: none
+    transform: none
 
 = box-sizing($type: border-box)
   @each $prefix in $prefixes
@@ -25,6 +26,7 @@ $prefixes: moz, webkit, o
 = transition($trans)
   @each $prefix in $prefixes
     -#{$prefix}-transition: $trans
+    transition: $trans
 
 
 body.stagehand-active
