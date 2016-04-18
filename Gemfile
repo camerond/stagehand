@@ -1,7 +1,9 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem "middleman", "~>3.1.2"
-gem "middleman-livereload", "~> 3.1.0"
+ruby '2.3.0'
+#ruby-gemset=stagehand
+
+gem "middleman"
+gem "middleman-livereload"
 gem "middleman-syntax"
-gem "middleman-deploy"
 gem "redcarpet"

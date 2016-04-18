@@ -16,14 +16,9 @@ set :sass, {
   :line_comments => false
 }
 
-proxy "/faq/index.html", "faq.html"
+proxy "/faq/index.html", "/faq"
 ignore "/test.html" if build?
 
 (1..4).to_a.each do |i|
   proxy "/examples/#{i}/index.html", "/examples/index.html", :locals => { :example => i }, ignore: true
-end
-
-activate :deploy do |deploy|
-  deploy.build_before = true
-  deploy.method = :git
 end
