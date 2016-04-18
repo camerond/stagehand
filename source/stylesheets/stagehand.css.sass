@@ -29,23 +29,23 @@ $prefixes: moz, webkit, o
 
 body.stagehand-active
   padding-left: 150px
-  section#stagehand-controls
+  #stagehand-controls
     left: 0
     a.stagehand-toggle
       opacity: 1
   @media screen and (max-width: 480px)
     padding-left: inherit
-    section#stagehand-controls
+    #stagehand-controls
       width: 50%
       padding-right: 40px
-      background: rgba(255,255,255,.9)
+      background: #fff rgba(255,255,255,.9)
 
 body.stagehand-overlay.stagehand-active
   padding-left: inherit
-  section#stagehand-controls
+  #stagehand-controls
     background: rgba(255,255,255,.9)
 
-section#stagehand-controls
+#stagehand-controls
   z-index: 1000001
   +reset
   color: #161718
