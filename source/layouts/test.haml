@@ -2,11 +2,8 @@
 %html
   %head
     %title Stagehand Test Suite
-    %script(type="text/javascript" src="/javascripts/jquery.min.js")
-    %script(type="text/javascript" src="/lib/qunit.js")
-    %script(type="text/javascript" src="/javascripts/stagehand.js")
-    %script(type="text/javascript" src="/javascripts/suite.js")
-    %link(rel="stylesheet" href="/lib/qunit.css" type="text/css")
+    = javascript_include_tag "lib/jquery.min", "lib/qunit", "stagehand", "suite"
+    = stylesheet_link_tag "lib/qunit"
   %body
     %h1#qunit-header
     %h2#qunit-banner
